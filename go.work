@@ -3,4 +3,8 @@ go 1.21.5
 use (
 	./DomainDrivenDesign
 	./Start
+
+	./GoMicroService/front-end
+	./GoMicroService/broker-service
+	./GoMicroService/authentication-service
 )

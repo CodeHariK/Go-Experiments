@@ -4,3 +4,34 @@
 
 Entity : Unique identifier, Mutable
 Value Object : No identifier, Immutable
+
+---
+
+valueobject
+    transaction
+
+entity
+    item
+    person
+
+service
+    bookstore
+    order
+
+aggregate
+    customer
+        person, products, transactions
+        NewCustomer, GetID, SetID, SetName, GetName
+    product
+
+domain
+    customer
+        repository
+        memory
+            memory
+        mongo
+            mongo
+    product
+        repository
+        memory
+            memory
