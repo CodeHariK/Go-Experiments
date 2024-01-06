@@ -7,4 +7,7 @@ use (
 	./GoMicroService/front-end
 	./GoMicroService/broker-service
 	./GoMicroService/authentication-service
+	./GoMicroService/listener-service
+	./GoMicroService/mail-service
+	./GoMicroService/logger-service
 )

@@ -1,5 +1,3 @@
-
-
 --
 -- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
