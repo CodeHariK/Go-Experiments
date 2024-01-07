@@ -1,0 +1,228 @@
+{
+    "info": {
+        "_postman_id": "01ffebf9-eed3-4e77-b183-cac1d14f72b9",
+        "name": "fiber-auth",
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Products",
+            "item": [
+                {
+                    "name": "Get all products",
+                    "_postman_id": "5bc41f5b-5b9e-4aef-9a4e-522805bd4f22",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:3000/api/product"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get product",
+                    "_postman_id": "37b409fb-8bc1-425b-8bd6-1cbfdfe4fecf",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:3000/api/product/3"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Create product",
+                    "_postman_id": "d230a6b1-a380-4cd5-a20f-e55fee13b7b5",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": {
+                                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTkyNDE1NTIwLCJpZGVudGl0eSI6ImVuZGVyIn0.B9iKWiVn2TMF7uXLLq6t2axOxuvXFhG_WMMYsDREeDY"
+                            }
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"title\": \"Cambures\",\n    \"description\": \"Fruto amarillo\",\n    \"amount\": 1\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": "http://localhost:3000/api/product"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete a product",
+                    "_postman_id": "07f20eaf-4b7a-407e-8492-94b108ce19bf",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": {
+                                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTkyNDE1NTIwLCJpZGVudGl0eSI6ImVuZGVyIn0.B9iKWiVn2TMF7uXLLq6t2axOxuvXFhG_WMMYsDREeDY"
+                            }
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "url": "http://localhost:3000/api/product/12"
+                    },
+                    "response": []
+                }
+            ],
+            "_postman_id": "6d2ca478-add0-4546-80ae-f70e8dff77b9",
+            "protocolProfileBehavior": {}
+        },
+        {
+            "name": "Auth",
+            "item": [
+                {
+                    "name": "Login",
+                    "_postman_id": "26cce0dc-877c-4414-add3-359325a41798",
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"identity\": \"abonnet\",\n    \"password\": \"12345678\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": "http://localhost:3000/api/auth/login"
+                    },
+                    "response": []
+                }
+            ],
+            "_postman_id": "0cf09da0-663d-4985-9480-c92963939fb4",
+            "protocolProfileBehavior": {}
+        },
+        {
+            "name": "User",
+            "item": [
+                {
+                    "name": "Create user",
+                    "_postman_id": "40348180-ee78-463e-a9fb-9692a2415226",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": {
+                                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTkyNDE1NTIwLCJpZGVudGl0eSI6ImVuZGVyIn0.B9iKWiVn2TMF7uXLLq6t2axOxuvXFhG_WMMYsDREeDY"
+                            }
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"username\": \"jury2\",\n    \"email\": \"jury2@gmail.com\",\n    \"password\": \"12345678\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": "http://localhost:3000/api/user"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete user",
+                    "_postman_id": "7bfa7a68-5af8-4524-b1fb-73985cc39f79",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": {
+                                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTI2MDQ4ODgsInVzZXJfaWQiOjI1LCJ1c2VybmFtZSI6Imp1cnkyIn0.PoUq7GvwuXxi1UXHqWU_CcswOmX55itOvp8gzolff9E"
+                            }
+                        },
+                        "method": "DELETE",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n\t\"password\":\"12345678\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": "http://localhost:3000/api/user/25"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update user name",
+                    "_postman_id": "7f2c4a7d-1b76-4b77-8f42-9007ac5dd87e",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": {
+                                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1OTI2MDUyNTIsInVzZXJfaWQiOjIyLCJ1c2VybmFtZSI6ImFib25uZXQifQ.u4kqTgKyCfpH3-Gnjs5VdWfpKWiD-7gqvzRN9kQYmkc"
+                            }
+                        },
+                        "method": "PATCH",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n\t\"names\":\"Nombres de usuario2\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": "http://localhost:3000/api/user/22"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get user",
+                    "_postman_id": "7a0a910c-bd11-4ae5-9707-479e40657d4b",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": "http://localhost:3000/api/user/19"
+                    },
+                    "response": []
+                }
+            ],
+            "_postman_id": "7d732006-2d2e-4510-8c97-7fae37740032",
+            "protocolProfileBehavior": {}
+        },
+        {
+            "name": "Hello",
+            "_postman_id": "ffc3ad45-d460-446c-8493-69e8b7632416",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:3000/api"
+            },
+            "response": []
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "id": "0932389a-82b3-4f73-8d62-0008131233b3",
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "id": "e1678f26-4dd2-4936-b937-f814379a292d",
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ],
+    "protocolProfileBehavior": {}
+}

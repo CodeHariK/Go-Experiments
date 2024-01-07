@@ -6,7 +6,7 @@ WORKDIR /app
 RUN mkdir "/build"
 COPY . .
 
-EXPOSE 8080
+EXPOSE 3000
 
 RUN go get github.com/githubnemo/CompileDaemon
 RUN go install github.com/githubnemo/CompileDaemon
