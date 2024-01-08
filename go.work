@@ -4,6 +4,14 @@ use (
 	./DomainDrivenDesign
 	./JwtAuth
 
+	./GrpcGo/helloworld/greeter_client
+	./GrpcGo/helloworld/helloproto
+	./GrpcGo/helloworld/greeter_server
+
+	./GrpcGo/route_guide/client
+	./GrpcGo/route_guide/server
+	./GrpcGo/route_guide/proto
+
 	./GoMicroService/front-end
 	./GoMicroService/broker-service
 	./GoMicroService/authentication-service
