@@ -14,6 +14,8 @@ use (
 
 	./GrpcGo/fiber-grpc
 
+	./SwaggerGo
+
 	./GoMicroService/front-end
 	./GoMicroService/broker-service
 	./GoMicroService/authentication-service
