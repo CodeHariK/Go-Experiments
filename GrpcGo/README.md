@@ -2,7 +2,7 @@
 
 [![Grpc](https://img.youtube.com/vi/gnchfOojMk4/0.jpg)](https://www.youtube.com/watch?v=gnchfOojMk4)
 
-* [Protocol Buffers](https://protobuf.dev/)
+* [Protocol Buffers](https://protobuf.dev/programming-guides/proto3/)
 * [Grpc Guides](https://grpc.io/docs/guides/)
 * [Grpc Documentation](https://github.com/grpc/grpc/tree/master/doc)
 * [Grpc Documentation](https://github.com/grpc/grpc-go/tree/master/Documentation)

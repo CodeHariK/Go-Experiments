@@ -13,6 +13,7 @@ use (
 	./GrpcGo/route_guide/proto
 
 	./GrpcGo/fiber-grpc
+	./GrpcGo/grpc-gateway
 
 	./SwaggerGo
 
