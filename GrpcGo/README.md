@@ -21,3 +21,8 @@
     Availability in many programming languages
     Optimized functionality through automatically-generated classes
 ```
+
+```grpc
+    We wanted the communication between the client and the server to be as small as possible,
+    as secure as possible and fully compliant with both ends (thus we chose Protobuf).
+```
