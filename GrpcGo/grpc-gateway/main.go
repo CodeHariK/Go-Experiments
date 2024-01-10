@@ -10,8 +10,8 @@ import (
 	"os"
 	"strings"
 
-	ins "demogrpc/insecure"
-	server "demogrpc/server"
+	ins "grpcgateway/insecure"
+	server "grpcgateway/server"
 
 	"github.com/felixge/httpsnoop"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -22,11 +22,11 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/encoding/protojson"
 
-	gw "demogrpc/proto"
+	gw "grpcgateway/proto"
 )
 
 var (
-	HTTPS      = true
+	HTTPS      = false
 	GRPC       = "0.0.0.0:8080"
 	DNS        = "dns:///0.0.0.0:8080"
 	GATEWAY    = "0.0.0.0:8090"

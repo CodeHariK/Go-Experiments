@@ -9,7 +9,7 @@ import (
 	"google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
 
-	gw "demogrpc/proto"
+	gw "grpcgateway/proto"
 )
 
 type server struct {

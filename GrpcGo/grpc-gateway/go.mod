@@ -1,4 +1,4 @@
-module demogrpc
+module grpcgateway
 
 go 1.21.5
 
