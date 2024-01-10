@@ -50,14 +50,6 @@ func (s *server) GetUser(req *gw.GetUserRequest, srv gw.UserService_GetUserServe
 
 	idx := slices.IndexFunc(s.users, func(c *gw.User) bool { return c.Id == req.Id })
 
-	print("*****************\n")
-	print(s.users)
-	print("*****************\n")
-	print(req.Id)
-	print("*****************\n")
-	print(idx)
-	print("*****************\n")
-
 	if idx != -1 {
 		err := srv.Send(&gw.GetUserResponse{
 			User: s.users[idx],

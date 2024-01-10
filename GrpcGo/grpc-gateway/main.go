@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"crypto/tls"
 	"io"
 	"log"
 	"net"
@@ -9,17 +10,27 @@ import (
 	"os"
 	"strings"
 
+	ins "demogrpc/insecure"
 	server "demogrpc/server"
 
 	"github.com/felixge/httpsnoop"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/encoding/protojson"
 
 	gw "demogrpc/proto"
+)
+
+var (
+	HTTPS      = true
+	GRPC       = "0.0.0.0:8080"
+	DNS        = "dns:///0.0.0.0:8080"
+	GATEWAY    = "0.0.0.0:8090"
+	GATEWAYMUX *runtime.ServeMux
 )
 
 func withLogger(handler http.Handler) http.Handler {
@@ -50,38 +61,72 @@ func main() {
 	grlog := grpclog.NewLoggerV2(os.Stdout, io.Discard, io.Discard)
 	grpclog.SetLoggerV2(grlog)
 
-	// Create a listener on TCP port
+	lis := listener()
+	registerServer(lis)
+	conn := dial()
+	mux()
+	registerHandler(conn)
+	serve()
+}
 
-	lis, err := net.Listen("tcp", ":8080")
+func listener() net.Listener {
+	// Create a listener on TCP port
+	lis, err := net.Listen("tcp", GRPC)
 	if err != nil {
 		log.Fatalln("Failed to listen:", err)
 	}
+	return lis
+}
 
-	// Create a gRPC server object
-	s := grpc.NewServer()
+func registerServer(lis net.Listener) {
+	var GRPC_SERVER *grpc.Server
+
+	if HTTPS {
+		GRPC_SERVER = grpc.NewServer(
+			grpc.Creds(credentials.NewServerTLSFromCert(&ins.Cert)),
+		)
+	} else {
+		GRPC_SERVER = grpc.NewServer()
+	}
+
 	// Attach the Greeter service to the server
-	ss := server.New()
-	gw.RegisterGreeterServer(s, ss)
-	gw.RegisterUserServiceServer(s, ss)
+	newServer := server.New()
+	gw.RegisterGreeterServer(GRPC_SERVER, newServer)
+	gw.RegisterUserServiceServer(GRPC_SERVER, newServer)
 	// Serve gRPC server
-	log.Println("Serving gRPC on 0.0.0.0:8080")
+	log.Printf("Serving gRPC on %s", GRPC)
 	go func() {
-		log.Fatalln(s.Serve(lis))
+		log.Fatalln(GRPC_SERVER.Serve(lis))
 	}()
+}
 
+func dial() *grpc.ClientConn {
 	// Create a client connection to the gRPC server we just started
 	// This is where the gRPC-Gateway proxies the requests
+
+	var cred credentials.TransportCredentials
+
+	if HTTPS {
+		cred = credentials.NewClientTLSFromCert(ins.CertPool, "")
+	} else {
+		cred = insecure.NewCredentials()
+	}
+
 	conn, err := grpc.DialContext(
 		context.Background(),
-		"0.0.0.0:8080",
+		DNS,
 		grpc.WithBlock(),
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithTransportCredentials(cred),
 	)
 	if err != nil {
 		log.Fatalln("Failed to dial server:", err)
 	}
 
-	gwmux := runtime.NewServeMux(
+	return conn
+}
+
+func mux() {
+	GATEWAYMUX = runtime.NewServeMux(
 		runtime.WithOutgoingHeaderMatcher(isHeaderAllowed),
 		runtime.WithMetadata(func(ctx context.Context, r *http.Request) metadata.MD {
 			header := r.Header.Get("Authorization")
@@ -110,22 +155,33 @@ func main() {
 			},
 		}),
 	)
+}
 
-	// Register Greeter
-	err = gw.RegisterGreeterHandler(context.Background(), gwmux, conn)
+func registerHandler(conn *grpc.ClientConn) {
+	err := gw.RegisterGreeterHandler(context.Background(), GATEWAYMUX, conn)
 	if err != nil {
 		log.Fatalln("Failed to register gateway:", err)
 	}
-	err = gw.RegisterUserServiceHandler(context.Background(), gwmux, conn)
+	err = gw.RegisterUserServiceHandler(context.Background(), GATEWAYMUX, conn)
 	if err != nil {
 		log.Fatalln("Failed to register gateway:", err)
 	}
+}
 
+func serve() {
 	gwServer := &http.Server{
-		Addr:    ":8090",
-		Handler: withLogger(gwmux),
+		Addr:    GATEWAY,
+		Handler: withLogger(GATEWAYMUX),
 	}
 
-	log.Println("Serving gRPC-Gateway on http://0.0.0.0:8090")
-	log.Fatalln(gwServer.ListenAndServe())
+	if HTTPS {
+		gwServer.TLSConfig = &tls.Config{
+			Certificates: []tls.Certificate{ins.Cert},
+		}
+		log.Printf("Serving gRPC-Gateway on https://%s", GATEWAY)
+		log.Fatalln(gwServer.ListenAndServeTLS("", ""))
+	} else {
+		log.Printf("Serving gRPC-Gateway on http://%s", GATEWAY)
+		log.Fatalln(gwServer.ListenAndServe())
+	}
 }
