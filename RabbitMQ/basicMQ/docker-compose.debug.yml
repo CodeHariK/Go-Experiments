@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  goexperiments:
+    image: goexperiments
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 5672:5672
