@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  # goexperiments:
+  #   image: goexperiments
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   ports:
+  #     - 6379:6379
+  redis:
+      image: redis:alpine
+      restart: always
+      ports:
+        - '6379:6379'
+      # command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+      volumes: 
+        - redis:/data
+  asyncqmon:
+    image: hibiken/asynqmon:latest
+    platform: linux/x86_64
+    ports:
+      - '8080:8080'
+volumes:
+  redis:
+    driver: local

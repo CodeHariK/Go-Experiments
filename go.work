@@ -19,6 +19,8 @@ use (
 
 	./RabbitMQ/basicMQ
 
+	./AsyncQ
+
 	./GoMicroService/front-end
 	./GoMicroService/broker-service
 	./GoMicroService/authentication-service

@@ -2,9 +2,11 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -42,9 +44,13 @@ func main() {
 	)
 	failOnError(err, "Failed to declare a queue")
 
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
 	// We set the payload for the message.
 	body := "Golang is awesome - Keep Moving Forward! " + mPayload
-	err = ch.Publish(
+	err = ch.PublishWithContext(
+		ctx,
 		"",     // exchange
 		q.Name, // routing key
 		false,  // mandatory
@@ -52,7 +58,8 @@ func main() {
 		amqp.Publishing{
 			ContentType: "text/plain",
 			Body:        []byte(body),
-		})
+		},
+	)
 	// If there is an error publishing the message, a log will be displayed in the terminal.
 	failOnError(err, "Failed to publish a message")
 	log.Printf(" [x] Congrats, sending message: %s", body)
