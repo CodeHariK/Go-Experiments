@@ -1,0 +1,28 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Hexagonal",
+    "dateExported": "2024-01-13T13:14:08.593Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "4fb7f696-d95c-40ea-901a-40e320cc5254",
+            "colId": "c8327606-3379-4de5-8522-ef4072a9d542",
+            "containerId": "",
+            "name": "http://127.0.0.1:8080/products",
+            "url": "http://127.0.0.1:8080/products",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2024-01-13T13:13:01.653Z",
+            "modified": "2024-01-13T13:13:01.653Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"code\" : \"code\",\n  \"name\" : \"name\",\n  \"price\" : \"price\"\n}",
+                "form": []
+            },
+            "tests": []
+        }
+    ]
+}

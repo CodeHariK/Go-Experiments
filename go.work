@@ -1,30 +1,35 @@
 go 1.21.5
 
 use (
+	./AsyncQ
 	./DomainDrivenDesign
-	./JwtAuth
 
-	./GrpcGo/helloworld/greeter_client
-	./GrpcGo/helloworld/helloproto
-	./GrpcGo/helloworld/greeter_server
+	./GoMicroService/authentication-service
+	./GoMicroService/broker-service
 
-	./GrpcGo/route_guide/client
-	./GrpcGo/route_guide/server
-	./GrpcGo/route_guide/proto
+	./GoMicroService/front-end
+	./GoMicroService/listener-service
+	./GoMicroService/logger-service
+	./GoMicroService/mail-service
 
 	./GrpcGo/fiber-grpc
 	./GrpcGo/grpc-gateway
 
-	./SwaggerGo
+	./GrpcGo/helloworld/greeter_client
+	./GrpcGo/helloworld/greeter_server
+	./GrpcGo/helloworld/helloproto
+
+	./GrpcGo/route_guide/client
+	./GrpcGo/route_guide/proto
+	./GrpcGo/route_guide/server
+	./JwtAuth
 
 	./RabbitMQ/basicMQ
 
-	./AsyncQ
+	./SwaggerGo
 
-	./GoMicroService/front-end
-	./GoMicroService/broker-service
-	./GoMicroService/authentication-service
-	./GoMicroService/listener-service
-	./GoMicroService/mail-service
-	./GoMicroService/logger-service
+	./EntGo/ent-mysql-fiber
+	./EntGo/examples
+
+	./Hexagonal
 )

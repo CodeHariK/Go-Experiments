@@ -1,0 +1,10 @@
+# Database settings
+database:
+  url: "mongodb+srv://admin:GoExperiments@cluster0.tendsox.mongodb.net/?retryWrites=true&w=majority"
+  db: "catalog"
+  timeout: 5
+
+# Server settings
+server:
+  host: "localhost"
+  port: ":8082"
