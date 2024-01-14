@@ -4,6 +4,9 @@ use (
 	./AsyncQ
 	./DomainDrivenDesign
 
+	./EntGo/ent-mysql-fiber
+	./EntGo/examples
+
 	./GoMicroService/authentication-service
 	./GoMicroService/broker-service
 
@@ -22,14 +25,13 @@ use (
 	./GrpcGo/route_guide/client
 	./GrpcGo/route_guide/proto
 	./GrpcGo/route_guide/server
+
+	./Hexagonal
 	./JwtAuth
+
+	./Monitoring/prometheus-basic
 
 	./RabbitMQ/basicMQ
 
 	./SwaggerGo
-
-	./EntGo/ent-mysql-fiber
-	./EntGo/examples
-
-	./Hexagonal
 )
