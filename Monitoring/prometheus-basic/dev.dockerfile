@@ -6,8 +6,14 @@ WORKDIR /app
 RUN mkdir "/build"
 COPY . .
 
-EXPOSE 3000
+EXPOSE 8090
 
-RUN go build -o /build/app
+RUN go get github.com/githubnemo/CompileDaemon
+RUN go install github.com/githubnemo/CompileDaemon
+RUN go mod tidy
 
-CMD ["/build/app"]
+ENTRYPOINT CompileDaemon -build="" -command="/build/app"
+
+# RUN go build -o /build/app
+
+# CMD [ "/build/app" ]

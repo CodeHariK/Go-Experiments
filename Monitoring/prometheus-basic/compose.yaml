@@ -1,7 +1,7 @@
 services:
 
-  server:
-    container_name: goprom
+  app:
+    container_name: goddess
     build:
       context: .
       dockerfile: ./dev.dockerfile

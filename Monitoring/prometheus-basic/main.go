@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"html"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"time"
@@ -44,6 +46,7 @@ func NewMetrics(reg prometheus.Registerer) *metrics {
 			Buckets:   []float64{.005, .01, .025, .05, .1, .25, .5, 1, 2.5, 5, 10},
 		}, []string{"route", "method", "status_code"}),
 	}
+	reg.MustRegister(m.pingCounter)
 	reg.MustRegister(m.cpuTemp)
 	reg.MustRegister(m.hdFailures)
 	reg.MustRegister(m.responseTimeHistogram)
@@ -66,6 +69,10 @@ func measureResponseDuration(next http.Handler, m metrics) http.Handler {
 		start := time.Now()
 		rec := statusRecorder{w, 200}
 
+		sleepTime := rand.Intn(3000)
+		time.Sleep(time.Duration(sleepTime) * time.Millisecond)
+		log.Println("Location : ", r.URL.Path, "Time", sleepTime)
+
 		next.ServeHTTP(&rec, r)
 
 		duration := time.Since(start)
@@ -77,6 +84,7 @@ func measureResponseDuration(next http.Handler, m metrics) http.Handler {
 
 func ping(w http.ResponseWriter, req *http.Request, m *metrics) {
 	m.pingCounter.Inc()
+	m.pingCounter.Add(rand.Float64())
 
 	fmt.Fprintf(w, "pong")
 }
@@ -97,11 +105,27 @@ func main() {
 
 	http.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
 		ping(w, r, m)
+
+		fmt.Fprintf(w, "Ping")
+		log.Println("Ping Log")
 	})
 
 	http.Handle("/", measureResponseDuration(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, r.RequestURI)
 	}), *m))
+	http.Handle("/bar", measureResponseDuration(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, r.RequestURI)
+		fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+		tm := time.Now().String()
+		w.Write([]byte("The time is: " + tm))
+	}), *m))
+
+	http.Handle("/hello", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintf(w, r.RequestURI)
+		log.Println(r.RequestURI)
+		tm := time.Now().String()
+		w.Write([]byte("The time is: " + tm))
+	}))
 
 	log.Fatal(http.ListenAndServe(":8090", nil))
 }
