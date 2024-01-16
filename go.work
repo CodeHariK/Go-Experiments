@@ -33,5 +33,7 @@ use (
 
 	./RabbitMQ/basicMQ
 
+	./Redis/redis-basic
+
 	./SwaggerGo
 )
