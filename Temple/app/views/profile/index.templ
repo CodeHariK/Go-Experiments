@@ -1,0 +1,7 @@
+package profile
+
+import "templeapp/model"
+
+templ Index(user model.User) {
+	<h1>User profile page { user.Email } { user.FirstName } { user.LastName }</h1>
+}

@@ -36,4 +36,7 @@ use (
 	./Redis/redis-basic
 
 	./SwaggerGo
+
+	./Temple
+	./Temple/app
 )
