@@ -4,6 +4,8 @@
 
 * [A Gentle Introduction to BPF](https://www.youtube.com/playlist?list=PLdUJnSStgdIOsHiuUixmVPPg743gO_SN2)
 
+* [Cilium Week](https://www.youtube.com/playlist?list=PLy0Gle4XyvbGSHTXVc8SNfTJollXpb-28)
+
 * Learning EBPF
 
 * <https://www.cni.dev/docs/>
