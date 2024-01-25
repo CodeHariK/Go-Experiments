@@ -15,10 +15,8 @@
 
 * [100DaysOfKubernetes](https://www.youtube.com/playlist?list=PLWnens-FYbIpUpmiiNYfkqTZQUYppGMFV)
 
-* [Full Kubernetes tutorial on Docker, KinD, kubectl, Helm, Prometheus, Grafana](https://www.youtube.com/watch?v=SeQevrW176A)
-
-* [Kubernetes Monitoring Made Easy with Prometheus](https://www.youtube.com/watch?v=6xmWr7p5TE0)
-
 * [Complete Kubernetes Tutorial for Beginners](https://www.youtube.com/playlist?list=PLy7NrYWoggjziYQIDorlXjTvvwweTYoNC)
 
 * [Full Kubernetes Course](https://www.youtube.com/playlist?list=PLy0Gle4XyvbFkHCDcJEYG2f6q1dVNJ64-)
+
+* [Kubernetes Tutorials](https://www.youtube.com/playlist?list=PLj-2elZxVPZ8U5_gxuF_GFWelIo9kFlAj)

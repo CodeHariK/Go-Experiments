@@ -1,5 +1,7 @@
 # AWS
 
+* https://github.com/aws/aws-sdk-go/tree/main/example
+
 * https://www.eksworkshop.com/
 * https://github.com/aws-samples
 
