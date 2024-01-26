@@ -22,6 +22,9 @@ ssh -i ~/.ssh/terrakey ec2-user@13.234.111.6
 * [Manage Kubernetes resources via Terraform](https://developer.hashicorp.com/terraform/tutorials/kubernetes/kubernetes-provider)
 * [Provision an EKS cluster (AWS)](https://developer.hashicorp.com/terraform/tutorials/kubernetes/eks)
 
+## Tutorials
+
+* [Terraform has forever changed the way I deploy code](https://www.youtube.com/watch?v=cGPyH-PO8vg)
 * [Why You NEED To Learn Terraform](https://www.youtube.com/watch?v=nvNqfgojocs)
 * [Learn Terraform (and AWS) by Building a Dev Environment – Full Course for Beginners](https://www.youtube.com/watch?v=iRaai1IBlB0)
 * [Complete Terraform Course - From BEGINNER to PRO! (Learn Infrastructure as Code)](https://www.youtube.com/watch?v=7xngnjfIlK4)
