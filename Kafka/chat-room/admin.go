@@ -62,7 +62,7 @@ func (a *Admin) CreateTopic(topic string) {
 	topicConfigs := []kafka.TopicConfig{
 		{
 			Topic:             topic,
-			NumPartitions:     1,
+			NumPartitions:     3,
 			ReplicationFactor: 1,
 		},
 	}

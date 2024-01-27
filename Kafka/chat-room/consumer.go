@@ -23,11 +23,11 @@ func NewConsumer(brokers []string, topic string) *Consumer {
 	}
 
 	r := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:   brokers,
-		GroupID:   groupID,
-		Topic:     topic,
-		Dialer:    dialer,
-		Partition: 2,
+		Brokers: brokers,
+		GroupID: groupID,
+		Topic:   topic,
+		Dialer:  dialer,
+		// Partition: 2,
 	})
 
 	return &Consumer{client: r, topic: topic}

@@ -17,7 +17,7 @@ func NewProducer(brokers []string, topic string) *Producer {
 	client := &kafka.Writer{
 		Addr:        kafka.TCP(brokers...),
 		Topic:       topic,
-		Balancer:    &kafka.LeastBytes{},
+		Balancer:    &kafka.RoundRobin{},
 		Logger:      kafka.LoggerFunc(logf),
 		ErrorLogger: kafka.LoggerFunc(logf),
 	}
@@ -29,6 +29,7 @@ func (p *Producer) SendMessage(user, message string) {
 	msg := kafka.Message{
 		Key:   []byte(user),
 		Value: []byte(message),
+		// Partition: 2,
 	}
 
 	err := p.client.WriteMessages(context.Background(),
@@ -44,6 +45,6 @@ func (p *Producer) Close() {
 }
 
 func logf(msg string, a ...interface{}) {
-	fmt.Printf(msg, a...)
+	// fmt.Printf(msg, a...)
 	fmt.Println()
 }
