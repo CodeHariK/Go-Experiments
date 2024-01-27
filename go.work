@@ -37,6 +37,8 @@ use (
 
 	./SwaggerGo
 
+	./Kafka/chat-room
+
 	./Temple
 	./Temple/app
 )
