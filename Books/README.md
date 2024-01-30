@@ -76,6 +76,8 @@ Class A -> 2^24 Host
 Class B -> 2^16 Host
 Class C -> 2^8 Host
 
+Private Address Spaces and Localhost : 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, 127.0.0.0/8
+
 ### Ports
 
 Besides an IP address (used by the IP layer), there is another address that is used by TCP (stream sockets) and, coincidentally, by UDP (datagram sockets). It is the port number. It’s a 16-bit number that’s like the local address for the connection.
@@ -97,3 +99,36 @@ When you call one of these functions, the kernel takes over and does all the wor
 Note that the client-server pair can speak SOCK_STREAM, SOCK_DGRAM, or anything else (as long as they’re speaking the same thing). Some good examples of client-server pairs are telnet/telnetd, ftp/ftpd, or Firefox/Apache. Every time you use ftp, there’s a remote program, ftpd, that serves you.
 
 Often, there will only be one server on a machine, and that server will handle multiple clients using fork(). The basic routine is: server will wait for a connection, accept() it, and fork() a child process to handle it.
+
+## TCP
+
+TCP is reliable because it overcomes the effects of packet loss or receiving packets out of order. 
+Packet loss occurs when data fails to reach its destination—typically because of data transmission errors (such as wireless network interference) or network congestion. 
+Network congestion happens when nodes attempt to send more data over a network connection than the connection can handle, causing the nodes to discard the excess packets. 
+TCP adapts its data transfer rate to make sure it transmits data as fast as possible while keeping dropped packets to a minimum. 
+TCP also keeps track of received packets and retransmits unacknowledged packets, as necessary. 
+There is no guarantee that all packets you send take the same route for the duration of the TCP session. 
+Thankfully, TCP organizes unordered packets and processes them in sequence.
+
+### TCP Sessions
+
+A TCP session allows you to deliver a stream of data of any size to a recipient and receive confirmation that the recipient received the data. This
+saves you from the inefficiency of sending a large amount of data across a network, only to find out at the end of the transmission that the recipient
+didn’t receive it. 
+
+A TCP connection uses a three-way handshake to introduce the client to the server and the server to the client. The handshake creates an established
+TCP session over which the client and server exchange data.
+
+Dial                          Listen
+| ------Syn(x)--------------> |
+| <-----Ack(x+1),Syn(y)------ |
+| ------Ack(y+1)------------> |
+
+window size: which is the number of bytes the sender can transmit to the receiver without requiring an acknowledgment
+sliding window : receiving the window size in an ACK packet, sending data, receiving an updated window size in the next ACK, and then sending more data
+
+Terminating TCP Sessions
+Dial                  Listen
+| ------Fin---------> |
+| <-----Ack, Fin----- |
+| ------Ack---------> |

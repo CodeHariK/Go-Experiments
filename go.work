@@ -2,10 +2,12 @@ go 1.21.5
 
 use (
 	./AsyncQ
+	./Books
 	./DomainDrivenDesign
 
 	./EntGo/ent-mysql-fiber
 	./EntGo/examples
+	./GoLibrary
 
 	./GoMicroService/authentication-service
 	./GoMicroService/broker-service
@@ -29,7 +31,11 @@ use (
 	./Hexagonal
 	./JwtAuth
 
+	./Kafka/chat-room
+
 	./Monitoring/prometheus-basic
+
+	./Protocols/WebSocketChat
 
 	./RabbitMQ/basicMQ
 
@@ -37,10 +43,6 @@ use (
 
 	./SwaggerGo
 
-	./Kafka/chat-room
-
 	./Temple
 	./Temple/app
-
-	./Protocols/WebSocketChat
 )
