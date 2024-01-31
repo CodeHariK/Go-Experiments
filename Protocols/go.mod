@@ -1,4 +1,4 @@
-module websocketchat
+module protocols
 
 go 1.21.5
 
