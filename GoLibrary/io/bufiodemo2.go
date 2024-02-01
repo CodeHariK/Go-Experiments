@@ -26,14 +26,14 @@ func Bufiodemo2() {
 	fmt.Printf("%q\n", b) // output: "I'd"
 
 	// Peek - Case 2: Peek larger than buffer size
-	b, err = br.Peek(30)
+	_, err = br.Peek(30)
 	if err != nil {
 		fmt.Println(err) // output: "bufio: buffer full"
 	}
 
 	// Peek - Case 3: Buffer size larger than string
 	br_large := bufio.NewReaderSize(str, 50)
-	b, err = br_large.Peek(50)
+	_, err = br_large.Peek(50)
 	if err != nil {
 		fmt.Println(err) // output: EOF
 	}

@@ -8,7 +8,7 @@ import (
 )
 
 // Message represents the data structure to hold information for echoing
-type Message struct {
+type EchoMessage struct {
 	Buffer  []byte
 	Length  int
 	Address net.Addr
@@ -67,7 +67,7 @@ func handleConnection(conn net.Conn) {
 		}
 
 		// Create a Message struct with the relevant information
-		message := Message{
+		message := EchoMessage{
 			Buffer:  buffer[:n],
 			Length:  n,
 			Address: conn.RemoteAddr(),
@@ -85,11 +85,11 @@ func handleConnection(conn net.Conn) {
 	}
 }
 
-func serializeMessage(message Message) []byte {
+func serializeMessage(message EchoMessage) []byte {
 	return []byte(fmt.Sprintf("%s (%d) -> %s", message.Address, message.Length, message.Buffer))
 }
 
-func messageToString(message Message) string {
+func messageToString(message EchoMessage) string {
 	// Convert the message to a string for printing
 	return fmt.Sprintf("{ Length: %d, Address: %s, Buffer: %s }", message.Length, message.Address, message.Buffer)
 }
