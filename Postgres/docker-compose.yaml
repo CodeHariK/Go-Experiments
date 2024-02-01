@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  godess:
+    image: postgres:alpine
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+    ports:
+      - "5432:5432"

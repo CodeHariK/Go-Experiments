@@ -18,5 +18,6 @@ func main() {
 	// gnet.SimpleRaddish()
 	// gnet.AdvRaddish()
 	// gnet.ChatServerStart()
-	gnet.SimpleHttp()
+	// gnet.SimpleHttp()
+	gnet.FileServer()
 }
