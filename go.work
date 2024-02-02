@@ -35,6 +35,7 @@ use (
 
 	./Monitoring/prometheus-basic
 	./Projects
+	./Projects/RSSAggregator
 
 	./Protocols
 
