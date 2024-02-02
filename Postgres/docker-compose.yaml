@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  godess:
+  goddess:
     image: postgres:alpine
     environment:
       POSTGRES_PASSWORD: mysecretpassword
