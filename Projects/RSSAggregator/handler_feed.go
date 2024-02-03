@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"rssaggregator/internal/database"
 	"time"
+
+	"rssaggregator/internal/database"
 
 	"github.com/google/uuid"
 )
@@ -19,6 +20,7 @@ func (apiCfg *apiConfig) handlerCreateFeed(w http.ResponseWriter, r *http.Reques
 
 	params := parameters{}
 	err := decoder.Decode(&params)
+	fmt.Println(params)
 	if err != nil {
 		respondWithError(w, 400, fmt.Sprintf("Error parsing JSON: %v", err))
 	}

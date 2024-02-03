@@ -1,0 +1,259 @@
+{
+    "info": {
+        "_postman_id": "fc83e4f1-e0a6-495a-949d-67488c87180e",
+        "name": "RssAggregator",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": ""
+    },
+    "item": [
+        {
+            "name": "healthz",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:8080/v1/healthz",
+                    "path": [
+                        "v1",
+                        "healthz"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                }
+            }
+        },
+        {
+            "name": "err",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:8080/v1/err",
+                    "path": [
+                        "v1",
+                        "err"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                }
+            }
+        },
+        {
+            "name": "users",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:8080/v1/users",
+                    "path": [
+                        "v1",
+                        "users"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\":\"Golang\"\n}"
+                }
+            }
+        },
+        {
+            "name": "users",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:8080/v1/users",
+                    "path": [
+                        "v1",
+                        "users"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "ApiKey 2bcb20f4a0a1bd70e6cdb5a85ce51090c3775f9a8bd3093411c5aa526c635ead"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "create feed",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:8080/v1/feeds",
+                    "path": [
+                        "v1",
+                        "feeds"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "ApiKey 2bcb20f4a0a1bd70e6cdb5a85ce51090c3775f9a8bd3093411c5aa526c635ead"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"name\": \"Computer Enhance\",\n  \"url\": \"https://www.computerenhance.com/feed\"\n}"
+                }
+            }
+        },
+        {
+            "name": " feeds",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:8080/v1/feeds",
+                    "path": [
+                        "v1",
+                        "feeds"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "ApiKey 2bcb20f4a0a1bd70e6cdb5a85ce51090c3775f9a8bd3093411c5aa526c635ead"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "feed_follows",
+            "request": {
+                "method": "POST",
+                "url": {
+                    "raw": "http://localhost:8080/v1/feed_follows",
+                    "path": [
+                        "v1",
+                        "feed_follows"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "ApiKey 2bcb20f4a0a1bd70e6cdb5a85ce51090c3775f9a8bd3093411c5aa526c635ead"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    },
+                    "raw": "{\n  \"feed_id\": \"ceeeb5ac-7105-4208-be27-c77b52da77bb\"\n}"
+                }
+            }
+        },
+        {
+            "name": "feed_follows",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:8080/v1/feed_follows",
+                    "path": [
+                        "v1",
+                        "feed_follows"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "ApiKey 2bcb20f4a0a1bd70e6cdb5a85ce51090c3775f9a8bd3093411c5aa526c635ead"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "posts",
+            "request": {
+                "method": "GET",
+                "url": {
+                    "raw": "http://localhost:8080/v1/posts",
+                    "path": [
+                        "v1",
+                        "posts"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "ApiKey 2bcb20f4a0a1bd70e6cdb5a85ce51090c3775f9a8bd3093411c5aa526c635ead"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "feed_follows",
+            "request": {
+                "method": "DELETE",
+                "url": {
+                    "raw": "http://localhost:8080/v1/feed_follows",
+                    "path": [
+                        "v1",
+                        "feed_follows"
+                    ],
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080"
+                },
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "ApiKey 2bcb20f4a0a1bd70e6cdb5a85ce51090c3775f9a8bd3093411c5aa526c635ead"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  goddess:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: test
+
+    ports:
+      - "5432:5432"
