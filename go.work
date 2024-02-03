@@ -47,4 +47,5 @@ use (
 
 	./Temple
 	./Temple/app
+	./Testing/FuzzTest
 )
