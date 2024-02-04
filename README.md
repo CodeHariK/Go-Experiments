@@ -19,3 +19,9 @@
 ## Projects
 
 * [Designing an On-Demand Video Streaming Service](https://hackernoon.com/designing-an-on-demand-video-streaming-service)
+
+## Videos
+
+* [Concurrency Patterns in Go](https://www.youtube.com/watch?v=rDRa23k70CU&ab_channel=GopherConUK)
+* [Go Profiling and Observability from Scratch](https://www.youtube.com/watch?v=7hg4T2Qqowk&ab_channel=GopherAcademy)
+* [Queues, Fairness, and The Go Scheduler](https://www.youtube.com/watch?v=wQpC99Xu1U4&ab_channel=GopherAcademy)
