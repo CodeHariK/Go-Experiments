@@ -3,6 +3,7 @@ go 1.21.5
 use (
 	./AsyncQ
 	./Books
+	./Cryptopals
 	./DomainDrivenDesign
 
 	./EntGo/ent-mysql-fiber

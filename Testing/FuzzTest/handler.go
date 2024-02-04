@@ -6,8 +6,6 @@ import (
 	"net/http"
 )
 
-// https://programmingpercy.tech/blog/fuzzy-testing-in-go/
-
 type ValuesRequest struct {
 	Values []int `json:"values"`
 }
