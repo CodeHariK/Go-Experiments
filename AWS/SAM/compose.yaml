@@ -1,0 +1,10 @@
+version: '3'
+services:
+  aws-sam-container-arm64:
+    image: my-aws-sam-container-arm64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash
+    stdin_open: true
+    tty: true
