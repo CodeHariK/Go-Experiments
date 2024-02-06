@@ -14,7 +14,29 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: ./ # This is the path to the Code, in our case we are bad and store it in root
-      Handler: hello-world
+      Handler: hello-gopher
+      Runtime: go1.x
+      Environment:
+        Variables:
+          my-cool-variable: "maybe-not-so-cool"
+      Architectures:
+        - x86_64
+      Events:
+        HelloEndpoint:
+          Type: Api
+          Properties:
+            Path: "/api/hellogopher"
+            Method: post
+  SQSLambda: # Here we set a Resource Name, You can set anything you want.
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: ./sqslambda # This is the path to the Code, in our case we are bad and store it in root
+      Handler: sqs-lambda
       Runtime: go1.x
       Architectures:
-        - arm64
+        - x86_64
+      Events:
+        SqsEvents: # Set any name, this identifies our Resource, in this case its the Eventhandler
+          Type: SQS # Set SQS as the Source for the event triggers
+          Properties:
+            Queue: "my-awesome-queue" # The queue to listen on

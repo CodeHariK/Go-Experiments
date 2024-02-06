@@ -11,12 +11,14 @@
 
 ## Tutorials
 
+* [Learning Kubernetes - The Easy Way](https://www.youtube.com/watch?v=JPYmellwdxc&ab_channel=ProgrammingPercy)
+
 * [Kubernetes 101](https://www.youtube.com/watch?v=3mNxtNqGk78)
+
+* [Learning Kubernetes - The Easy Way](https://www.youtube.com/watch?v=JPYmellwdxc&ab_channel=ProgrammingPercy)
 
 * [100DaysOfKubernetes](https://www.youtube.com/playlist?list=PLWnens-FYbIpUpmiiNYfkqTZQUYppGMFV)
 
 * [Complete Kubernetes Tutorial for Beginners](https://www.youtube.com/playlist?list=PLy7NrYWoggjziYQIDorlXjTvvwweTYoNC)
 
 * [Full Kubernetes Course](https://www.youtube.com/playlist?list=PLy0Gle4XyvbFkHCDcJEYG2f6q1dVNJ64-)
-
-* [Kubernetes Tutorials](https://www.youtube.com/playlist?list=PLj-2elZxVPZ8U5_gxuF_GFWelIo9kFlAj)

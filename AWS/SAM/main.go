@@ -1,8 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"net/http"
+	"os"
 
+	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 )
 
@@ -11,13 +15,24 @@ type Event struct {
 	Name string `json:"name"`
 }
 
-// Our Lambda function
-// Output Whatever you want, error or str, or struct and error etc.
-func lambdaHandler(event Event) (string, error) {
-	// Worlds simplest Lambda, Concatinate Event Name with Hello
-	output := fmt.Sprintf("Hello From Lambda %s", event.Name)
+// Our Lambda function now Accepts a APIGatewayProxyRequest and outputs a Response instead
+func lambdaHandler(event events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+	// This is our orignial event
+	var input Event
+	// We can find the users Payload inside event.Body as a String, Marshal it into our wanted Event format.
+	if err := json.Unmarshal([]byte(event.Body), &input); err != nil {
+		return events.APIGatewayProxyResponse{
+			Body:       err.Error(),
+			StatusCode: http.StatusInternalServerError,
+		}, nil
+	}
 
-	return output, nil
+	output := fmt.Sprintf("Hello From Lambda %s, the variable is %s", input.Name, os.Getenv("my-cool-variable"))
+
+	return events.APIGatewayProxyResponse{
+		Body:       output,
+		StatusCode: 200,
+	}, nil
 }
 
 func main() {
