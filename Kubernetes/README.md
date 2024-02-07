@@ -12,13 +12,17 @@
 ## Tutorials
 
 * [Learning Kubernetes - The Easy Way](https://www.youtube.com/watch?v=JPYmellwdxc&ab_channel=ProgrammingPercy)
-
 * [Kubernetes 101](https://www.youtube.com/watch?v=3mNxtNqGk78)
-
 * [Learning Kubernetes - The Easy Way](https://www.youtube.com/watch?v=JPYmellwdxc&ab_channel=ProgrammingPercy)
-
 * [100DaysOfKubernetes](https://www.youtube.com/playlist?list=PLWnens-FYbIpUpmiiNYfkqTZQUYppGMFV)
-
 * [Complete Kubernetes Tutorial for Beginners](https://www.youtube.com/playlist?list=PLy7NrYWoggjziYQIDorlXjTvvwweTYoNC)
-
 * [Full Kubernetes Course](https://www.youtube.com/playlist?list=PLy0Gle4XyvbFkHCDcJEYG2f6q1dVNJ64-)
+
+## Tools
+
+* [Kustomize: The Best Way to Manage Your Kubernetes Configs](https://www.youtube.com/watch?v=spCdNeNCuFU)
+
+### Operators
+
+* [Everything you need to know about Kubebuilder: Write operators like a pro](https://www.youtube.com/watch?v=_XUJ1HoinWA)
+* [Understanding the Kubernetes Resource Model and Controller Pattern](https://www.youtube.com/watch?v=J0n4n2RtbGs)
