@@ -40,6 +40,7 @@ https://programmingpercy.tech/blog/learn-kubernetes-the-easy-way/
 * minikube addons enable dashboard
 * minikube addons enable metrics-server
 * minikube dashboard
+* kubectl config set-context --current --namespace=hellogopher
 * kubectl apply -f kubernetes/
 * kubectl exec pod/mysql-77bd8d464d-8vd2w -it -- bash
 * mysql --user=root --password=$MYSQL_ROOT_PASSWORD
@@ -53,3 +54,10 @@ https://programmingpercy.tech/blog/learn-kubernetes-the-easy-way/
 * kubectl get secrets
 * kubectl get secrets database-secrets -o yaml
 * kubectl patch secret database-secrets --type='json' -p='[{"op" : "replace","path" : "/data/DATABASE_PASSWORD","value" : "test"}]'
+* minikube logs
+* kubectl get all -n hellogopher
+* kubectl describe deployment,service,configmap,secret,pod -n hellogopher
+* kubectl rollout status deployment/hellogopher -n hellogopher
+* kubectl delete -f '*.yml'
+* kubectl create -f kubernetes
+* kubectl get service mysql -n hellogopher

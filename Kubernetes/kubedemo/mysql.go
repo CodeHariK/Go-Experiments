@@ -51,7 +51,7 @@ func connectDatabase() error {
 }
 
 func createDatabase(dbname string) error {
-	log.Println("Creating database")
+	log.Printf("Creating database %s", dbname)
 
 	ctx, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelFunc()

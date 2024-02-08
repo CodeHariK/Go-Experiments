@@ -16,11 +16,11 @@ spec:
     spec:
       containers:
         - name: mysql
-          image: mysql:5.6
+          image: mysql:8.3
           resources:
             limits:
-              memory: "128Mi"
-              cpu: "500m"
+              memory: "512Mi"
+              cpu: "1000m"
           env:
             - name: MYSQL_ROOT_PASSWORD
               value: password
