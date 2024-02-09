@@ -14,6 +14,7 @@ https://programmingpercy.tech/blog/learn-kubernetes-the-easy-way/
 * https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/
 
 * minikube start
+* kubectl api-resources
 * kubectl get nodes
 * eval $(minikube -p minikube docker-env)
 * docker build -t programmingpercy/hellogopher:5.0 .
@@ -32,14 +33,20 @@ https://programmingpercy.tech/blog/learn-kubernetes-the-easy-way/
 * kubectl get pods --selector app!=hellogopher
 * kubectl delete pods -l app=hellogopher ::: kubectl delete pods --selector app=hellogopher
 * kubectl describe pod/hellogopher-df787c4d5-gbv66
+* kubectl describe po pod/hellogopher-df787c4d5-gbv66 -n hellogopher
+* kubectl get po pod/hellogopher-df787c4d5-gbv66 -n hellogopher -o yaml
 * kubectl delete service/hellogopher
 * kubectl set image deployment/hellogopher hellogopher=programmingpercy/hellogopher:2.0
 * kubectl apply -f hellogopher.yml
 * kubectl logs pod/hellogopher-f76b49f9-95v4p
+* kubectl edit po hellogopher-f76b49f9-95v4p
 * kubectl exec -it pod/hellogopher-79d5bfdfbd-bnhkf -- /bin/sh
 * minikube addons enable dashboard
 * minikube addons enable metrics-server
 * minikube dashboard
+* kubctl get namespaces
+* kubectl describe namespace default
+* kubectl config get-contexts
 * kubectl config set-context --current --namespace=hellogopher
 * kubectl apply -f kubernetes/
 * kubectl exec pod/mysql-77bd8d464d-8vd2w -it -- bash
@@ -61,3 +68,11 @@ https://programmingpercy.tech/blog/learn-kubernetes-the-easy-way/
 * kubectl delete -f '*.yml'
 * kubectl create -f kubernetes
 * kubectl get service mysql -n hellogopher
+* kubectl scale deployment hello --replicas=3
+* kubectl rollout history deploy hello
+* kubectl rollout undo deploy hello
+* kubectl get pods --watch
+* kubectl set image deployment hello hello-container=busybox:1.31.1 --record
+* kubectl get po -o wide
+* kubectl describe svc hellogopher
+* kubectl get endpoints
