@@ -16,6 +16,7 @@ https://programmingpercy.tech/blog/learn-kubernetes-the-easy-way/
 * minikube start
 * kubectl api-resources
 * kubectl get nodes
+* kubectl --validate
 * eval $(minikube -p minikube docker-env)
 * docker build -t programmingpercy/hellogopher:5.0 .
 * kubectl create -f hellogopher.yml
