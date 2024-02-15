@@ -1,4 +1,4 @@
-go 1.21.6
+go 1.22.0
 
 use (
 	./AWS/SAM
@@ -39,6 +39,7 @@ use (
 	./Monitoring/prometheus-basic
 	./Projects
 	./Projects/RSSAggregator
+	./Projects/SimpleBank
 
 	./Protocols
 
