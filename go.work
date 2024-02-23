@@ -43,8 +43,6 @@ use (
 
 	./Protocols
 
-	./RabbitMQ/basicMQ
-
 	./Redis/redis-basic
 
 	./SwaggerGo
