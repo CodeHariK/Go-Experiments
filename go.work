@@ -42,6 +42,8 @@ use (
 	./Projects/SimpleBank
 
 	./Protocols
+	./RabbitMQ/event-driven-rabbitmq
+	./RabbitMQ/rabbitmqstreams-go
 
 	./Redis/redis-basic
 

@@ -1,0 +1,45 @@
+version: '3.4'
+
+services:
+
+  gateway:
+    image: basicmq
+    build:
+      context: .
+      dockerfile: ./gateway/Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+        - RABBIT_URI=amqp://admin:admin@host.docker.internal:5672/
+
+  storage:
+    image: basicmq
+    build:
+      context: .
+      dockerfile: ./storage/Dockerfile
+    environment:
+        - RABBIT_URI=amqp://admin:admin@host.docker.internal:5672/
+
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    container_name: "rabbitmq"
+    environment:
+        - RABBITMQ_DEFAULT_USER=admin
+        - RABBITMQ_DEFAULT_PASS=admin
+    ports:
+        - 15671:15671
+        - 15672:15672
+        - 25672:25672
+        - 5671:5671
+        - 5672:5672
+        - 4369:4369
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq
+    restart: unless-stopped
+
+networks:
+  rabbitmq:
+    driver: bridge
