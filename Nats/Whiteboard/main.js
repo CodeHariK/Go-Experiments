@@ -8,7 +8,7 @@ Alpine.data("whiteboard", (subject) => ({
   color: "black",
   thickness: 5,
   drawing: false,
-  last: { x:0, y:0 },
+  last: { x: 0, y: 0 },
   context: null,
   nats: null,
   jc: null,
@@ -22,16 +22,16 @@ Alpine.data("whiteboard", (subject) => ({
     opts.orderedConsumer()
     const sub = await this.nats.jetstream().subscribe(subject, opts)
 
-    for await(const m of sub) {
+    for await (const m of sub) {
       const data = this.jc.decode(m.data)
       switch (data.type) {
         case "draw":
-          if(data.id !== this.id) {
+          if (data.id !== this.id) {
             this.drawRaw(data)
           }
           break;
         case "clear":
-          this.context.clearRect(0 ,0 ,window.innerWidth, window.innerHeight)
+          this.context.clearRect(0, 0, window.innerWidth, window.innerHeight)
         default:
           break;
       }
@@ -59,7 +59,7 @@ Alpine.data("whiteboard", (subject) => ({
         from: from,
         to: to,
         thickness: this.thickness,
-        color: this.color 
+        color: this.color
       }
 
       this.drawRaw(msg)
@@ -70,10 +70,10 @@ Alpine.data("whiteboard", (subject) => ({
   },
 
   getPoint(e) {
-    if(!e.offsetX || !e.offsetY) {
+    if (!e.offsetX || !e.offsetY) {
       const rect = e.target.getBoundingClientRect()
-      e.offsetX = (e.touches[0].clientX - window.pageXOffset - rect.left)
-      e.offsetY = (e.touches[0].clientY - window.pageYOffset - rect.top)
+      e.offsetX = (e.touches[0].clientX - window.scrollX - rect.left)
+      e.offsetY = (e.touches[0].clientY - window.scrollY - rect.top)
     }
     return { x: e.offsetX, y: e.offsetY }
   },
@@ -85,7 +85,7 @@ Alpine.data("whiteboard", (subject) => ({
     this.nats.publish(subject, this.jc.encode(msg), { headers: h })
   },
 
-  drawRaw({from, to, thickness, color}) {
+  drawRaw({ from, to, thickness, color }) {
     const c = this.context
     c.beginPath()
     c.lineWidth = thickness
