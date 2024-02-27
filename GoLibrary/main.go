@@ -5,6 +5,8 @@ import gnet "golibrary/net"
 
 func main() {
 	// gio.Printheader()
+	// gio.HelloWorldIO()
+	// gio.SimpleBufferMain()
 	// gio.Bufiodemo0()
 	// gio.Bufiodemo1()
 	// gio.Bufiodemo2()
@@ -19,5 +21,6 @@ func main() {
 	// gnet.AdvRaddish()
 	// gnet.ChatServerStart()
 	// gnet.SimpleHttp()
-	gnet.FileServer()
+	// gnet.FileServer()
+	gnet.LargeFileStreaming()
 }
