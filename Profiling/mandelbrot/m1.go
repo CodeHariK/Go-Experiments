@@ -10,7 +10,7 @@ import (
 	"os"
 	"path/filepath"
 
-	mandelbrot "mandelbrot/lib"
+	mandelbrot "profiling/mandelbrot/lib"
 
 	"github.com/pkg/profile"
 )

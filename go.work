@@ -37,8 +37,7 @@ use (
 	./Kubernetes/kubedemo
 
 	./Monitoring/prometheus-basic
-	./Profiling/mandelbrot
-	./Profiling/wordcount
+	./Profiling
 	./Projects
 	./Projects/RSSAggregator
 	./Projects/SimpleBank
