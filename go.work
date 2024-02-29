@@ -9,7 +9,6 @@ use (
 
 	./EntGo/ent-mysql-fiber
 	./EntGo/examples
-	./GoLibrary
 
 	./GoMicroService/authentication-service
 	./GoMicroService/broker-service
@@ -18,6 +17,7 @@ use (
 	./GoMicroService/listener-service
 	./GoMicroService/logger-service
 	./GoMicroService/mail-service
+	./GoRuntime
 
 	./GrpcGo/fiber-grpc
 	./GrpcGo/grpc-gateway
