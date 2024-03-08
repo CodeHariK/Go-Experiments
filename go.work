@@ -52,5 +52,6 @@ use (
 
 	./Temple
 	./Temple/app
+	./Terraform/s3sqsfunction/src
 	./Testing/FuzzTest
 )

@@ -74,12 +74,22 @@ resource "aws_key_pair" "mtc_auth" {
 }
 
 resource "aws_instance" "dev_node" {
-  ami                    = data.aws_ami.server_ami.id
-  instance_type          = "t2.micro"
-  key_name               = aws_key_pair.mtc_auth.id
-  vpc_security_group_ids = [aws_security_group.mtc_sg.id]
-  subnet_id              = aws_subnet.mtc_public_subnet.id
-  user_data              = file("userdata.tpl")
+  ami                         = data.aws_ami.server_ami.id
+  instance_type               = "t2.micro"
+  key_name                    = aws_key_pair.mtc_auth.id
+  vpc_security_group_ids      = [aws_security_group.mtc_sg.id]
+  subnet_id                   = aws_subnet.mtc_public_subnet.id
+  associate_public_ip_address = true
+
+  # user_data              = file("userdata.tpl")
+
+  user_data = <<-EOF
+            #!/bin/bash
+            yum install -y nginx
+            systemctl start nginx
+            systemctl enable nginx
+            echo "<html><body><h1>Hello from Nginx on AWS!</h1></body></html>" > /usr/share/nginx/html/index.html
+            EOF
 
   root_block_device {
     volume_size = 10
