@@ -13,8 +13,9 @@
 
 * [Learning Kubernetes - The Easy Way](https://www.youtube.com/watch?v=JPYmellwdxc&ab_channel=ProgrammingPercy)
 * [Full Kubernetes Course](https://www.youtube.com/playlist?list=PLy0Gle4XyvbFkHCDcJEYG2f6q1dVNJ64-)
-* [100DaysOfKubernetes](https://www.youtube.com/playlist?list=PLWnens-FYbIpUpmiiNYfkqTZQUYppGMFV)
 * [Kubernetes 101](https://www.youtube.com/watch?v=3mNxtNqGk78)
+
+* [DevOps Kubernetes Master Class | Kubernetes Full DevOps Tutorial](https://www.youtube.com/watch?v=L8n_HYDnq_I)
 
 ## Tools
 

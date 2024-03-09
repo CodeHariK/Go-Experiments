@@ -2,9 +2,11 @@ package handler
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"strings"
 
@@ -58,8 +60,13 @@ func New(ctx context.Context, logger *zap.Logger, opts ...Option) (*Handler, err
 
 // Handle handles the given SQS event, writing the body of each record to S3.
 func (h *Handler) Handle(ctx context.Context, msg *events.SQSEvent) error {
+	eventJson, _ := json.MarshalIndent(msg, "", "  ")
+	log.Printf("EVENT: %s", eventJson)
 	for _, record := range msg.Records {
 		data := strings.NewReader(record.Body)
+
+		log.Println(record.Body)
+
 		if err := h.writeToS3(ctx, record.MessageId, data); err != nil {
 			return err
 		}
