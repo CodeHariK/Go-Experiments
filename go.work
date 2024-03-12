@@ -34,7 +34,7 @@ use (
 	./JwtAuth
 
 	./Kafka/chat-room
-	./Kubernetes/kubedemo
+	./Kubernetes/Example/kubedemo
 
 	./Monitoring/prometheus-basic
 	./Profiling

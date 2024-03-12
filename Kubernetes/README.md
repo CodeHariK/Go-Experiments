@@ -11,6 +11,7 @@
 
 ## Tutorials
 
+* [Kubernetes Crash Course: Learn the Basics and Build a Microservice Application](https://www.youtube.com/watch?v=XuSQU5Grv1g)
 * [Learning Kubernetes - The Easy Way](https://www.youtube.com/watch?v=JPYmellwdxc&ab_channel=ProgrammingPercy)
 * [Full Kubernetes Course](https://www.youtube.com/playlist?list=PLy0Gle4XyvbFkHCDcJEYG2f6q1dVNJ64-)
 * [Kubernetes 101](https://www.youtube.com/watch?v=3mNxtNqGk78)
