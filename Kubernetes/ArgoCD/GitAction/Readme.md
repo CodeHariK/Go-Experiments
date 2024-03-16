@@ -36,4 +36,12 @@ kubectl port-forward svc/argocd-server -n argocd 1111:443
 argocd login localhost:1111
 
 kubectl port-forward svc/astro -n gitops 4321:80
+
+kubectl proxy --port=8080
+localhost:8080/api/v1/pods
+localhost:8080/api/v1/namespaces/example/services/http:nginx:web/proxy
+
+kubectl api-resources | grep Ingress
+
+kubectl delete ns argocd
 ```
