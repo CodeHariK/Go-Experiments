@@ -12,6 +12,14 @@ Prometheus is a system monitoring and alerting system.
 
 ## Tutorials
 
+* [Prometheus](https://www.youtube.com/playlist?list=PLrMP04WSdCjrL4OBnaqXRy8X3XEd7ZrKf)
+* [Prometheus Fundamentals](https://www.youtube.com/playlist?list=PLyBW7UHmEXgylLwxdVbrBQJ-fJ_jMvh8h)
+* [Server Monitoring with Grafana Prometheus and Loki](https://www.youtube.com/watch?v=ddZjhv66o_o&ab_channel=PiyushGarg)
+* [Beautiful Dashboards with Grafana and Prometheus - Monitoring Kubernetes Tutorial](https://www.youtube.com/watch?v=fzny5uUaAeY&ab_channel=TechnoTim)
+* [Kubernetes Monitoring Made Easy with Prometheus | KodeKloud](https://www.youtube.com/watch?v=6xmWr7p5TE0&ab_channel=KodeKloud)
+* [Mastering Grafana Loki: Complete Guide to Installation, Configuration, and Integration | Part 1](https://www.youtube.com/watch?v=0B-yQdSXFJE&ab_channel=KodeKloud)
+* [Mastering Grafana Loki: Kubernetes Log Collection & Integration | Part 2](https://www.youtube.com/watch?v=O52dseg2bJo&ab_channel=KodeKloud)
+
 * [Full Kubernetes tutorial on Docker, KinD, kubectl, Helm, Prometheus, Grafana](https://www.youtube.com/watch?v=SeQevrW176A)
 
 * [Kubernetes Monitoring Made Easy with Prometheus](https://www.youtube.com/watch?v=6xmWr7p5TE0)
