@@ -176,3 +176,189 @@ hubble observe --namespace default -o jsonpb | jq
 kubectl annotate pod -l app=productpage --overwrite io.cilium.proxy-visibility="<Ingress/9080/TCP/HTTP>"
 kubectl apply -f https://docs.isovalent.com/public/http-ingress-visibility.yaml
 hubble observe --protocol http --label app=reviews --port 9080
+
+## 🌐 Deploying a gRPC Ingress
+While HTTP is still the king of protocols in the web, gRPC is increasingly used, in particular for its low latency and high throughput capabilities.
+
+Let's see how we can deploy a Kubernetes Ingress for a gRPC application using Cilium!
+
+🚀 Deploy a gRPC Application
+In this challenge, we will deploy a sample gRPC application, which consists of multiple services such as:
+
+📧 email
+🛒 checkout and cart
+💡 recommendation
+👨‍💻 frontend
+💳 payment
+🚚 shipping
+💱 currency
+📦 productcatalog
+In this challenge, we will set up a gRPC Ingress with two path prefixes:
+
+/hipstershop.ProductCatalogService pointing to the productcatalog service
+/hipstershop.CurrencyService pointing to the currency service
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grpc-ingress
+  namespace: default
+spec:
+  ingressClassName: cilium
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: productcatalogservice
+                port:
+                  number: 3550
+            path: /hipstershop.ProductCatalogService
+            pathType: Prefix
+          - backend:
+              service:
+                name: currencyservice
+                port:
+                  number: 7000
+            path: /hipstershop.CurrencyService
+            pathType: Prefix
+
+
+grpcurl -plaintext -proto ./demo.proto $INGRESS_IP:80 hipstershop.CurrencyService/GetSupportedCurrencies
+grpcurl -plaintext -proto ./demo.proto $INGRESS_IP:80 hipstershop.ProductCatalogService/ListProducts
+```
+
+## 🔑 SNI-based Ingress rules
+Due to their frontal position in the cluster, Kubernetes Ingress are commonly used as TLS termination proxies.
+
+In this challenge, we will use self-signed certificates for simplicity. In production, it is recommended to either inject known CA credentials, or generate dynamic certificates using e.g. Cert Manager.
+
+## 🔑 Create TLS certificate and private key
+For demonstration purposes we will use a TLS certificate signed by a made-up, self-signed certificate authority (CA). One easy way to do this is with mkcert.
+
+Create a certificate that will validate bookinfo.cilium.rocks and hipstershop.cilium.rocks, as these are the host names used in this ingress example:
+
+```sh
+mkcert '*.cilium.rocks'
+Mkcert created a key (_wildcard.cilium.rocks-key.pem) and a certificate (_wildcard.cilium.rocks.pem) that we will use for the ingress service.
+
+Create a Kubernetes secret with this key and certificate:
+
+kubectl create secret tls demo-cert \
+  --key=_wildcard.cilium.rocks-key.pem \
+  --cert=_wildcard.cilium.rocks.pem
+```
+
+🚪 Deploy the ingress
+Delete the ingresses created in the last two challenges:
+
+kubectl delete ingress basic-ingress
+kubectl delete ingress grpc-ingress
+The ingress configuration for this demo provides the same routing as those demos but with the addition of TLS termination:
+
+the /hipstershop.CurrencyService prefix will be routed to the currency gRPC service deployed in the gRPC challenge
+the /details prefix will be routed to the details HTTP service deployed in the HTTP challenge
+the / prefix will be routed to the productpage HTTP service deployed in the HTTP challenge
+These three services will be secured via TLS and accessible on two domain names:
+
+bookinfo.cilium.rocks
+hipstershop.cilium.rocks
+Inspect the ingress to verify these rules:
+
+yq tls-ingress.yaml
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tls-ingress
+  namespace: default
+spec:
+  ingressClassName: cilium
+  rules:
+    - host: hipstershop.cilium.rocks
+      http:
+        paths:
+          - backend:
+              service:
+                name: productcatalogservice
+                port:
+                  number: 3550
+            path: /hipstershop.ProductCatalogService
+            pathType: Prefix
+          - backend:
+              service:
+                name: currencyservice
+                port:
+                  number: 7000
+            path: /hipstershop.CurrencyService
+            pathType: Prefix
+    - host: bookinfo.cilium.rocks
+      http:
+        paths:
+          - backend:
+              service:
+                name: details
+                port:
+                  number: 9080
+            path: /details
+            pathType: Prefix
+          - backend:
+              service:
+                name: productpage
+                port:
+                  number: 9080
+            path: /
+            pathType: Prefix
+  tls:
+    - hosts:
+        - bookinfo.cilium.rocks
+        - hipstershop.cilium.rocks
+      secretName: demo-cert
+```
+
+Then deploy the ingress to the cluster:
+
+kubectl apply -f tls-ingress.yaml
+This creates a LoadBalancer service, which after around 30 seconds or so should be populated with an external IP address.
+
+Verify that the Ingress has an load balancer IP address assigned:
+
+kubectl get ingress tls-ingress
+Then assign this IP to the INGRESS_IP variable so we can make use of it:
+
+INGRESS_IP=$(kubectl get ingress tls-ingress -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+echo $INGRESS_IP
+
+🗺️ Edit /etc/hosts
+In this ingress configuration, the host names hipstershop.cilium.rocks and bookinfo.cilium.rocks are specified in the path routing rules.
+
+Since we do not have DNS entries for these names, we will modify the /etc/hosts file on the host to manually associate these names to the known ingress IP we retrieved. Execute the following in the >_ Terminal tab:
+
+```sh
+cat << EOF >> /etc/hosts
+${INGRESS_IP} bookinfo.cilium.rocks
+${INGRESS_IP} hipstershop.cilium.rocks
+EOF
+Requests to these names will now be directed to the ingress.
+```
+
+🌐 Make requests
+Install the Mkcert CA into your system so cURL can trust it:
+
+```sh
+mkcert -install
+Now let's make a request to the ingress:
+
+curl -s https://bookinfo.cilium.rocks/details/1 | jq
+The data should be properly retrieved, using HTTPS (and thus, the TLS handshake was properly achieved).
+
+Similarly you can test a gRPC request:
+
+grpcurl -proto ./demo.proto hipstershop.cilium.rocks:443 hipstershop.ProductCatalogService/ListProducts | jq
+```
+
+We can see that our single Ingress resource now allows to access both applications, in a secure manner over HTTPS, using a valid TLS certificate.
+
+Let's validate our learning by taking a short quiz and a lab!

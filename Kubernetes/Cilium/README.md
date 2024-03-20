@@ -9,6 +9,14 @@
 * [Cilium Week](https://www.youtube.com/playlist?list=PLy0Gle4XyvbGSHTXVc8SNfTJollXpb-28)
 
 * Learning EBPF
+* Linux Observability with BPF
+* BPF Performance Tools
+* Systems Performance
+
+* Observability Engineering
+
+* Container Security
+* Security Observability with eBPF
 
 * <https://www.cni.dev/docs/>
 
