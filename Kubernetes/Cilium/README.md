@@ -2,6 +2,8 @@
 
 * https://labs-map.isovalent.com/
 
+* [Enlightning - Cilium Networking, Security and Observability](https://youtu.be/KIWQTolF-3g?list=PLAdzTan_eSPSaKSaWqZiC0A2Cbej_UX6v)
+
 * [A Guided Tour of Cilium Service Mesh - Liz Rice, Isovalent](https://www.youtube.com/watch?v=e10kDBEsZw4&ab_channel=CNCF%5BCloudNativeComputingFoundation%5D)
 
 * [A Gentle Introduction to BPF](https://www.youtube.com/playlist?list=PLdUJnSStgdIOsHiuUixmVPPg743gO_SN2)
@@ -14,9 +16,6 @@
 * Systems Performance
 
 * Observability Engineering
-
-* Container Security
-* Security Observability with eBPF
 
 * <https://www.cni.dev/docs/>
 
