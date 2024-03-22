@@ -1,0 +1,40 @@
+# https://docs.cilium.io/en/latest/observability/visibility/
+
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: "dns-visibility"
+spec:
+  endpointSelector:
+    matchLabels:
+      {}
+      # "k8s:io.kubernetes.pod.namespace": default
+  egress:
+    # - toPorts:
+    #     - ports:
+    #         - port: "53"
+    #           protocol: ANY
+    #       rules:
+    #         dns:
+    #           - matchPattern: "*"
+    - toEntities:
+        - all
+    - toEndpoints:
+        - matchLabels:
+            # "k8s:io.kubernetes.pod.namespace": default
+            "k8s:io.kubernetes.pod.namespace": kube-system
+            "k8s:k8s-app": kube-dns
+      toPorts:
+        # - ports:
+        #     - port: "80"
+        #       protocol: TCP
+        #     - port: "8080"
+        #       protocol: TCP
+        #   rules:
+        #     http: [{}]
+        - ports:
+            - port: "53"
+              protocol: ANY
+          rules:
+            dns:
+              - matchPattern: "*"
