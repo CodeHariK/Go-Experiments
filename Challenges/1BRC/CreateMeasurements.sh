@@ -1,11 +1,10 @@
-## 1 M : 100ms ->
-go run CreateMeasurements.go 1000000
+#!/bin/bash
 
 # 1 C
-# go run CreateMeasurements.go 10000000
+# go run . 10000000
 
 # 10 C
-# go run CreateMeasurements.go 100000000
+# go run . 100000000
 
-# 1 B
-# go run CreateMeasurements.go 1000000000
+# 1 B -> 20s, 8mpy
+# go run . 1000000000

@@ -3,14 +3,8 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"math/rand"
-	"net/http"
 	"os"
-	"strconv"
-	"time"
-
-	_ "net/http/pprof"
 )
 
 type WeatherStation struct {
@@ -23,21 +17,7 @@ func (w WeatherStation) Measurement() float64 {
 	return float64(int(m*10)) / 10
 }
 
-func main() {
-	start := time.Now()
-
-	if len(os.Args) != 2 {
-		fmt.Println("Usage: go run create_measurements.go <number of records to create>")
-		os.Exit(1)
-	}
-
-	size := 0
-	var err error
-	if size, err = strconv.Atoi(os.Args[1]); err != nil {
-		fmt.Println("Usage: go run create_measurements.go <number of records to create>")
-		os.Exit(1)
-	}
-
+func create_measurements(size int) {
 	stations := []WeatherStation{
 		{"Abha", 18.0},
 		{"Abidjan", 26.0},
@@ -461,19 +441,13 @@ func main() {
 	}
 	defer file.Close()
 
-	writer := bufio.NewWriter(file)
+	// writer := bufio.NewWriter(file)
+	writer := bufio.NewWriterSize(file, 32*1024)
 
 	for i := 0; i < size; i++ {
-		if i > 0 && i%50_000_000 == 0 {
-			fmt.Printf("Wrote %d measurements in %d ms\n", i, time.Since(start).Milliseconds())
-		}
 		station := stations[rand.Intn(len(stations))]
 		fmt.Fprintf(writer, "%s;%.1f\n", station.ID, station.Measurement())
 	}
 
 	writer.Flush()
-
-	fmt.Printf("Created file with %d measurements in %x ms\n", size, time.Since(start).Milliseconds())
-
-	log.Println(http.ListenAndServe("localhost:6060", nil))
 }
