@@ -14,6 +14,8 @@
 
 ## Level 2
 
+* [DevOps Full Course Using Go](https://www.youtube.com/playlist?list=PL7g1jYj15RUMdka_gPLDCFrIhwjtvCLJD)
+
 ## Level 3
 
 ## Projects

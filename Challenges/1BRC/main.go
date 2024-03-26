@@ -44,7 +44,8 @@ func main() {
 		// solver.ShraddhaBasic4()
 		// solver.Shraddha5()
 		// solver.Shraddha6()
-		solver.Shraddha13()
+		// solver.Shraddha13()
+		solver.Shraddha14()
 	}
 
 	fmt.Printf("Time : %d ms\n", time.Since(start).Milliseconds())
