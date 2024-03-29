@@ -8,6 +8,10 @@
 
 # Github Action
 
+* [GitHub Actions Tutorial - Basic Concepts and CI/CD Pipeline](https://www.youtube.com/playlist?list=PLdsu0umqbb8PQC4AhdbC97DtyZ9eI1qKG)
+
 * [PLAY ALL GitHub Actions: The Full Course](https://www.youtube.com/playlist?list=PLArH6NjfKsUhvGHrpag7SuPumMzQRhUKY)
+
+* [GitHub Actions Tutorial](https://www.youtube.com/watch?v=TLB5MY9BBa4)
 
 * [Rewriting git from scratch in Go!](https://www.youtube.com/playlist?list=PLArH6NjfKsUjkUZFJCHRLp7dneAY-U85L)
