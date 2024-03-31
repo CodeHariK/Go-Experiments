@@ -24,6 +24,7 @@ ssh -i ~/.ssh/terrakey ec2-user@13.234.111.6
 
 ## Tutorials
 
+* [Terraform Tutorial for Beginners | Terraform with AWS](https://www.youtube.com/playlist?list=PLdsu0umqbb8NxoJUNup3PCb38RQpQtm9p)
 * [Terraform has forever changed the way I deploy code](https://www.youtube.com/watch?v=cGPyH-PO8vg)
 * [Why You NEED To Learn Terraform](https://www.youtube.com/watch?v=nvNqfgojocs)
 * [Learn Terraform (and AWS) by Building a Dev Environment – Full Course for Beginners](https://www.youtube.com/watch?v=iRaai1IBlB0)
