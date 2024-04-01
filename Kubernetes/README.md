@@ -20,6 +20,12 @@
 
 * [DevOps Kubernetes Master Class | Kubernetes Full DevOps Tutorial](https://www.youtube.com/watch?v=L8n_HYDnq_I)
 
+## Load Balancer
+
+* [GKE Load Balancing: Overview](https://www.youtube.com/watch?v=8RQvtagsrg0)
+
+* [Native EKS Ingress: AWS Load Balancer Controller & 5 Examples (Terraform, TLS, IngressGroup, IP)](https://www.youtube.com/watch?v=ZfjpWOC5eoE)
+
 ## Tools
 
 * [Kustomize: The Best Way to Manage Your Kubernetes Configs](https://www.youtube.com/watch?v=spCdNeNCuFU)
