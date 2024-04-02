@@ -14,6 +14,11 @@
 
 * [eCHO episode 15: Tracee](https://www.youtube.com/watch?v=aOgidMoPz9A&list=PLDg_GiBbAx-mY3VFLPbLHcxo6wUjejAOC&index=114&ab_channel=eBPF%26CiliumCommunity)
 
+## Cert Manager
+
+* [Cert Manager Kubernetes Tutorial (Let's Encrypt & Nginx Ingress & ACME | 5 Examples | YAML & HELM)](https://www.youtube.com/watch?v=7m4_kZOObzw)
+* [Wildcard Certificates with Traefik + cert-manager + Let's Encrypt in Kubernetes Tutorial](https://www.youtube.com/watch?v=G4CmbYL9UPg)
+
 ## SPIFFE SPIRE
 
 * https://www.zerotohero.dev/spire-rocks/

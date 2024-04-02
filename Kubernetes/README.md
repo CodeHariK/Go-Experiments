@@ -20,10 +20,15 @@
 
 * [DevOps Kubernetes Master Class | Kubernetes Full DevOps Tutorial](https://www.youtube.com/watch?v=L8n_HYDnq_I)
 
+## AWS EKS
+
+* [How to Create A Secured Kubernetes Cluster on Amazon EKS](https://www.youtube.com/watch?v=HcjJqZRk1-w)
+
 ## Load Balancer
 
 * [GKE Load Balancing: Overview](https://www.youtube.com/watch?v=8RQvtagsrg0)
 
+* [How to Deploy An Nginx Ingress Controller in AWS EKS](https://www.youtube.com/watch?v=gvKi7wZHbLU)
 * [Native EKS Ingress: AWS Load Balancer Controller & 5 Examples (Terraform, TLS, IngressGroup, IP)](https://www.youtube.com/watch?v=ZfjpWOC5eoE)
 
 ## Tools

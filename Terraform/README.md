@@ -24,11 +24,15 @@ ssh -i ~/.ssh/terrakey ec2-user@13.234.111.6
 
 ## Tutorials
 
+* [Complete Terraform Course - From BEGINNER to PRO! (Learn Infrastructure as Code)](https://www.youtube.com/watch?v=7xngnjfIlK4)
+* [Terragrunt Tutorial: Create VPC, EKS from Scratch!](https://www.youtube.com/watch?v=yduHaOj3XMg)
+* [Terraform Tutorials for Beginners](https://www.youtube.com/playlist?list=PLiMWaCMwGJXmJdmfJjG3aK1IkU7oWvxIj)
 * [Terraform Tutorial for Beginners | Terraform with AWS](https://www.youtube.com/playlist?list=PLdsu0umqbb8NxoJUNup3PCb38RQpQtm9p)
 * [Terraform has forever changed the way I deploy code](https://www.youtube.com/watch?v=cGPyH-PO8vg)
 * [Why You NEED To Learn Terraform](https://www.youtube.com/watch?v=nvNqfgojocs)
 * [Learn Terraform (and AWS) by Building a Dev Environment – Full Course for Beginners](https://www.youtube.com/watch?v=iRaai1IBlB0)
-* [Complete Terraform Course - From BEGINNER to PRO! (Learn Infrastructure as Code)](https://www.youtube.com/watch?v=7xngnjfIlK4)
+* [How to Create EKS Cluster Using Terraform + IAM Roles for Service Accounts & EKS Cluster Autoscaler](https://www.youtube.com/watch?v=MZyrxzb7yAU)
+* [How to Create EKS Cluster Using Terraform | Deploy EKS using IaC Terraform](youtube.com/watch?v=y3Hji6WZ9Z4)
 
 ## Github
 

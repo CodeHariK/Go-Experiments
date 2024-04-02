@@ -15,3 +15,5 @@
 * [GitHub Actions Tutorial](https://www.youtube.com/watch?v=TLB5MY9BBa4)
 
 * [Rewriting git from scratch in Go!](https://www.youtube.com/playlist?list=PLArH6NjfKsUjkUZFJCHRLp7dneAY-U85L)
+
+* [GitHub Actions for DevOps: From Basics to Advanced Workflows](https://www.youtube.com/watch?v=ovl7rU9uUHI)

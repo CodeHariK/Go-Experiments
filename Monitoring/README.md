@@ -12,6 +12,7 @@ Prometheus is a system monitoring and alerting system.
 
 ## Tutorials
 
+* [Prometheus and Grafana Tutorial](https://www.youtube.com/playlist?list=PLdsu0umqbb8NxUs8r8BIUe9-PhcoZyojA)
 * [Kubernetes Observe](https://www.youtube.com/playlist?list=PL6VBQyIvTlRiLxk2z4FWEViPXimlCARiW)
 * [Prometheus](https://www.youtube.com/@AntonPutra/search?query=prometheus)
 * [Prometheus](https://www.youtube.com/playlist?list=PLrMP04WSdCjrL4OBnaqXRy8X3XEd7ZrKf)
