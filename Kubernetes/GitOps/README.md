@@ -9,3 +9,7 @@
 * [ArgoCD Masterclass | ArgoCD Tutorial From Scratch](https://www.youtube.com/watch?v=-ebgvH3HbRc)
 * [ArgoCD Tutorial for Beginners | GitOps CD for Kubernetes](https://www.youtube.com/watch?v=MeU5_k9ssrs)
 * [ArgoCD](https://www.youtube.com/@AntonPutra/search?query=argocd)
+
+## Argo Rollout
+
+* [Argo Rollouts in 15 minutes!](https://www.youtube.com/watch?v=w3xdopP4aEk)
