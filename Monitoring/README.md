@@ -12,6 +12,8 @@ Prometheus is a system monitoring and alerting system.
 
 ## Tutorials
 
+* [Digitalocean Best Practices in Monitoring a Kubernetes Cluster With Prometheus, Grafana and Loki](https://www.youtube.com/watch?v=NABZqKq1McE&list=PLseEp7p6Ewianx91YyPkdf1G12aAU7ugp&index=4)
+
 * [Prometheus and Grafana Tutorial](https://www.youtube.com/playlist?list=PLdsu0umqbb8NxUs8r8BIUe9-PhcoZyojA)
 * [Kubernetes Observe](https://www.youtube.com/playlist?list=PL6VBQyIvTlRiLxk2z4FWEViPXimlCARiW)
 * [Prometheus](https://www.youtube.com/@AntonPutra/search?query=prometheus)
@@ -21,6 +23,7 @@ Prometheus is a system monitoring and alerting system.
 * [Beautiful Dashboards with Grafana and Prometheus - Monitoring Kubernetes Tutorial](https://www.youtube.com/watch?v=fzny5uUaAeY&ab_channel=TechnoTim)
 * [Kubernetes Monitoring Made Easy with Prometheus | KodeKloud](https://www.youtube.com/watch?v=6xmWr7p5TE0&ab_channel=KodeKloud)
 * [How Prometheus Monitoring Works | Explaining Prometheus Architectur](https://www.youtube.com/watch?v=f4W_eEJC-20)
+* [Mastering Prometheus: Installation and Systemd Setup Guide](https://www.youtube.com/watch?v=cl9JlW0nzzE)
 
 * [Mastering Grafana Loki: Complete Guide to Installation, Configuration, and Integration | Part 1](https://www.youtube.com/watch?v=0B-yQdSXFJE&ab_channel=KodeKloud)
 * [Mastering Grafana Loki: Kubernetes Log Collection & Integration | Part 2](https://www.youtube.com/watch?v=O52dseg2bJo&ab_channel=KodeKloud)

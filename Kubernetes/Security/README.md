@@ -16,6 +16,7 @@
 
 ## Cert Manager
 
+* [Securing Kubernetes Ingress With Let’s Encrypt](https://www.youtube.com/watch?v=MpovOI5eK58)
 * [Cert Manager Kubernetes Tutorial (Let's Encrypt & Nginx Ingress & ACME | 5 Examples | YAML & HELM)](https://www.youtube.com/watch?v=7m4_kZOObzw)
 * [Wildcard Certificates with Traefik + cert-manager + Let's Encrypt in Kubernetes Tutorial](https://www.youtube.com/watch?v=G4CmbYL9UPg)
 

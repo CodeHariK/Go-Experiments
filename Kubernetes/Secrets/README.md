@@ -1,5 +1,7 @@
 # Secrets
 
+* [Digitalocean Managing Kubernetes Secrets](https://www.youtube.com/watch?v=EW25WpErCmA&list=PLseEp7p6Ewianx91YyPkdf1G12aAU7ugp&index=6)
+
 * [GitOps Secrets Management with Argo CD](https://www.youtube.com/watch?v=PaxOzh9LdSo)
 * [Sealed Secrets Kubernetes (Bitnami Sealed Secrets Tutorial | kubeseal Example)](https://www.youtube.com/watch?v=ShGHCpUMdOg)
 
