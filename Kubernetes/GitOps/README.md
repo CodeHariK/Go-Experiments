@@ -1,5 +1,10 @@
 # GitOps
 
+## Deploy
+
+* [10 Microservices deploy](https://github.com/jaiswaladi246/EKS-Complete)
+* [Create EKS Cluster From UI](https://github.com/jaiswaladi246/ArgoCD)
+
 ## Argo CD
 
 * [PLAY ALL GitOps with ArgoCD](https://www.youtube.com/playlist?list=PLdsu0umqbb8P8dNoox7ECgOo_fJ9FBfZl)
@@ -13,3 +18,7 @@
 ## Argo Rollout
 
 * [Argo Rollouts in 15 minutes!](https://www.youtube.com/watch?v=w3xdopP4aEk)
+
+## Vault
+
+* [Exploring GitOps with Argo CD and HashiCorp Vault in Kubernetes](https://www.youtube.com/watch?v=SNejeTvg5js)

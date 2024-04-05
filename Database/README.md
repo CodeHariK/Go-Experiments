@@ -1,7 +1,6 @@
 # Database
 
-
-* https://livesql.oracle.com/
+* https://www.cockroachlabs.com/docs/cockroachcloud/quickstart
 
 ## Book
 

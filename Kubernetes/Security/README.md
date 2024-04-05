@@ -20,6 +20,10 @@
 * [Cert Manager Kubernetes Tutorial (Let's Encrypt & Nginx Ingress & ACME | 5 Examples | YAML & HELM)](https://www.youtube.com/watch?v=7m4_kZOObzw)
 * [Wildcard Certificates with Traefik + cert-manager + Let's Encrypt in Kubernetes Tutorial](https://www.youtube.com/watch?v=G4CmbYL9UPg)
 
+## Kyverno
+
+* [Securing GitOps with Policy as Code](https://www.youtube.com/watch?v=umb18amHFvo)
+
 ## SPIFFE SPIRE
 
 * https://www.zerotohero.dev/spire-rocks/

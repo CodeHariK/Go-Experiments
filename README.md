@@ -7,6 +7,7 @@
 * [Effective Go](https://go.dev/doc/effective_go)
 * [Effective Go](https://github.com/pthethanh/effective-go)
 * [Go Patterns](https://github.com/tmrts/go-patterns)
+* [100 Go Mistakes and How to Avoid Them](https://100go.co)
 
 ## Level 1
 
