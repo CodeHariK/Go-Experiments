@@ -2,11 +2,19 @@
 
 * https://github.com/GoogleCloudPlatform/serverless-expeditions
 
+## ML
+
+* [How to Deploy a Machine Learning Model to Google Cloud](https://www.youtube.com/watch?v=fw6NMQrYc6w)
+
 ## App
 
 * https://codelabs.developers.google.com/serverless-workshop/
 
 * https://github.com/GoogleCloudPlatform/serverless-photosharing-workshop
+
+* [Deploying NextJS to Google CloudRun using Github Actions](https://www.youtube.com/watch?v=IjUnQ9kMnVo)
+* [How to easily Continuous Deployment with Cloud Run](https://www.youtube.com/watch?v=GhSAQ19f4HA)
+* [Google Cloud Console](https://www.youtube.com/playlist?list=PLY91jl6VVD7wLP84OUgmjGSUBbem92KHk)
 
 * [Designing a serverless app on Google Cloud](https://www.youtube.com/watch?v=HbsHC8gq_NQ)
 
@@ -14,9 +22,15 @@
 
 * [Can Cloud Run handle these 9 workloads?](https://www.youtube.com/watch?v=R2b7aZTRf-c)
 
+* [Get started on Cloud Run: Deploy a meme generator app!](https://www.youtube.com/watch?v=rVWopvGE74c&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=3)
+
 ## CloudCode
 
 * [Best practices in Kubernetes app development](https://www.youtube.com/watch?v=Kxg2vDr6ido)
+
+## VPC Networking
+
+* [Networking Configurations on Google Cloud](https://www.youtube.com/watch?v=rPZyJjkVb8k&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=6)
 
 ## Serverless
 
@@ -27,6 +41,11 @@
 ## Terraform
 
 * [Terraform, serverless, and Cloud Run in practice](https://www.youtube.com/watch?v=IBm0SmwEWpA)
+* [How to set up Django on Cloud Run with Terraform](https://www.youtube.com/watch?v=scdtpMBLT8A)
+
+## Compute
+
+* [Compute with Google Compute Engine](https://www.youtube.com/watch?v=xRez9bm_1u4&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=5)
 
 ## Cloudrun
 
@@ -43,6 +62,11 @@
 * [Point-and-click continuous deployment with Cloud Run](https://www.youtube.com/watch?v=Nf3KAY-i6zw)
 
 * [Websockets with Cloud Run](https://www.youtube.com/watch?v=g6i-mb_3iWM)
+
+## GKE
+
+* [Compute with Google Kubernetes Engine](https://www.youtube.com/watch?v=5-9Zdxp0GT0&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=4)
+* [GKE Essentials](https://www.youtube.com/playlist?list=PLIivdWyY5sqLQ3m7WJDfBdMMqO12Q0vqg)
 
 ## GKE Autopilot
 
@@ -82,8 +106,13 @@
 
 ## Observability
 
+* [Configuring Cloud Operations on Google Cloud](https://www.youtube.com/watch?v=xIaaGef1QvI&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=10)
 * [Instrumenting Cloud Run with Prometheus or OpenTelemetry metrics](https://www.youtube.com/watch?v=JqejFF0OX1I)
 * [Monitor your Cloud Run app](https://www.youtube.com/watch?v=otoqJXt46S8)
+
+## Cloud Task
+
+* [Getting started on Cloud Tasks and Cloud Scheduler](https://www.youtube.com/watch?v=P9MCC9KmM_8&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=24)
 
 ## Pub/Sub
 
@@ -94,18 +123,21 @@
 
 * [What is Cloud IAM?](https://www.youtube.com/watch?v=xQClVtAECdg)
 
+* [Getting started on Google Cloud](https://www.youtube.com/watch?v=qofqzJbqD3s&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=2)
+
 ## Machine Learning
 
 * [Become a Cloud Machine Learning developer in 5 steps](https://www.youtube.com/watch?v=-2uI3OTYcCE)
 
 ## Vertex AI
 
+* [Get started with Vertex AI](https://www.youtube.com/watch?v=pZKpAai7stE&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=21)
 * [Learn Vertex AI while building a fraud detection system](https://www.youtube.com/watch?v=5kEhkKfs4TI)
 * [Building a question answering system with Vertex AI](https://www.youtube.com/watch?v=5iSmX8sqtx8)
 
 ## Dataflow
 
-* [Building stream processing pipelines with Dataflow](https://www.youtube.com/watch?v=dXhF3JJg3mE)
+* [Building stream processing pipelines with Dataflow](https://www.youtube.com/watch?v=dXhF3JJg3mE&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=18)
 * [What is Dataflow?](https://www.youtube.com/watch?v=KalJ0VuEM7s)
 * [What is Dataflow Prime?](https://www.youtube.com/watch?v=9fc2MNQHQ2s)
 
@@ -127,9 +159,30 @@
 
 ## Bigquery
 
+* [Leigha Jarett's Playlist](https://www.youtube.com/playlist?list=PLIivdWyY5sqJoqr-izQvzrOSLiggdv7C7)
+* [How to get started with BigQuery](https://www.youtube.com/watch?v=BH_7_zVk5oM&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=16)
 * [Understanding BigQuery data governance](https://www.youtube.com/watch?v=wR4l6IKr8zg)
 * [Cost optimization best practices for BigQuery](https://www.youtube.com/watch?v=cZgTavxWO2k)
-* [Leigha Jarett's Playlist](https://www.youtube.com/playlist?list=PLIivdWyY5sqJoqr-izQvzrOSLiggdv7C7)
+
+## Apigee
+
+* [Architecting a retail startup with Google Cloud](https://www.youtube.com/watch?v=LIWEvhsTv7k&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=33)
+
+## MLops
+
+* [Accelerating model deployment with MLOps](https://www.youtube.com/watch?v=Z5GITTIE9DM&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=32)
+
+## Dataproc
+
+* [Run Spark and Hadoop faster with Dataproc](https://www.youtube.com/watch?v=shzKmZ6Yqtk&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=17)
+
+## Data studio
+
+* [Data visualization with Data Studio](https://www.youtube.com/watch?v=TUY8QsTik5c&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=19)
+
+## Looker
+
+* [Uncovering insights with Looker](https://www.youtube.com/watch?v=hbdBux8rt64&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=26)
 
 ## Secret
 
@@ -162,6 +215,11 @@
 ## AlloyDB
 
 * [Introducing AlloyDB, a PostgreSQL-compatible cloud database service](https://www.youtube.com/watch?v=o5pKfH0Tonw)
+* [Faster analytical queries with AlloyDB](https://www.youtube.com/watch?v=wAsYOY34LUQ&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=29)
+
+## Cloud Spanner
+
+* [Scaling with Cloud Spanner](https://www.youtube.com/watch?v=vSmBW2DiX4U&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=28)
 
 ## Cloud Storage
 
@@ -171,3 +229,11 @@
 
 * [How you can protect your websites and applications with Google Cloud Armor](https://www.youtube.com/watch?v=oXJ68Sa8jfU)
 * [Google Cloud Armor - Deep Dive](https://www.youtube.com/watch?v=RsXbmOb3L2E)
+
+## Security Command Center
+
+* [Get started with Security Command Center and Active Assist](https://www.youtube.com/watch?v=0qyUm6UsMkE&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=23)
+
+## Billing
+
+* [Billing Administration on Google Cloud](https://www.youtube.com/watch?v=GpiQPym27II&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=11)
