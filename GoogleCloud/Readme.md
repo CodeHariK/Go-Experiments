@@ -56,6 +56,7 @@
 * [Cloud Run volume mounts](https://www.youtube.com/watch?v=8pu2fVQbbNs)
 * [Cloud Functions vs. Cloud Run](https://www.youtube.com/watch?v=zRjOSxTpC3A)
 
+* [Safe serverless deployments with Cloud Run](https://www.youtube.com/watch?v=ArDuQDjW-DQ&list=PLIivdWyY5sqJwq_pgOxcHzusWjXDVCEiX&index=4)
 * [Cloud Run deployments with YAML](https://www.youtube.com/watch?v=_H0Q_0oz5hM)
 * [How to deploy Cloud Run services with GitHub Actions](https://www.youtube.com/watch?v=DMCi7WWTtX0)
 * [How to use Github Actions with Google's Workload Identity Federation](https://www.youtube.com/watch?v=ZgVhU5qvK1M)
@@ -159,6 +160,7 @@
 
 ## Bigquery
 
+* [BigQuery Spotlight](https://www.youtube.com/playlist?list=PLIivdWyY5sqLAbIdmcMwsxWg-w8Px34MS)
 * [Leigha Jarett's Playlist](https://www.youtube.com/playlist?list=PLIivdWyY5sqJoqr-izQvzrOSLiggdv7C7)
 * [How to get started with BigQuery](https://www.youtube.com/watch?v=BH_7_zVk5oM&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=16)
 * [Understanding BigQuery data governance](https://www.youtube.com/watch?v=wR4l6IKr8zg)
@@ -176,13 +178,28 @@
 
 * [Run Spark and Hadoop faster with Dataproc](https://www.youtube.com/watch?v=shzKmZ6Yqtk&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=17)
 
+## Google Analytics
+
+* [Google Analytics 4 Tutorials](https://www.youtube.com/playlist?list=PLgr_8Hk8l4ZG-drs4DouI1e4uqTmbz2od)
+
 ## Data studio
 
 * [Data visualization with Data Studio](https://www.youtube.com/watch?v=TUY8QsTik5c&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=19)
 
+* [https://www.youtube.com/@KimonoMom/videos](https://www.youtube.com/playlist?list=PLzzmI930BFvtT38JjU29eH4dhjvLzYU9i)
+* [Looker Studio Complete Tutorial 2024](https://www.youtube.com/playlist?list=PLh9mb-JjFjzOnPk3FbbsF3NgjjaQcnbts)
+
 ## Looker
 
 * [Uncovering insights with Looker](https://www.youtube.com/watch?v=hbdBux8rt64&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=26)
+
+## Generative AI
+
+* [Serverless Generative AI](https://www.youtube.com/watch?v=ntEiXdr1-zA&list=PLIivdWyY5sqJwq_pgOxcHzusWjXDVCEiX&index=3)
+
+## Beam
+
+* [Getting Started with Apache Beam](https://www.youtube.com/playlist?list=PLIivdWyY5sqIEiHGunZXg_yoS7unlHNJt)
 
 ## Secret
 
@@ -227,6 +244,7 @@
 
 ## Armor
 
+* [Go Deep With Google Cloud Armor](https://www.youtube.com/playlist?list=PLIivdWyY5sqLAAHIkJ1Gou2eWO4bYcyGA)
 * [How you can protect your websites and applications with Google Cloud Armor](https://www.youtube.com/watch?v=oXJ68Sa8jfU)
 * [Google Cloud Armor - Deep Dive](https://www.youtube.com/watch?v=RsXbmOb3L2E)
 

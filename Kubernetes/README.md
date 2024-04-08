@@ -11,6 +11,8 @@
 
 ## Tutorials
 
+* [Kubernetes Tutorials](https://www.youtube.com/playlist?list=PLiMWaCMwGJXnHmccp2xlBENZ1xr4FpjXF)
+
 * [KCD Bengaluru'23 Workshops](https://www.youtube.com/playlist?list=PLo4lFffE9Ct_oQzvEFYBmQtgwea1lTQLY)
 * [90 Day CKA/CKAD Challenge](https://www.youtube.com/playlist?list=PL3EazRnW1p-iVUr8AxZUrkhhcyq9ETQxk)
 
