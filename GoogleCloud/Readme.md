@@ -197,6 +197,10 @@
 
 * [Serverless Generative AI](https://www.youtube.com/watch?v=ntEiXdr1-zA&list=PLIivdWyY5sqJwq_pgOxcHzusWjXDVCEiX&index=3)
 
+## Gemini
+
+* [Analyze data in BigQuery using Gemini models](https://www.youtube.com/watch?v=qrT4g0hZHns)
+
 ## Beam
 
 * [Getting Started with Apache Beam](https://www.youtube.com/playlist?list=PLIivdWyY5sqIEiHGunZXg_yoS7unlHNJt)

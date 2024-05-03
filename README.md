@@ -9,6 +9,9 @@
 * [Go Patterns](https://github.com/tmrts/go-patterns)
 * [100 Go Mistakes and How to Avoid Them](https://100go.co)
 
+* Writing An Interpreter In Go
+* Writing A Compiler In Go
+
 ## Level 1
 
 * [Grpc & Protocol Buffers](GrpcGo/README.md)

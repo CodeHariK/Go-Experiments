@@ -16,11 +16,22 @@ Prometheus is a system monitoring and alerting system.
 
 * https://opentelemetry.io/docs/languages/go/getting-started/
 
+* [Get started with the OpenTelemetry Collector](https://cloud.google.com/stackdriver/docs/managed-prometheus/setup-otel)
+* [Easy Telemetry Instrumentation on GKE with the OpenTelemetry Operator](https://cloud.google.com/blog/topics/developers-practitioners/easy-telemetry-instrumentation-gke-opentelemetry-operator/)
+* [Instrument trace information using OpenTelemetry](https://codelabs.developers.google.com/codelabs/otel-cloudtrace)
+* [Instrument for better performance in your app in Go (part 1:trace)](https://codelabs.developers.google.com/codelabs/otel-cloudtrace-go)
+* [Instrument for better performance in your app in Go (part 2:profiler)](https://codelabs.developers.google.com/cloud-profiler-go)
+* [Google Managed Prometheus with OpenTelemetry](https://medium.com/google-cloud/google-managed-prometheus-with-opentelemetry-1a1fd1f0ae8a)
+
 * [OpenTelemetry Golang Tutorial (Tracing in Grafana & Kubernetes & Tempo)](https://www.youtube.com/watch?v=ZIN7H00ulQw)
 * [OpenTelemetry Course - Understand Software Performance](https://www.youtube.com/watch?v=r8UvWSX3KA8&ab_channel=freeCodeCamp.org)
 
 * [How to Get Started with OpenTelemetry](https://www.youtube.com/watch?v=Txe4ji4EDUA&ab_channel=NGINX)
 * [How to Set Up Prometheus & Grafana: Monitoring an API with Golang](https://www.youtube.com/watch?v=pP2DKCKR4CQ)
+
+* [Bootstrapping tracing and metrics with OpenTelemetry on GKE](https://www.youtube.com/watch?v=Q2K1rJn67X8)
+
+* [OpenTelemetry Bootcamp Tutorials](https://www.youtube.com/playlist?list=PLNxnp_rzlqf6z1cC0IkIwp6yjsBboX945)
 
 ## Tutorials
 

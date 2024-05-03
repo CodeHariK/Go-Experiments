@@ -2,6 +2,10 @@
 
 ![img](img.gif)
 
+## Tutorials
+
+* [Complete Redis, Websockets, Pub Subs and Message queues bootcamp](https://www.youtube.com/watch?v=IJkYipYNEtI)
+
 ## Websocket
 
 * [ProgrammingPercy Mastering WebSockets With Go - An in-depth tutorial](https://www.youtube.com/watch?v=pKpKv9MKN-E&ab_channel=ProgrammingPercy)

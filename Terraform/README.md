@@ -42,6 +42,7 @@ ssh -i ~/.ssh/terrakey ec2-user@13.234.111.6
 ## GCP
 
 * [Learn Terraform with Google Cloud Platform](https://www.youtube.com/watch?v=VCayKl82Lt8)
+* [Terraform with GCP](https://www.youtube.com/playlist?list=PLLrA_pU9-Gz0jyZ3ES0HnP3oJA8uY8KOB)
 
 ## Github
 
