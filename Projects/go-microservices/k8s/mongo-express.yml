@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-express
+  template:
+    metadata:
+      labels:
+        app: mongo-express
+    spec:
+      containers:
+      - name: mongo-express
+        image: "mongo-express"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+
+          - name: ME_CONFIG_OPTIONS_EDITORTHEME
+            value: "ambiance"
+          - name: ME_CONFIG_MONGODB_SERVER
+            value: "mongo"
+          - name: ME_CONFIG_BASICAUTH_USERNAME
+            value: "admin"
+          - name: ME_CONFIG_BASICAUTH_PASSWORD
+            value: "password"
+          - name: ME_CONFIG_MONGODB_AUTH_DATABASE
+            value: "logs"
+          - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+            value: "admin"
+          - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+            value: "password"           
+        ports:
+          - containerPort: 80
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-express
+spec:
+  selector:
+    app: mongo-express
+  ports:
+    - protocol: TCP
+      name: main-port
+      port: 80
+      targetPort: 80

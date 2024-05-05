@@ -66,7 +66,6 @@ func (consumer *Consumer) Listen(topics []string) error {
 			false,
 			nil,
 		)
-
 		if err != nil {
 			log.Println(err)
 			return err

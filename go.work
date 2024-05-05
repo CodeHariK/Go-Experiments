@@ -11,13 +11,6 @@ use (
 	./EntGo/ent-mysql-fiber
 	./EntGo/examples
 
-	./GoMicroService/authentication-service
-	./GoMicroService/broker-service
-
-	./GoMicroService/front-end
-	./GoMicroService/listener-service
-	./GoMicroService/logger-service
-	./GoMicroService/mail-service
 	./GoRuntime
 
 	./GrpcGo/fiber-grpc

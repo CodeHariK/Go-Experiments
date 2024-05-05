@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	amqp "github.com/rabbitmq/amqp091-go"
-	"github.com/tsawler/go-rabbit/lib/event"
 	"log"
 	"math"
 	"os"
 	"time"
+
+	amqp "github.com/rabbitmq/amqp091-go"
+	"github.com/tsawler/go-rabbit/lib/event"
 )
 
 func main() {
@@ -39,9 +40,9 @@ func main() {
 // If we can't connect after 5 tries (with increasing delays), return an error
 func connect() (*amqp.Connection, error) {
 	var counts int64
-	var backOff = 1 * time.Second
+	backOff := 1 * time.Second
 	var connection *amqp.Connection
-	var rabbitURL = os.Getenv("RABBIT_URL")
+	rabbitURL := os.Getenv("RABBIT_URL")
 
 	// don't continue until rabbitmq is ready
 	for {

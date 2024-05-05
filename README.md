@@ -25,3 +25,7 @@
 ## Projects
 
 * [Designing an On-Demand Video Streaming Service](https://hackernoon.com/designing-an-on-demand-video-streaming-service)
+
+## System design
+
+* [System Design Pratiksha](https://www.youtube.com/playlist?list=PLWp3jRAb6-XWmlu9R96p3xp0G_F3kdq3x)
