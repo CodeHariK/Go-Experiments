@@ -1,31 +1,11 @@
-go 1.22.1
+go 1.22.2
 
 use (
 	./AWS/SAM
-	./AsyncQ
 	./Books
-	./Challenges/1BRC
 	./Cryptopals
-	./DomainDrivenDesign
-
-	./EntGo/ent-mysql-fiber
-	./EntGo/examples
 
 	./GoRuntime
-
-	./GrpcGo/fiber-grpc
-	./GrpcGo/grpc-gateway
-
-	./GrpcGo/helloworld/greeter_client
-	./GrpcGo/helloworld/greeter_server
-	./GrpcGo/helloworld/helloproto
-
-	./GrpcGo/route_guide/client
-	./GrpcGo/route_guide/proto
-	./GrpcGo/route_guide/server
-
-	./Hexagonal
-	./JwtAuth
 
 	./Kafka/chat-room
 	./Kubernetes/Example/kubedemo
@@ -35,6 +15,7 @@ use (
 	./Projects
 	./Projects/RSSAggregator
 	./Projects/SimpleBank
+	./Projects/goredis
 
 	./Protocols
 	./RabbitMQ/event-driven-rabbitmq
