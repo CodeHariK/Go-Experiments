@@ -6,12 +6,12 @@ import (
 	"net"
 	"time"
 
-	"github.com/veggiedefender/torrent-client/bitfield"
-	"github.com/veggiedefender/torrent-client/peers"
+	"torrent-client/bitfield"
+	"torrent-client/peers"
 
-	"github.com/veggiedefender/torrent-client/message"
+	"torrent-client/message"
 
-	"github.com/veggiedefender/torrent-client/handshake"
+	"torrent-client/handshake"
 )
 
 // A Client is a TCP connection with a peer
@@ -22,6 +22,36 @@ type Client struct {
 	peer     peers.Peer
 	infoHash [20]byte
 	peerID   [20]byte
+}
+
+// New connects with a peer, completes a handshake, and receives a handshake
+// returns an err if any of those fail.
+func New(peer peers.Peer, peerID, infoHash [20]byte) (*Client, error) {
+	conn, err := net.DialTimeout("tcp", peer.String(), 3*time.Second)
+	if err != nil {
+		return nil, err
+	}
+
+	_, err = completeHandshake(conn, infoHash, peerID)
+	if err != nil {
+		conn.Close()
+		return nil, err
+	}
+
+	bf, err := recvBitfield(conn)
+	if err != nil {
+		conn.Close()
+		return nil, err
+	}
+
+	return &Client{
+		Conn:     conn,
+		Choked:   true,
+		Bitfield: bf,
+		peer:     peer,
+		infoHash: infoHash,
+		peerID:   peerID,
+	}, nil
 }
 
 func completeHandshake(conn net.Conn, infohash, peerID [20]byte) (*handshake.Handshake, error) {
@@ -62,36 +92,6 @@ func recvBitfield(conn net.Conn) (bitfield.Bitfield, error) {
 	}
 
 	return msg.Payload, nil
-}
-
-// New connects with a peer, completes a handshake, and receives a handshake
-// returns an err if any of those fail.
-func New(peer peers.Peer, peerID, infoHash [20]byte) (*Client, error) {
-	conn, err := net.DialTimeout("tcp", peer.String(), 3*time.Second)
-	if err != nil {
-		return nil, err
-	}
-
-	_, err = completeHandshake(conn, infoHash, peerID)
-	if err != nil {
-		conn.Close()
-		return nil, err
-	}
-
-	bf, err := recvBitfield(conn)
-	if err != nil {
-		conn.Close()
-		return nil, err
-	}
-
-	return &Client{
-		Conn:     conn,
-		Choked:   true,
-		Bitfield: bf,
-		peer:     peer,
-		infoHash: infoHash,
-		peerID:   peerID,
-	}, nil
 }
 
 // Read reads and consumes a message from the connection

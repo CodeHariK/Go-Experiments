@@ -16,6 +16,7 @@ use (
 	./Projects/RSSAggregator
 	./Projects/SimpleBank
 	./Projects/goredis
+	./Projects/torrent-client
 
 	./Protocols
 	./RabbitMQ/event-driven-rabbitmq

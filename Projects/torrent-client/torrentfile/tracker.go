@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/veggiedefender/torrent-client/peers"
+	"torrent-client/peers"
 
 	"github.com/jackpal/bencode-go"
 )

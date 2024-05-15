@@ -22,6 +22,14 @@
 
 ## Level 3
 
+## Distributed System
+
+* [Distributed Systems lecture series](https://www.youtube.com/playlist?list=PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB)
+* [Raft - The Understandable Distributed Protocol](https://www.youtube.com/watch?v=ro2fU8_mr2w)
+* [Understand RAFT without breaking your brain](https://www.youtube.com/watch?v=IujMVjKvWP4)
+* [Mastering the Raft Consensus Algorithm: A Comprehensive Tutorial in Distributed Systems](https://www.youtube.com/watch?v=ZyqAbQkpeUo)
+* [Raft, Build Your Own Distributed System Using Go](https://www.youtube.com/watch?v=8XbxQ1Epi5w)
+
 ## Projects
 
 * [Designing an On-Demand Video Streaming Service](https://hackernoon.com/designing-an-on-demand-video-streaming-service)
@@ -29,3 +37,5 @@
 ## System design
 
 * [System Design Pratiksha](https://www.youtube.com/playlist?list=PLWp3jRAb6-XWmlu9R96p3xp0G_F3kdq3x)
+
+* [Algorithms in Distributed Systems, Two Phase Commit](https://www.youtube.com/playlist?list=PLsdq-3Z1EPT1wfRQo2xrrst2SGremT_qd)
