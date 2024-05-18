@@ -13,8 +13,8 @@ use (
 	./Monitoring/prometheus-basic
 	./Profiling
 	./Projects
+	./Projects/Chess/glee
 	./Projects/RSSAggregator
-	./Projects/SimpleBank
 	./Projects/goredis
 	./Projects/torrent-client
 

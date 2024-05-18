@@ -1,3 +1,7 @@
 {
-    "favorites.resources": []
+    "favorites.resources": [],
+    "files.associations": {
+        "*.mdx": "markdown",
+        "iostream": "cpp"
+    }
 }
