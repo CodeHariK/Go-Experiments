@@ -13,7 +13,6 @@ var ht = hashtables.Lookup
 
 type SearchParams struct {
 	Depth           int
-	Ply             int
 	Pos             **position.Position
 	EngineMove      *moves.Move
 	Perft           *int
@@ -22,47 +21,47 @@ type SearchParams struct {
 	Root            bool
 }
 
-func MinMax(p SearchParams) int {
-	p.Root = p.Ply == p.Depth
-	if p.Ply == 0 {
-		*p.SinglePlyPerft++
-		return evaluate.EvaluatePosition(*p.Pos)
-	}
-	p.EvaluationScore = 30000
-	if (*p.Pos).IsWhitesTurn() {
-		p.EvaluationScore = -30000
-	}
-	mvs := generate.GenerateMoves(*p.Pos)
-	mvList := mvs.GetMovesList()
-	for _, move := range mvList {
-		if !MakeValidMove(move, p.Pos) {
-			continue
-		}
-		evaluateMove(move, p)
-	}
-	return p.EvaluationScore
-}
+// func MinMax(p SearchParams) int {
+// 	p.Root = p.Ply == p.Depth
+// 	if p.Ply == 0 {
+// 		*p.SinglePlyPerft++
+// 		return evaluate.EvaluatePosition(*p.Pos)
+// 	}
+// 	p.EvaluationScore = 30000
+// 	if (*p.Pos).IsWhitesTurn() {
+// 		p.EvaluationScore = -30000
+// 	}
+// 	mvs := generate.GenerateMoves(*p.Pos)
+// 	mvList := mvs.GetMovesList()
+// 	for _, move := range mvList {
+// 		if !MakeValidMove(move, p.Pos) {
+// 			continue
+// 		}
+// 		evaluateMove(move, p)
+// 	}
+// 	return p.EvaluationScore
+// }
 
-// evaluateMove checks if pseudo legal move is valid, and if so
-// increments Ply and calls MinMax to continue the search
-func evaluateMove(move moves.Move, p SearchParams) error {
-	p.Ply = p.Ply - 1
-	temp := MinMax(p)
-	if temp > p.EvaluationScore {
-		p.EvaluationScore = temp
-		if p.Root {
-			*p.EngineMove = move
-		}
-	}
-	if p.Root {
-		// move.Print()
-		// fmt.Println(*p.SinglePlyPerft)
-		*p.Perft += *p.SinglePlyPerft
-		*p.SinglePlyPerft = 0
-	}
-	*p.Pos = (*p.Pos).UnMakeMove()
-	return nil
-}
+// // evaluateMove checks if pseudo legal move is valid, and if so
+// // increments Ply and calls MinMax to continue the search
+// func evaluateMove(move moves.Move, p SearchParams) error {
+// 	p.Ply = p.Ply - 1
+// 	temp := MinMax(p)
+// 	if temp > p.EvaluationScore {
+// 		p.EvaluationScore = temp
+// 		if p.Root {
+// 			*p.EngineMove = move
+// 		}
+// 	}
+// 	if p.Root {
+// 		// move.Print()
+// 		// fmt.Println(*p.SinglePlyPerft)
+// 		*p.Perft += *p.SinglePlyPerft
+// 		*p.SinglePlyPerft = 0
+// 	}
+// 	*p.Pos = (*p.Pos).UnMakeMove()
+// 	return nil
+// }
 
 func MakeValidMove(move moves.Move, pos **position.Position) bool {
 	if (*pos).IsCastlingMove(move) {

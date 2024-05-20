@@ -25,6 +25,7 @@ func (w *WebsocketServer) UCI(rw http.ResponseWriter, r *http.Request, conn *web
 			log.Println("read error:", err)
 			break
 		}
+		println("\n->  " + string(commands) + "\n")
 		commandTokens := strings.Split(string(commands), " ")
 		command := commandTokens[0]
 		switch string(command) {

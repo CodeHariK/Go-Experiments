@@ -1,11 +1,11 @@
 package main
 
 import (
-	"golang.org/x/sync/errgroup"
-
 	"fmt"
 	"math/rand"
 	"time"
+
+	"golang.org/x/sync/errgroup"
 )
 
 // send the same message to different actors

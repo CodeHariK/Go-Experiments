@@ -17,7 +17,7 @@ func GenerateMoves(pos *position.Position) *moves.Moves {
 	return movesList
 }
 
-// GenerateMoves generates a list of pseudo legal moves for a given postion.
+// GenerateMoves generates a list of pseudo legal moves for a given position.
 // Moves that expose the moving sides king to check may be included in the move list.
 // This condition is checked for by the engine when thinking.
 func GenerateAllMoves(pos *position.Position, mvsList *moves.Moves, ht *hashtables.HashTables) {
@@ -30,8 +30,10 @@ func GenerateAllMoves(pos *position.Position, mvsList *moves.Moves, ht *hashtabl
 }
 
 func generateLegalMovesForSinglePiece(
-	pos *position.Position, movesList *moves.Moves, pieceLocationsBb uint64, genValidMovesFn func(int, uint64, *hashtables.HashTables) *bitboard.Bitboard, ht *hashtables.HashTables) {
-
+	pos *position.Position, movesList *moves.Moves, pieceLocationsBb uint64,
+	genValidMovesFn func(int, uint64, *hashtables.HashTables) *bitboard.Bitboard,
+	ht *hashtables.HashTables,
+) {
 	pieceLocationBbCopy := bitboard.NewBitboard(pieceLocationsBb)
 	for pieceLocationBbCopy.Value() != 0 {
 		piecePosition := pieceLocationBbCopy.Lsb()
@@ -59,27 +61,27 @@ func GenerateKnightMoves(pos *position.Position, mvsList *moves.Moves, ht *hasht
 	generateLegalMovesForSinglePiece(pos, mvsList, pos.GetActiveSidesBitboards()[position.Knights].Value(), getKnightMovesBb, ht)
 }
 
-// GenerateKingMovesFromInitialPosition checks valid moves with castling taken into account
-func GenerateKingMovesFromInitialPosition(pos *position.Position, mvsList *moves.Moves, ht *hashtables.HashTables) *bitboard.Bitboard {
-	kingBb := pos.GetActiveSidesBitboards()[position.King]
-	kingPosition := kingBb.Lsb()
-	kingMovesLookup := bitboard.NewBitboard(ht.LegalKingMovesBbHash[pos.GetActiveSide()][kingPosition])
-	castlingBits := bitboard.NewBitboard(ht.CastlingBits[0] | ht.CastlingBits[1])
-	occSqsBb := pos.AllOccupiedSqsBb().Value()
-	finalRankBb := bitboard.NewBitboard(ht.EighthRankBb | ht.FirstRankBb)
-	return generateValidDirectionalMovesBb(kingPosition, ht.EastArrayBbHash, occSqsBb, getLsb).
-		Combine(generateValidDirectionalMovesBb(kingPosition, ht.WestArrayBbHash, occSqsBb, getMsb)).
-		// only allow sliding moves that are withing the legal king moves
-		BitwiseAnd(kingMovesLookup).
-		// cannot move to square that is occupied by same side
-		RemoveOverlappingBits(pos.ActiveSideOccupiedSqsBb()).
-		// remove castling move if permissions is not set
-		RemoveOverlappingBits(pos.GetActiveSideCastlingRightsBb()).
-		// remove castling moves if there is an opposing piece there
-		RemoveOverlappingBits(bitboard.ReturnBitwiseAnd(pos.InactiveSideOccupiedSqsBb(), castlingBits)).
-		// add in moves that are not on the final rank
-		Combine(bitboard.ReturnBitwiseAnd(kingMovesLookup.RemoveOverlappingBits(pos.ActiveSideOccupiedSqsBb()), finalRankBb.ReturnBitsFlipped()))
-}
+// // GenerateKingMovesFromInitialPosition checks valid moves with castling taken into account
+// func GenerateKingMovesFromInitialPosition(pos *position.Position, mvsList *moves.Moves, ht *hashtables.HashTables) *bitboard.Bitboard {
+// 	kingBb := pos.GetActiveSidesBitboards()[position.King]
+// 	kingPosition := kingBb.Lsb()
+// 	kingMovesLookup := bitboard.NewBitboard(ht.LegalKingMovesBbHash[pos.GetActiveSide()][kingPosition])
+// 	castlingBits := bitboard.NewBitboard(ht.CastlingBits[0] | ht.CastlingBits[1])
+// 	occSqsBb := pos.AllOccupiedSqsBb().Value()
+// 	finalRankBb := bitboard.NewBitboard(ht.EighthRankBb | ht.FirstRankBb)
+// 	return generateValidDirectionalMovesBb(kingPosition, ht.EastArrayBbHash, occSqsBb, getLsb).
+// 		Combine(generateValidDirectionalMovesBb(kingPosition, ht.WestArrayBbHash, occSqsBb, getMsb)).
+// 		// only allow sliding moves that are withing the legal king moves
+// 		BitwiseAnd(kingMovesLookup).
+// 		// cannot move to square that is occupied by same side
+// 		RemoveOverlappingBits(pos.ActiveSideOccupiedSqsBb()).
+// 		// remove castling move if permissions is not set
+// 		RemoveOverlappingBits(pos.GetActiveSideCastlingRightsBb()).
+// 		// remove castling moves if there is an opposing piece there
+// 		RemoveOverlappingBits(bitboard.ReturnBitwiseAnd(pos.InactiveSideOccupiedSqsBb(), castlingBits)).
+// 		// add in moves that are not on the final rank
+// 		Combine(bitboard.ReturnBitwiseAnd(kingMovesLookup.RemoveOverlappingBits(pos.ActiveSideOccupiedSqsBb()), finalRankBb.ReturnBitsFlipped()))
+// }
 
 func GenerateKingMoves(pos *position.Position, mvsList *moves.Moves, ht *hashtables.HashTables) {
 	kingBb := pos.GetActiveSidesBitboards()[position.King]
@@ -251,7 +253,9 @@ func generateValidStraightSlidingMovesBb(index int, occSqsBb uint64, ht *hashtab
 }
 
 func generateValidDirectionalMovesBb(
-	index int, directionalHash [64]uint64, occupiedSqsBb uint64, sigBit func(*bitboard.Bitboard) int) *bitboard.Bitboard {
+	index int, directionalHash [64]uint64,
+	occupiedSqsBb uint64, sigBit func(*bitboard.Bitboard) int,
+) *bitboard.Bitboard {
 	var validDirectionalMoves *bitboard.Bitboard
 	occupiedSqsOverlapsDirectionalArray := bitboard.NewBitboard(occupiedSqsBb & directionalHash[index])
 	if occupiedSqsOverlapsDirectionalArray.Value() != 0 {
@@ -264,18 +268,19 @@ func generateValidDirectionalMovesBb(
 	return validDirectionalMoves
 }
 
-func generateValidDirectionalKingMovesBb(
-	index int, directionalHash [64]uint64, occupiedSqsBb uint64, sigBit func(*bitboard.Bitboard) int) *bitboard.Bitboard {
-	var validDirectionalMoves *bitboard.Bitboard
-	occupiedSqsOverlapsDirectionalArray := bitboard.NewBitboard(occupiedSqsBb & directionalHash[index])
-	if occupiedSqsOverlapsDirectionalArray.Value() != 0 {
-		sigBit := sigBit(occupiedSqsOverlapsDirectionalArray)
-		validDirectionalMoves = bitboard.NewBitboard(directionalHash[index] ^ directionalHash[sigBit])
-		return validDirectionalMoves
-	}
-	validDirectionalMoves = bitboard.NewBitboard(directionalHash[index])
-	return validDirectionalMoves
-}
+// func generateValidDirectionalKingMovesBb(
+// 	index int, directionalHash [64]uint64, occupiedSqsBb uint64, sigBit func(*bitboard.Bitboard) int,
+// ) *bitboard.Bitboard {
+// 	var validDirectionalMoves *bitboard.Bitboard
+// 	occupiedSqsOverlapsDirectionalArray := bitboard.NewBitboard(occupiedSqsBb & directionalHash[index])
+// 	if occupiedSqsOverlapsDirectionalArray.Value() != 0 {
+// 		sigBit := sigBit(occupiedSqsOverlapsDirectionalArray)
+// 		validDirectionalMoves = bitboard.NewBitboard(directionalHash[index] ^ directionalHash[sigBit])
+// 		return validDirectionalMoves
+// 	}
+// 	validDirectionalMoves = bitboard.NewBitboard(directionalHash[index])
+// 	return validDirectionalMoves
+// }
 
 func getLsb(bb *bitboard.Bitboard) int {
 	return bb.Lsb()

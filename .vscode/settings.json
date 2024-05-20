@@ -1,5 +1,10 @@
 {
-    "favorites.resources": [],
+    "favorites.resources": [
+        {
+            "filePath": "Projects/Chess/glee",
+            "group": "Default"
+        }
+    ],
     "files.associations": {
         "*.mdx": "markdown",
         "iostream": "cpp"

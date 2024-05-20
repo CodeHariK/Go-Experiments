@@ -7,7 +7,6 @@ use (
 
 	./GoRuntime
 
-	./Kafka/chat-room
 	./Kubernetes/Example/kubedemo
 
 	./Monitoring/prometheus-basic
@@ -19,15 +18,8 @@ use (
 	./Projects/torrent-client
 
 	./Protocols
-	./RabbitMQ/event-driven-rabbitmq
-	./RabbitMQ/rabbitmqstreams-go
+	./Protocols/Nats/Check
 
-	./Redis/redis-basic
-
-	./SwaggerGo
-
-	./Temple
-	./Temple/app
 	./Terraform/s3sqsfunction/src
 	./Testing/FuzzTest
 )

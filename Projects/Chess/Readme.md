@@ -11,3 +11,7 @@
 
 * [Programming a Hearthstone agent using Monte Carlo Tree Search](https://ntnuopen.ntnu.no/ntnu-xmlui/bitstream/handle/11250/2420367/14750_FULLTEXT.pdf?sequence=1)
 * [A Hearthstone simulator in Python](https://github.com/jleclanche/fireplace)
+
+* [Deepmind AlphaZero - Mastering Games Without Human Knowledge](https://www.youtube.com/watch?v=Wujy7OzvdJk)
+* [Alpha Zero and Monte Carlo Tree Search](https://www.youtube.com/watch?v=62nq4Zsn8vc)
+* [Using MuZero's Tree Search To Find Optimal Tic-Tac-Toe](https://www.youtube.com/watch?v=c8SLNEpFSrs)

@@ -112,7 +112,7 @@ func play(p *position.Position, humanSide int) *position.Position {
 					fmt.Println("e7e8Q...........promotion move resulting in Queen [Q,R,B,N]")
 					fmt.Println("fen.............outputs FEN of board position")
 					fmt.Println("quit............terminates the game")
-					break;
+					break
 				}
 				if handleMove(string(move), p, generate.GenerateMoves(p)) {
 					break

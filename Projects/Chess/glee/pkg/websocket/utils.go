@@ -67,8 +67,7 @@ func search(p *position.Position, mvs *moves.Moves) (*position.Position, *moves.
 	perft := 0
 	singlePlyPerft := 0
 	params := engine.SearchParams{
-		Depth:          5,
-		Ply:            5,
+		Depth:          6,
 		Pos:            &p,
 		Perft:          &perft,
 		SinglePlyPerft: &singlePlyPerft,
