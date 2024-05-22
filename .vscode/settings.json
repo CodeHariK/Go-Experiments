@@ -7,6 +7,9 @@
     ],
     "files.associations": {
         "*.mdx": "markdown",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "__locale": "c",
+        "locale": "c",
+        "istream": "c"
     }
 }

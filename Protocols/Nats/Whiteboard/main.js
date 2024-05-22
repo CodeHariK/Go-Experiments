@@ -1,7 +1,7 @@
 import './style.css'
 import Alpine from "alpinejs";
 import throttle from './throttle';
-import { connect, consumerOpts, headers, JSONCodec } from 'nats.ws';
+import { connect, consumerOpts, StringCodec, credsAuthenticator, headers, JSONCodec } from 'nats.ws';
 
 Alpine.data("whiteboard", (subject) => ({
   id: Math.random().toString(36).slice(2, 10),
@@ -14,9 +14,23 @@ Alpine.data("whiteboard", (subject) => ({
   jc: null,
 
   async init() {
-    const server = import.meta.env.VITE_NATS_SERVER
+
+    console.log(subject)
+
     this.jc = JSONCodec()
-    this.nats = await connect({ servers: server })
+
+    const creds = await fetch("NGS-Default-CLI.creds")
+    if (!creds.ok) {
+      addEntry("unable to find NGS-Default-CLI.creds - aborting")
+      return;
+    }
+    const sc = StringCodec()
+    const token = await creds.text()
+    const auth = credsAuthenticator(sc.encode(token))
+
+    this.nats = await connect({ servers: 'wss://connect.ngs.global', authenticator: auth, debug: true })
+
+    console.log(this.nats)
 
     const opts = consumerOpts()
     opts.orderedConsumer()
