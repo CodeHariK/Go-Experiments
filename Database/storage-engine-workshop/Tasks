@@ -1,0 +1,52 @@
+1. Implement memtable with get and put
+   done
+2. Provide support for multiget
+   done
+3. Basic implementation of WAL without segments
+   done
+4. Allow page aligned writes in WAL without segments
+   NA
+5. Implement page aligned reads in WAL
+   NA
+6. Implement flushing in WAL
+   pending
+7. Implement segments in WAL
+   done
+8. Implement marker in WAL
+   done
+9. Implement SSTable (convert MemTable to SSTable)
+   done
+10. Convert memtable to SSTable when the size of memtable has reached its limit
+   done
+11. Implement flushing in SSTable
+   done
+12. Implement read from SSTable
+   done
+13. Implement a bloom filter without reference to SSTable
+   done
+14. Implement bloom filter with reference to SSTable
+   done
+15. Implement a get & multiGet in SSTable that uses index block to read a key
+   done
+16. Implement end to end put and get the involves - memtable/bloom filter and SSTable (via test)
+   done
+17. Implement transactions
+   done
+18. Implement concurrency
+   done
+19. Implement update using versioned put
+   pending
+20. Write benchmarks
+   pending
+21. Re-look at closing the file
+   pending
+22. Establish the relationship between SSTable and bloom filter on restart
+   pending
+23. Make PersistentSlice specific to WAL
+   done
+24. Introduce new persistent slice like abstraction for SSTable encoded key/value
+   done
+25. Handle conflicts in transaction.put
+    pending
+26. Adds tests for checking transaction marker + multiget in transaction
+    pending
