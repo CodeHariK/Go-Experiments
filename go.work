@@ -13,6 +13,7 @@ use (
 	./Profiling
 	./Projects
 	./Projects/Chess/glee
+	./Projects/GreenGoblin
 	./Projects/RSSAggregator
 	./Projects/goredis
 	./Projects/torrent-client
