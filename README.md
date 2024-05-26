@@ -16,6 +16,8 @@
 
 * [Grpc & Protocol Buffers](GrpcGo/README.md)
 
+* [Go For TypeScript Developers - Use Your TypeScript Skills to Learn Go](https://www.youtube.com/watch?v=ptuQ7xncV7A)
+
 ## Level 2
 
 * [DevOps Full Course Using Go](https://www.youtube.com/playlist?list=PL7g1jYj15RUMdka_gPLDCFrIhwjtvCLJD)
@@ -37,5 +39,7 @@
 ## System design
 
 * [System Design Pratiksha](https://www.youtube.com/playlist?list=PLWp3jRAb6-XWmlu9R96p3xp0G_F3kdq3x)
+
+* [Exponent System Design](https://www.youtube.com/playlist?list=PLrtCHHeadkHp92TyPt1Fj452_VGLipJnL)
 
 * [Algorithms in Distributed Systems, Two Phase Commit](https://www.youtube.com/playlist?list=PLsdq-3Z1EPT1wfRQo2xrrst2SGremT_qd)

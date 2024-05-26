@@ -2,7 +2,10 @@
 
 ![img](img.gif)
 
-## Tutorials
+Inter-process communications are usually implemented using message passing with a synchronous request-response style or asynchronous event-driven styles. In the synchronous communication style, the client process sends a request message to the server process over the network and waits for a response message. In asynchronous event-driven messaging, processes communicate with asynchronous message passing by using an intermediary known as an event broker.
+
+## HTTP/2
+High-performance binary message protocol with support for bidirectional messaging.
 
 * [Complete Redis, Websockets, Pub Subs and Message queues bootcamp](https://www.youtube.com/watch?v=IJkYipYNEtI)
 
@@ -31,8 +34,27 @@
 
 ## WebRTC
 
-*  UDP, P2P
+* UDP, P2P
 * Scalable RealTime
 * Use cases : Games, video call
 
-## WebTransport
+## REST
+
+* HTTP
+* Inefficient text based message protocols
+* Lacks strongly typed interfaces between apps
+
+## GRPC
+
+* HTTP/2
+* Protocol buffer based binary protocol
+* Request–Response and Streaming
+* Authentication, encryption, resiliency (deadlines and timeouts), metadata exchange, compression, load balancing, service discovery
+* Unary RPC, Server-Streaming RPC, Client-Streaming RPC, Bidirectional-Streaming RPC
+
+* https://protobuf.dev/programming-guides/encoding/
+
+Interprocess communication technology that allows you to connect, invoke, operate, and
+debug distributed heterogeneous applications as easily as making a local function call.
+
+RESTful services are quite bulky, inefficient, and error-prone for building inter-process communication. It is often required to have a highly scalable, loosely coupled inter-process communication technology that is more efficient than RESTful services. This is where gRPC, a modern inter-process communication style for building distributed applications and microservices, comes into the picture (we’ll compare and contrast gRPC with RESTful communication later in this chapter). gRPC primarily uses a synchronous request-response style for communication but can operate in fully asynchronous or streaming mode once the initial communication is established.

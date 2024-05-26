@@ -6,3 +6,6 @@
 * buf dep update
 * buf generate
 * go mod tidy
+
+* go get github.com/cloudflare/cfssl/cmd/cfssljson
+* go get github.com/cloudflare/cfssl/cmd/cfssl

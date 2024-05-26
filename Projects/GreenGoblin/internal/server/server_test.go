@@ -47,7 +47,7 @@ func setupTest(t *testing.T, fn func(*Config)) (
 	clientOptions := []grpc.DialOption{
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	}
-	cc, err := grpc.Dial(l.Addr().String(), clientOptions...)
+	cc, err := grpc.NewClient(l.Addr().String(), clientOptions...)
 	require.NoError(t, err)
 
 	dir, err := os.MkdirTemp("", "server-test")
