@@ -1,4 +1,4 @@
-go 1.22.2
+go 1.22.3
 
 use (
 	./AWS/SAM
@@ -15,6 +15,7 @@ use (
 	./Projects/Chess/glee
 	./Projects/GreenGoblin
 	./Projects/RSSAggregator
+	./Projects/TerminalWizard
 	./Projects/goredis
 	./Projects/torrent-client
 
