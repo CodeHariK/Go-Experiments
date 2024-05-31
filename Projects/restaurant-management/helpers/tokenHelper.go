@@ -3,10 +3,11 @@ package helper
 import (
 	"context"
 	"fmt"
-	"golang-restaurant-management/database"
 	"log"
 	"os"
 	"time"
+
+	"golang-restaurant-management/database"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"go.mongodb.org/mongo-driver/bson"
@@ -46,19 +47,16 @@ func GenerateAllTokens(email string, firstName string, lastName string, uid stri
 
 	token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(SECRET_KEY))
 	refreshToken, err := jwt.NewWithClaims(jwt.SigningMethodHS256, refreshClaims).SignedString([]byte(SECRET_KEY))
-
 	if err != nil {
 		log.Panic(err)
 		return
 	}
 
 	return token, refreshToken, err
-
 }
 
 func UpdateAllTokens(signedToken string, signedRefreshToken string, userId string) {
-
-	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
 
 	var updateObj primitive.D
 
@@ -89,11 +87,9 @@ func UpdateAllTokens(signedToken string, signedRefreshToken string, userId strin
 		return
 	}
 	return
-
 }
 
 func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
-
 	token, err := jwt.ParseWithClaims(
 		signedToken,
 		&SignedDetails{},
@@ -102,7 +98,7 @@ func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
 		},
 	)
 
-	//the token is invalid
+	// the token is invalid
 
 	claims, ok := token.Claims.(*SignedDetails)
 	if !ok {
@@ -111,7 +107,7 @@ func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
 		return
 	}
 
-	//the token is expired
+	// the token is expired
 	if claims.ExpiresAt < time.Now().Local().Unix() {
 		msg = fmt.Sprint("token is expired")
 		msg = err.Error()
@@ -119,5 +115,4 @@ func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
 	}
 
 	return claims, msg
-
 }
