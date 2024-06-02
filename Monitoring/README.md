@@ -1,17 +1,5 @@
 # Monitoring
 
-## Prometheus
-
-Prometheus is a system monitoring and alerting system.
-
-* https://samber.github.io/awesome-prometheus-alerts/
-
-* [Getting Started](https://prometheus.io/docs/tutorials/getting_started/)
-
-* [client_golang](https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#section-readme)
-
-* [Monitoring cAdvisor with Prometheus](https://github.com/google/cadvisor/blob/master/docs/storage/prometheus.md)
-
 ## Open Telemetry
 
 * https://opentelemetry.io/docs/languages/go/getting-started/
@@ -33,15 +21,24 @@ Prometheus is a system monitoring and alerting system.
 
 * [OpenTelemetry Bootcamp Tutorials](https://www.youtube.com/playlist?list=PLNxnp_rzlqf6z1cC0IkIwp6yjsBboX945)
 
-## Tutorials
+## Prometheus
+
+* https://promlabs.com/promql-cheat-sheet/
+* https://samber.github.io/awesome-prometheus-alerts/
+
+* [Getting Started](https://prometheus.io/docs/tutorials/getting_started/)
+* [client_golang](https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#section-readme)
+* [Monitoring cAdvisor with Prometheus](https://github.com/google/cadvisor/blob/master/docs/storage/prometheus.md)
+
+* [Prometheus Fundamentals](https://www.youtube.com/playlist?list=PLyBW7UHmEXgylLwxdVbrBQJ-fJ_jMvh8h)
+
+* [Kubernetes Monitoring Made Easy with Prometheus | KodeKloud](https://www.youtube.com/watch?v=6xmWr7p5TE0&ab_channel=KodeKloud)
 
 * [Prometheus and Grafana Tutorial](https://www.youtube.com/playlist?list=PLdsu0umqbb8NxUs8r8BIUe9-PhcoZyojA)
 * [Kubernetes Observe](https://www.youtube.com/playlist?list=PL6VBQyIvTlRiLxk2z4FWEViPXimlCARiW)
 * [Prometheus](https://www.youtube.com/@AntonPutra/search?query=prometheus)
 * [Prometheus](https://www.youtube.com/playlist?list=PLrMP04WSdCjrL4OBnaqXRy8X3XEd7ZrKf)
-* [Prometheus Fundamentals](https://www.youtube.com/playlist?list=PLyBW7UHmEXgylLwxdVbrBQJ-fJ_jMvh8h)
 * [Beautiful Dashboards with Grafana and Prometheus - Monitoring Kubernetes Tutorial](https://www.youtube.com/watch?v=fzny5uUaAeY&ab_channel=TechnoTim)
-* [Kubernetes Monitoring Made Easy with Prometheus | KodeKloud](https://www.youtube.com/watch?v=6xmWr7p5TE0&ab_channel=KodeKloud)
 * [How Prometheus Monitoring Works | Explaining Prometheus Architectur](https://www.youtube.com/watch?v=f4W_eEJC-20)
 * [Mastering Prometheus: Installation and Systemd Setup Guide](https://www.youtube.com/watch?v=cl9JlW0nzzE)
 
@@ -51,15 +48,19 @@ Prometheus is a system monitoring and alerting system.
 
 ## Loki
 
+* [Mastering Grafana Loki: Complete Guide to Installation, Configuration, and Integration | Part 1](https://www.youtube.com/watch?v=0B-yQdSXFJE&ab_channel=KodeKloud)
+* [Mastering Grafana Loki: Kubernetes Log Collection & Integration | Part 2](https://www.youtube.com/watch?v=O52dseg2bJo&ab_channel=KodeKloud)
+
 * [Meet Grafana LOKI, a Log Aggregation System for EVERYTHING](https://www.youtube.com/watch?v=h_GGd7HfKQ8)
 
 * [Digitalocean Best Practices in Monitoring a Kubernetes Cluster With Prometheus, Grafana and Loki](https://www.youtube.com/watch?v=NABZqKq1McE&list=PLseEp7p6Ewianx91YyPkdf1G12aAU7ugp&index=4)
 
 * [Server Monitoring with Grafana Prometheus and Loki](https://www.youtube.com/watch?v=ddZjhv66o_o&ab_channel=PiyushGarg)
 
-* [Mastering Grafana Loki: Complete Guide to Installation, Configuration, and Integration | Part 1](https://www.youtube.com/watch?v=0B-yQdSXFJE&ab_channel=KodeKloud)
-* [Mastering Grafana Loki: Kubernetes Log Collection & Integration | Part 2](https://www.youtube.com/watch?v=O52dseg2bJo&ab_channel=KodeKloud)
 * [Grafana Loki for Beginners](https://www.youtube.com/watch?v=x2usZVRnXK4)
+
+* [Log based metrics and alerting in Grafana Loki](https://www.youtube.com/watch?v=BvgLIsWNV-0)
+* [Grafana Loki querying basics, log based metrics and setting alerts on logs](https://www.youtube.com/watch?v=VEGYgPiAazk)
 
 ## Grafana
 
