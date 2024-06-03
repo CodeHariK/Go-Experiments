@@ -1,8 +1,30 @@
-# Monitoring
+# Observability
+
+* [Open source observability explained - the Grafana Labs stack](https://www.youtube.com/watch?v=WSW1urIXsfA)
+
+## Grafana
+
+* [Grafana for Beginners](https://www.youtube.com/playlist?list=PLDGkOdUX1Ujo27m6qiTPPCpFHVfyKq9jT)
+* [Demos & Tutorials](https://www.youtube.com/playlist?list=PLDGkOdUX1UjpDYrCX89-qzAUQR2y44eoi)
+
+* [Grafana Tutorial For Beginners](https://www.youtube.com/playlist?list=PLdsu0umqbb8MYuhh4EJsNEIrueS_kFlgw)
+
+* https://github.com/blueswen/fastapi-observability
+* https://github.com/javaducky/opentelemetry-demo
+* https://github.com/open-telemetry/opentelemetry-demo
+* [OpenTelemetry demo app with Grafana, Loki, Prometheus, Tempo](https://www.youtube.com/watch?v=dXR8WNm5uos)
+
+* [Grafana](https://www.youtube.com/playlist?list=PLCgehTvigkDN8GHiRu0Hxk5kpw4CWngUv)
+
+* [TimeScale Guide to Grafana 101](https://www.youtube.com/playlist?list=PLsceB9ac9MHTjwvV18QJnPcLrTXm_Q-Ft)
 
 ## Open Telemetry
 
 * https://opentelemetry.io/docs/languages/go/getting-started/
+
+* [Efficient Debugging and Logging with OpenTelemetry in Go](https://www.youtube.com/watch?v=5rjTdA6BM1E)
+* https://github.com/kostyay/gorm-opentelemetry
+* https://github.com/kostyay/otel-demo
 
 * [Get started with the OpenTelemetry Collector](https://cloud.google.com/stackdriver/docs/managed-prometheus/setup-otel)
 * [Easy Telemetry Instrumentation on GKE with the OpenTelemetry Operator](https://cloud.google.com/blog/topics/developers-practitioners/easy-telemetry-instrumentation-gke-opentelemetry-operator/)
@@ -60,11 +82,11 @@
 * [Grafana Loki for Beginners](https://www.youtube.com/watch?v=x2usZVRnXK4)
 
 * [Log based metrics and alerting in Grafana Loki](https://www.youtube.com/watch?v=BvgLIsWNV-0)
-* [Grafana Loki querying basics, log based metrics and setting alerts on logs](https://www.youtube.com/watch?v=VEGYgPiAazk)
+* [Grafana Loki querying basics, log based metrics and setting alerts on logs](https://www.youtube.com/watch?v=VEGYgPiAazk)i
 
-## Grafana
+## Tempo
 
-* [Grafana Tutorial For Beginners](https://www.youtube.com/playlist?list=PLdsu0umqbb8MYuhh4EJsNEIrueS_kFlgw)
+* [Beyond tracing with Grafana Tempo What do we do with all this data](https://www.youtube.com/watch?v=zVHHeO8tAWQ)
 
 ## Go
 

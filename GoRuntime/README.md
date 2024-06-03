@@ -9,4 +9,6 @@
 
 * [Go Profiling and Observability from Scratch](https://www.youtube.com/watch?v=7hg4T2Qqowk&ab_channel=GopherAcademy)
 
+* [Tracing Programs with Go](https://www.youtube.com/watch?v=mjixFKO-IdM)
+
 * [The context package internals](https://www.youtube.com/watch?v=mfgBhGu5pco&ab_channel=GopherConUK)
