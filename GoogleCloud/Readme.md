@@ -1,5 +1,7 @@
 # Google Cloud
 
+* https://cloud.google.com/docs/samples?language=golang
+
 * https://github.com/GoogleCloudPlatform/serverless-expeditions
 
 ## ML
@@ -65,6 +67,9 @@
 * [Websockets with Cloud Run](https://www.youtube.com/watch?v=g6i-mb_3iWM)
 
 ## GKE
+
+* https://cloud.google.com/kubernetes-engine/docs/how-to/stateful-apps
+* https://cloud.google.com/kubernetes-engine/docs/concepts/persistent-volumes
 
 * [Compute with Google Kubernetes Engine](https://www.youtube.com/watch?v=5-9Zdxp0GT0&list=PLIivdWyY5sqJOQJCXW_aYEqwfyi6bu1gC&index=4)
 * [GKE Essentials](https://www.youtube.com/playlist?list=PLIivdWyY5sqLQ3m7WJDfBdMMqO12Q0vqg)
