@@ -26,6 +26,8 @@
 * https://github.com/kostyay/gorm-opentelemetry
 * https://github.com/kostyay/otel-demo
 
+* [OTel in Practice](https://www.youtube.com/playlist?list=PLVYDBkQ1TdyxKgdGE4ThYLkNRCuLLYy9x)
+
 * [Get started with the OpenTelemetry Collector](https://cloud.google.com/stackdriver/docs/managed-prometheus/setup-otel)
 * [Easy Telemetry Instrumentation on GKE with the OpenTelemetry Operator](https://cloud.google.com/blog/topics/developers-practitioners/easy-telemetry-instrumentation-gke-opentelemetry-operator/)
 * [Instrument trace information using OpenTelemetry](https://codelabs.developers.google.com/codelabs/otel-cloudtrace)
@@ -70,6 +72,9 @@
 
 ## Loki
 
+* [Zero to Hero: Loki](https://www.youtube.com/playlist?list=PLDGkOdUX1Ujr9QOsM--ogwJAYu6JD48W7)
+* [Grafana Loki](https://www.youtube.com/playlist?list=PLDGkOdUX1UjpIWD3wTGGsiN4adkOq3LzQ)
+
 * [Mastering Grafana Loki: Complete Guide to Installation, Configuration, and Integration | Part 1](https://www.youtube.com/watch?v=0B-yQdSXFJE&ab_channel=KodeKloud)
 * [Mastering Grafana Loki: Kubernetes Log Collection & Integration | Part 2](https://www.youtube.com/watch?v=O52dseg2bJo&ab_channel=KodeKloud)
 
@@ -87,6 +92,13 @@
 ## Tempo
 
 * [Beyond tracing with Grafana Tempo What do we do with all this data](https://www.youtube.com/watch?v=zVHHeO8tAWQ)
+
+## k6
+
+* https://grafana.com/docs/k6/latest/get-started/running-k6/
+
+* [Grafana k6](https://www.youtube.com/playlist?list=PLDGkOdUX1UjrZM3lIHvFcKJxVgl2n4J65)
+* [Learn k6 Series](https://www.youtube.com/playlist?list=PLJ9A48W0kpRJKmVeurt7ltKfrOdr8ZBdt)
 
 ## Go
 
