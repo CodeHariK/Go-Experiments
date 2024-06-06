@@ -2,7 +2,9 @@
 
 * [Open source observability explained - the Grafana Labs stack](https://www.youtube.com/watch?v=WSW1urIXsfA)
 
-## Grafana
+## 
+
+* https://grafana.com/tutorials/grafana-fundamentals/
 
 * [Grafana for Beginners](https://www.youtube.com/playlist?list=PLDGkOdUX1Ujo27m6qiTPPCpFHVfyKq9jT)
 * [Demos & Tutorials](https://www.youtube.com/playlist?list=PLDGkOdUX1UjpDYrCX89-qzAUQR2y44eoi)
@@ -26,6 +28,8 @@
 * https://github.com/kostyay/gorm-opentelemetry
 * https://github.com/kostyay/otel-demo
 
+* [OpenTelemetry Course - Understand Software Performance](https://www.youtube.com/watch?v=r8UvWSX3KA8&ab_channel=freeCodeCamp.org)
+
 * [OTel in Practice](https://www.youtube.com/playlist?list=PLVYDBkQ1TdyxKgdGE4ThYLkNRCuLLYy9x)
 
 * [Get started with the OpenTelemetry Collector](https://cloud.google.com/stackdriver/docs/managed-prometheus/setup-otel)
@@ -36,7 +40,6 @@
 * [Google Managed Prometheus with OpenTelemetry](https://medium.com/google-cloud/google-managed-prometheus-with-opentelemetry-1a1fd1f0ae8a)
 
 * [OpenTelemetry Golang Tutorial (Tracing in Grafana & Kubernetes & Tempo)](https://www.youtube.com/watch?v=ZIN7H00ulQw)
-* [OpenTelemetry Course - Understand Software Performance](https://www.youtube.com/watch?v=r8UvWSX3KA8&ab_channel=freeCodeCamp.org)
 
 * [How to Get Started with OpenTelemetry](https://www.youtube.com/watch?v=Txe4ji4EDUA&ab_channel=NGINX)
 * [How to Set Up Prometheus & Grafana: Monitoring an API with Golang](https://www.youtube.com/watch?v=pP2DKCKR4CQ)
@@ -58,10 +61,10 @@
 
 * [Kubernetes Monitoring Made Easy with Prometheus | KodeKloud](https://www.youtube.com/watch?v=6xmWr7p5TE0&ab_channel=KodeKloud)
 
+* [Prometheus](https://www.youtube.com/playlist?list=PLrMP04WSdCjrL4OBnaqXRy8X3XEd7ZrKf)
 * [Prometheus and Grafana Tutorial](https://www.youtube.com/playlist?list=PLdsu0umqbb8NxUs8r8BIUe9-PhcoZyojA)
 * [Kubernetes Observe](https://www.youtube.com/playlist?list=PL6VBQyIvTlRiLxk2z4FWEViPXimlCARiW)
 * [Prometheus](https://www.youtube.com/@AntonPutra/search?query=prometheus)
-* [Prometheus](https://www.youtube.com/playlist?list=PLrMP04WSdCjrL4OBnaqXRy8X3XEd7ZrKf)
 * [Beautiful Dashboards with Grafana and Prometheus - Monitoring Kubernetes Tutorial](https://www.youtube.com/watch?v=fzny5uUaAeY&ab_channel=TechnoTim)
 * [How Prometheus Monitoring Works | Explaining Prometheus Architectur](https://www.youtube.com/watch?v=f4W_eEJC-20)
 * [Mastering Prometheus: Installation and Systemd Setup Guide](https://www.youtube.com/watch?v=cl9JlW0nzzE)
@@ -75,14 +78,16 @@
 * [Zero to Hero: Loki](https://www.youtube.com/playlist?list=PLDGkOdUX1Ujr9QOsM--ogwJAYu6JD48W7)
 * [Grafana Loki](https://www.youtube.com/playlist?list=PLDGkOdUX1UjpIWD3wTGGsiN4adkOq3LzQ)
 
+* [Server Monitoring with Grafana Prometheus and Loki](https://www.youtube.com/watch?v=ddZjhv66o_o&ab_channel=PiyushGarg)
+
 * [Mastering Grafana Loki: Complete Guide to Installation, Configuration, and Integration | Part 1](https://www.youtube.com/watch?v=0B-yQdSXFJE&ab_channel=KodeKloud)
 * [Mastering Grafana Loki: Kubernetes Log Collection & Integration | Part 2](https://www.youtube.com/watch?v=O52dseg2bJo&ab_channel=KodeKloud)
 
 * [Meet Grafana LOKI, a Log Aggregation System for EVERYTHING](https://www.youtube.com/watch?v=h_GGd7HfKQ8)
 
-* [Digitalocean Best Practices in Monitoring a Kubernetes Cluster With Prometheus, Grafana and Loki](https://www.youtube.com/watch?v=NABZqKq1McE&list=PLseEp7p6Ewianx91YyPkdf1G12aAU7ugp&index=4)
+* [Grafana Loki to access Kubernetes logs](https://www.youtube.com/watch?v=Mn2YpMJaEBY)
 
-* [Server Monitoring with Grafana Prometheus and Loki](https://www.youtube.com/watch?v=ddZjhv66o_o&ab_channel=PiyushGarg)
+* [Digitalocean Best Practices in Monitoring a Kubernetes Cluster With Prometheus, Grafana and Loki](https://www.youtube.com/watch?v=NABZqKq1McE&list=PLseEp7p6Ewianx91YyPkdf1G12aAU7ugp&index=4)
 
 * [Grafana Loki for Beginners](https://www.youtube.com/watch?v=x2usZVRnXK4)
 
@@ -91,14 +96,18 @@
 
 ## Tempo
 
+* https://grafana.com/docs/tempo/latest/
+
 * [Beyond tracing with Grafana Tempo What do we do with all this data](https://www.youtube.com/watch?v=zVHHeO8tAWQ)
 
-## k6
+## Site Reliability Engineering
 
 * https://grafana.com/docs/k6/latest/get-started/running-k6/
 
 * [Grafana k6](https://www.youtube.com/playlist?list=PLDGkOdUX1UjrZM3lIHvFcKJxVgl2n4J65)
 * [Learn k6 Series](https://www.youtube.com/playlist?list=PLJ9A48W0kpRJKmVeurt7ltKfrOdr8ZBdt)
+
+* [Site Reliability Engineering](https://www.youtube.com/playlist?list=PL6VBQyIvTlRg3t_sl0dIcmh_X2qLmpHh4)
 
 ## Go
 

@@ -7,6 +7,7 @@
 
 ## Argo CD
 
+* [Learn Continuous Delivery on Kubernetes with ArgoCD](https://www.youtube.com/watch?v=B7Q-LcWK4TA)
 * [PLAY ALL GitOps with ArgoCD](https://www.youtube.com/playlist?list=PLdsu0umqbb8P8dNoox7ECgOo_fJ9FBfZl)
 * [ArgoCD Tutorial for Beginners: GitOps CD for Kubernetes](https://www.youtube.com/playlist?list=PLiMWaCMwGJXkktZoHhmL6sbg7ELNjv9Xw)
 * [ArgoCD Starter Guide: Full Tutorial for ArgoCD in Kubernetes](https://www.youtube.com/watch?v=JLrR9RV9AFA)
