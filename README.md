@@ -18,6 +18,8 @@
 
 * [Go For TypeScript Developers - Use Your TypeScript Skills to Learn Go](https://www.youtube.com/watch?v=ptuQ7xncV7A)
 
+* [Workshop: Practical Go](https://www.youtube.com/watch?v=gi7t6Pl9rxE)
+
 ## Level 2
 
 * [DevOps Full Course Using Go](https://www.youtube.com/playlist?list=PL7g1jYj15RUMdka_gPLDCFrIhwjtvCLJD)
