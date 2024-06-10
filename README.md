@@ -16,9 +16,9 @@
 
 * [Grpc & Protocol Buffers](GrpcGo/README.md)
 
-* [Go For TypeScript Developers - Use Your TypeScript Skills to Learn Go](https://www.youtube.com/watch?v=ptuQ7xncV7A)
-
 * [Workshop: Practical Go](https://www.youtube.com/watch?v=gi7t6Pl9rxE)
+
+* [Go For TypeScript Developers - Use Your TypeScript Skills to Learn Go](https://www.youtube.com/watch?v=ptuQ7xncV7A)
 
 ## Level 2
 
@@ -45,3 +45,7 @@
 * [Exponent System Design](https://www.youtube.com/playlist?list=PLrtCHHeadkHp92TyPt1Fj452_VGLipJnL)
 
 * [Algorithms in Distributed Systems, Two Phase Commit](https://www.youtube.com/playlist?list=PLsdq-3Z1EPT1wfRQo2xrrst2SGremT_qd)
+
+* Kiki
+* [How Pinterest Scaled to 11 Million Users With Only 6 Engineers](https://www.youtube.com/watch?v=QRlP6BI1PFA)
+* [How Instagram Scaled to 14 Million Users With Only 3 Engineers](https://www.youtube.com/watch?v=TdhXPsDXdAI)
