@@ -6,6 +6,9 @@
 
 * https://grafana.com/tutorials/grafana-fundamentals/
 
+* https://grafana.com/docs/grafana/latest/setup-grafana/installation/helm/
+* https://github.com/grafana/helm-charts
+
 * [Grafana for Beginners](https://www.youtube.com/playlist?list=PLDGkOdUX1Ujo27m6qiTPPCpFHVfyKq9jT)
 * [Demos & Tutorials](https://www.youtube.com/playlist?list=PLDGkOdUX1UjpDYrCX89-qzAUQR2y44eoi)
 
@@ -53,6 +56,8 @@
 * https://promlabs.com/promql-cheat-sheet/
 * https://samber.github.io/awesome-prometheus-alerts/
 
+* https://earthly.dev/blog/monitoring-system-metrics-prometheus-grafana/
+
 * [Getting Started](https://prometheus.io/docs/tutorials/getting_started/)
 * [client_golang](https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#section-readme)
 * [Monitoring cAdvisor with Prometheus](https://github.com/google/cadvisor/blob/master/docs/storage/prometheus.md)
@@ -74,6 +79,8 @@
 * [AWS EKS Install Prometheus and Grafana using HELM](https://www.youtube.com/watch?v=3yIDT5w2nCg)
 
 ## Loki
+
+* https://earthly.dev/blog/grafana-loki-log-aggregation-k8s/
 
 * [Zero to Hero: Loki](https://www.youtube.com/playlist?list=PLDGkOdUX1Ujr9QOsM--ogwJAYu6JD48W7)
 * [Grafana Loki](https://www.youtube.com/playlist?list=PLDGkOdUX1UjpIWD3wTGGsiN4adkOq3LzQ)

@@ -13,6 +13,7 @@
 * [CMU Intro to Database Systems (15-445/645 - Fall 2023)](https://www.youtube.com/playlist?list=PLSE8ODhjZXjbj8BMuIrRcacnQh20hmY9g)
 
 * [Writing My Own Database From Scratch](https://www.youtube.com/watch?v=5Pc18ge9ohI)
+* [How Do DBs Sort Tables When They Don't Fit In RAM?](https://www.youtube.com/watch?v=F9XmmS8rL4c)
 
 * https://github.com/cstack/db_tutorial
 

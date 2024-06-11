@@ -25,6 +25,10 @@
 
 * [DevOps Kubernetes Master Class | Kubernetes Full DevOps Tutorial](https://www.youtube.com/watch?v=L8n_HYDnq_I)
 
+## Go
+
+* https://earthly.dev/blog/optimize-golang-for-kubernetes/
+
 ## AWS EKS
 
 * [How to Create A Secured Kubernetes Cluster on Amazon EKS](https://www.youtube.com/watch?v=HcjJqZRk1-w)
