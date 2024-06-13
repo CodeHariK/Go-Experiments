@@ -31,6 +31,7 @@ Queue : Expiration, Delay, Atmostonce, Atleastonce, exactlyonce, waitsuntilmessa
 * Components fail indpendent of each other, but failure cascade
 * Cicuit breaker : break the circuit, so that failure won't propogated or overload system and system can self heal.
 
+* [Top 6 Load Balancing Algorithms Every Developer Should Know](https://www.youtube.com/watch?v=dBmxNsS3BGE)
 * L4 vs L7 load balancer
 * L4 works on packets, does not know anything above it.
 * Round robin, weighted rr, least connection, ip hash, url hash

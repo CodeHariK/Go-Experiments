@@ -46,6 +46,31 @@
 
 * [Algorithms in Distributed Systems, Two Phase Commit](https://www.youtube.com/playlist?list=PLsdq-3Z1EPT1wfRQo2xrrst2SGremT_qd)
 
+* ByteByteGo
+* [System Design Interview: Design A Location Based Service (Yelp, Google Places)](https://www.youtube.com/watch?v=M4lR_Va97cQ)
+
 * Kiki
 * [How Pinterest Scaled to 11 Million Users With Only 6 Engineers](https://www.youtube.com/watch?v=QRlP6BI1PFA)
 * [How Instagram Scaled to 14 Million Users With Only 3 Engineers](https://www.youtube.com/watch?v=TdhXPsDXdAI)
+
+###
+
+* [Back-Of-The-Envelope Estimation / Capacity Planning](https://www.youtube.com/watch?v=UC5xf8FbdJc)
+
+* [Bloom Filters](https://www.youtube.com/watch?v=V3pzxngeLqw)
+* [Consistent Hashing | Algorithms You Should Know #1](https://www.youtube.com/watch?v=UF9Iqmg94tk)
+
+## Database
+
+* [The Secret Sauce Behind NoSQL: LSM Tree](https://www.youtube.com/watch?v=I6jB0nM9SKU) 
+
+### Postgres
+
+* [5 Secrets for making PostgreSQL run BLAZING FAST. How to improve database performance.](https://www.youtube.com/watch?v=YON9PliOYFk)
+
+* [What is Database Sharding?](https://www.youtube.com/watch?v=XP98YCr-iXQ)
+
+* [PostgreSQL performance tips you have never seen before](https://www.youtube.com/watch?v=m8ogrogKjXo)
+
+* [Practical Partitioning in Production with #PostgreSQL](https://www.youtube.com/watch?v=edQZauVU-ws)
+* [Don't make these mistakes with #PostgreSQL!](https://www.youtube.com/watch?v=vxuPW4Ottrk)
