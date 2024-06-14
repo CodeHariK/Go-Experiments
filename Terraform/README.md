@@ -25,6 +25,7 @@ ssh -i ~/.ssh/terrakey ec2-user@13.234.111.6
 ## Tutorials
 
 * [Complete Terraform Course - From BEGINNER to PRO! (Learn Infrastructure as Code)](https://www.youtube.com/watch?v=7xngnjfIlK4)
+* [Terraform Tutorial for Beginners + Labs: Complete Step by Step Guide!](https://www.youtube.com/watch?v=YcJ9IeukJL8)
 * [Terraform Course - Automate your AWS cloud infrastructure](https://www.youtube.com/watch?v=SLB_c_ayRMo)
 * [Terraform Tutorials for Beginners](https://www.youtube.com/playlist?list=PLiMWaCMwGJXmJdmfJjG3aK1IkU7oWvxIj)
 * [Terraform Tutorial for Beginners | Terraform with AWS](https://www.youtube.com/playlist?list=PLdsu0umqbb8NxoJUNup3PCb38RQpQtm9p)
