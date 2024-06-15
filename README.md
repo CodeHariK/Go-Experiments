@@ -44,6 +44,11 @@
 
 ## System design
 
+1 Mega  = 1 Mil  = 10^6
+1 Terra = 1 Bil  = 10^9
+1 H = 3600
+1 D = 10^5
+
 * [System Design Pratiksha](https://www.youtube.com/playlist?list=PLWp3jRAb6-XWmlu9R96p3xp0G_F3kdq3x)
 
 * [Exponent System Design](https://www.youtube.com/playlist?list=PLrtCHHeadkHp92TyPt1Fj452_VGLipJnL)
@@ -70,6 +75,8 @@
 
 * NeetCode
 * [Design Youtube - System Design Interview](https://www.youtube.com/watch?v=jPKTo1iGQiE)
+
+![Stock](./SystemDesign/Stock.excalidraw.png)
 
 ###
 
