@@ -76,14 +76,20 @@
 * NeetCode
 * [Design Youtube - System Design Interview](https://www.youtube.com/watch?v=jPKTo1iGQiE)
 
-![Stock](./SystemDesign/Stock.excalidraw.png)
+* [Scaling Hotstar for 25 million concurrent viewers](https://www.youtube.com/watch?v=QjvyiyH4rr0)
 
-###
+* [How to Build an Exchange](https://www.youtube.com/watch?v=b1e4t2k2KJY)
+
+* 
+* [Stock Exchange System Design : Distributed Transactions, Financial System](https://www.youtube.com/watch?v=XuKs2kWH0mQ)
 
 * [Back-Of-The-Envelope Estimation / Capacity Planning](https://www.youtube.com/watch?v=UC5xf8FbdJc)
 
 * [Bloom Filters](https://www.youtube.com/watch?v=V3pzxngeLqw)
 * [Consistent Hashing | Algorithms You Should Know #1](https://www.youtube.com/watch?v=UF9Iqmg94tk)
+
+![Stock](./SystemDesign/Stock.excalidraw.png)
+![Twitter](./SystemDesign/Twitter.excalidraw.png)
 
 ## Database
 
@@ -134,9 +140,10 @@
 
 * [Google Cloud Platform Learning Series](https://www.youtube.com/playlist?list=PLkJoVgst5ibapmObyPLz2uKytahU-HE2c)
 
-* [Learn Google Cloud](https://www.youtube.com/playlist?list=PLBRBRV08tHh1e9oqTsONC5AuhFd-SUXWq)
-
 #### Networking
+
+* [Maglev: A Fast and Reliable Software Network Load Balancer](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/44824.pdf)
+* [High Availability Load Balancers with Maglev](https://blog.cloudflare.com/high-availability-load-balancers-with-maglev)
 
 * [Cloud Load Balancing Deep Dive and Best Practices](https://www.youtube.com/watch?v=HUHBq_VGgFg)
 
@@ -153,4 +160,5 @@
 * [Let's Learn Terraform in GCP | Basics of Terraform](https://www.youtube.com/playlist?list=PLn275E3eumb75IhjQOqmtx8MUaK5hVV38)
 
 * [GCP Infrastructure as Code with Terraform](https://www.youtube.com/watch?v=Z8OIR7Jdxy4)
+
 * [Google Cloud with Terraform](https://www.youtube.com/playlist?list=PLkJoVgst5ibbxW_tGq7_9l3NAQvB5-LJO)
