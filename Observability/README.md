@@ -1,5 +1,10 @@
 # Observability
 
+* https://grafana.com/community/
+* https://play.grafana.org/dashboards
+
+* https://microbs.io/docs/apps/ecommerce/
+
 * [Open source observability explained - the Grafana Labs stack](https://www.youtube.com/watch?v=WSW1urIXsfA)
 
 ## 
@@ -27,6 +32,10 @@
 
 * https://opentelemetry.io/docs/languages/go/getting-started/
 
+* https://github.com/open-telemetry/opentelemetry-go/tree/main/example
+
+* https://github.com/open-telemetry/opentelemetry-demo
+
 * [Efficient Debugging and Logging with OpenTelemetry in Go](https://www.youtube.com/watch?v=5rjTdA6BM1E)
 * https://github.com/kostyay/gorm-opentelemetry
 * https://github.com/kostyay/otel-demo
@@ -53,15 +62,20 @@
 
 ## Prometheus
 
+* https://prometheus.io/docs/introduction/overview/
+
 * https://promlabs.com/promql-cheat-sheet/
 * https://samber.github.io/awesome-prometheus-alerts/
 
 * https://earthly.dev/blog/monitoring-system-metrics-prometheus-grafana/
 
+* https://github.com/prometheus/prometheus/tree/main/documentation/examples
+
 * [Getting Started](https://prometheus.io/docs/tutorials/getting_started/)
 * [client_golang](https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#section-readme)
 * [Monitoring cAdvisor with Prometheus](https://github.com/google/cadvisor/blob/master/docs/storage/prometheus.md)
 
+* [How to Monitor/Instrument Golang with Prometheus (Counter - Gauge - Histogram - Summary)](https://www.youtube.com/watch?v=WUBjlJzI2a0)
 * [Prometheus Fundamentals](https://www.youtube.com/playlist?list=PLyBW7UHmEXgylLwxdVbrBQJ-fJ_jMvh8h)
 
 * [Kubernetes Monitoring Made Easy with Prometheus | KodeKloud](https://www.youtube.com/watch?v=6xmWr7p5TE0&ab_channel=KodeKloud)
@@ -105,6 +119,9 @@
 
 * https://grafana.com/docs/tempo/latest/
 
+* [Webinar] https://grafana.com/go/webinar/getting-started-with-tracing-and-grafana-tempo/
+* [Webinar] https://grafana.com/go/webinar/getting-started-with-tracing-and-grafana-tempo-emea
+
 * [Beyond tracing with Grafana Tempo What do we do with all this data](https://www.youtube.com/watch?v=zVHHeO8tAWQ)
 
 ## Site Reliability Engineering
@@ -115,10 +132,6 @@
 * [Learn k6 Series](https://www.youtube.com/playlist?list=PLJ9A48W0kpRJKmVeurt7ltKfrOdr8ZBdt)
 
 * [Site Reliability Engineering](https://www.youtube.com/playlist?list=PL6VBQyIvTlRg3t_sl0dIcmh_X2qLmpHh4)
-
-## Go
-
-* [How to Monitor/Instrument Golang with Prometheus (Counter - Gauge - Histogram - Summary)](https://www.youtube.com/watch?v=WUBjlJzI2a0)
 
 ## Kubernetes
 
