@@ -53,6 +53,8 @@
 
 * [🐙 Yet another load balancer](https://github.com/onestraw/golb)
 
+* https://github.com/anthdm/superkit
+
 ### Microservices
 
 * https://github.com/GoogleCloudPlatform/microservices-demo

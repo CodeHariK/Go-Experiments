@@ -9,7 +9,6 @@ use (
 
 	./Kubernetes/Example/kubedemo
 
-	./Monitoring/prometheus-basic
 	./Profiling
 	./Projects
 	./Projects/Chess/glee
