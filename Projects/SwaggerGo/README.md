@@ -1,9 +1,6 @@
 # SwaggerGo
-
 go install github.com/swaggo/swag/cmd/swag@latest
 
-swag init --parseDependency --parseInternal
+swag init --parseDependency --parseInternal --ot json
 
-import _ "swagger/docs"
-
-<http://127.0.0.1:8080/swagger/index.html>
+<http://127.0.0.1:8080/docs>

@@ -17,7 +17,7 @@
     "host": "localhost:8080",
     "basePath": "/",
     "paths": {
-        "/v1/books": {
+        "/api/v1/books": {
             "get": {
                 "description": "Get all books",
                 "consumes": [
@@ -111,7 +111,7 @@
                 }
             }
         },
-        "/v1/books/{id}": {
+        "/api/v1/books/{id}": {
             "get": {
                 "description": "Get book by ID",
                 "consumes": [
@@ -214,18 +214,6 @@
         }
     },
     "definitions": {
-        "gorm.DeletedAt": {
-            "type": "object",
-            "properties": {
-                "time": {
-                    "type": "string"
-                },
-                "valid": {
-                    "description": "Valid is true if Time is not NULL",
-                    "type": "boolean"
-                }
-            }
-        },
         "handlers.ResponseHTTP": {
             "type": "object",
             "properties": {
@@ -245,15 +233,6 @@
                     "type": "string",
                     "example": "Dino"
                 },
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "$ref": "#/definitions/gorm.DeletedAt"
-                },
-                "id": {
-                    "type": "integer"
-                },
                 "publisher": {
                     "type": "string",
                     "example": "Creative Company"
@@ -261,9 +240,6 @@
                 "title": {
                     "type": "string",
                     "example": "Book A"
-                },
-                "updatedAt": {
-                    "type": "string"
                 }
             }
         }

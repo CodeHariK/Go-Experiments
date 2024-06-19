@@ -11,9 +11,11 @@ use (
 
 	./Profiling
 	./Projects
+	./Projects/Checkout-System
 	./Projects/Chess/glee
 	./Projects/GreenGoblin
 	./Projects/RSSAggregator
+	./Projects/SwaggerGo
 	./Projects/TerminalWizard
 	./Projects/goredis
 	./Projects/torrent-client
