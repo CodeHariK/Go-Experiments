@@ -68,6 +68,8 @@
 * https://samber.github.io/awesome-prometheus-alerts/
 
 * https://earthly.dev/blog/monitoring-system-metrics-prometheus-grafana/
+* https://www.digitalocean.com/community/tutorials/how-to-set-up-digitalocean-kubernetes-cluster-monitoring-with-helm-and-prometheus-operator
+* https://www.digitalocean.com/community/tutorials/how-to-set-up-a-kubernetes-monitoring-stack-with-prometheus-grafana-and-alertmanager-on-digitalocean
 
 * https://github.com/prometheus/prometheus/tree/main/documentation/examples
 
@@ -122,11 +124,20 @@
 * [Webinar] https://grafana.com/go/webinar/getting-started-with-tracing-and-grafana-tempo/
 * [Webinar] https://grafana.com/go/webinar/getting-started-with-tracing-and-grafana-tempo-emea
 
+* https://www.digitalocean.com/community/tutorials/how-to-implement-distributed-tracing-with-jaeger-on-kubernetes
+
 * [Beyond tracing with Grafana Tempo What do we do with all this data](https://www.youtube.com/watch?v=zVHHeO8tAWQ)
 
 ## Site Reliability Engineering
 
 * https://grafana.com/docs/k6/latest/get-started/running-k6/
+
+* [API load testing: A beginner's guide](https://grafana.com/blog/2024/01/30/api-load-testing/)
+* [Stress testing: A beginner's guide](https://grafana.com/blog/2024/01/30/stress-testing/)
+* [Spike testing: A beginner's guide](https://grafana.com/blog/2024/01/30/spike-testing/)
+* [Soak testing: A beginner's guide](https://grafana.com/blog/2024/01/30/soak-testing/)
+* [Average-load testing: A beginner's guide](https://grafana.com/blog/2024/01/30/average-load-testing/)
+* [Breakpoint testing: A beginner's guide](https://grafana.com/blog/2024/01/30/breakpoint-testing/) 
 
 * [Grafana k6](https://www.youtube.com/playlist?list=PLDGkOdUX1UjrZM3lIHvFcKJxVgl2n4J65)
 * [Learn k6 Series](https://www.youtube.com/playlist?list=PLJ9A48W0kpRJKmVeurt7ltKfrOdr8ZBdt)

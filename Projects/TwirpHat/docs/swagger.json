@@ -1,0 +1,67 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample swagger for Fiber",
+        "title": "Fiber Example API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "email": "fiber@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {
+        "/dash/twirphat.haberdasher.Haberdasher/MakeHat": {
+            "post": {
+                "description": "Post Hat Making",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Hat"
+                ],
+                "summary": "Post MakeHats",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/haberdasher.Hat"
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable"
+                    }
+                },
+                "X-codeSample": "hello"
+            }
+        }
+    },
+    "definitions": {
+        "haberdasher.Hat": {
+            "type": "object",
+            "properties": {
+                "color": {
+                    "description": "The color of a hat will never be 'invisible', but other than\nthat, anything is fair game.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of a hat is it's type. Like, 'bowler', or something.",
+                    "type": "string"
+                },
+                "size": {
+                    "description": "The size of a hat should always be in inches.",
+                    "type": "integer"
+                }
+            }
+        }
+    }
+}
