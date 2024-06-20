@@ -17,6 +17,7 @@ use (
 	./Projects/RSSAggregator
 	./Projects/SwaggerGo
 	./Projects/TerminalWizard
+	./Projects/TwirpHat
 	./Projects/goredis
 	./Projects/torrent-client
 

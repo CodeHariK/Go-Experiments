@@ -5,7 +5,7 @@ import (
 )
 
 // @title			Fiber Example API
-// @version		1.0
+// @version			1.0
 // @description	This is a sample swagger for Fiber
 // @termsOfService	http://swagger.io/terms/
 // @contact.name	API Support
