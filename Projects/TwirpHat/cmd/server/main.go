@@ -71,17 +71,17 @@ func main() {
 		Handler: loggedMux,
 	}
 
-	process, err := os.FindProcess(os.Getpid())
 	fmt.Printf("Server Pid %d\n", os.Getpid())
-	go func() {
-		time.Sleep(50 * time.Second)
-		if err != nil {
-			log.Fatalf("Failed to find process: %v", err)
-		}
-		if err := process.Signal(syscall.SIGINT); err != nil {
-			log.Fatalf("Failed to send signal: %v", err)
-		}
-	}()
+	// process, err := os.FindProcess(os.Getpid())
+	// go func() {
+	// 	time.Sleep(50 * time.Second)
+	// 	if err != nil {
+	// 		log.Fatalf("Failed to find process: %v", err)
+	// 	}
+	// 	if err := process.Signal(syscall.SIGINT); err != nil {
+	// 		log.Fatalf("Failed to send signal: %v", err)
+	// 	}
+	// }()
 
 	mux.Handle(dashServer.PathPrefix(), dashServer)
 	docs.SwaggerHandler(mux, "https://cdn.pixabay.com/photo/2017/03/16/21/18/logo-2150297_640.png")
@@ -89,6 +89,18 @@ func main() {
 	// Channel to listen for interrupt or termination signal from the OS
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt, os.Kill, syscall.SIGINT, syscall.SIGTERM)
+
+	///////
+	///////
+	///////
+	///////
+	///////
+	defer close(stop)
+	///////
+	///////
+	///////
+	///////
+	///////
 
 	// Channel to signal the completion of the shutdown process
 	serverShutdown := make(chan struct{})

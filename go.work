@@ -15,6 +15,7 @@ use (
 	./Projects/Chess/glee
 	./Projects/GreenGoblin
 	./Projects/RSSAggregator
+	./Projects/ReRun
 	./Projects/SwaggerGo
 	./Projects/TerminalWizard
 	./Projects/TwirpHat
