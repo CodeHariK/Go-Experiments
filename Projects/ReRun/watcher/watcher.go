@@ -127,7 +127,6 @@ func (w *watcher) runCommand() {
 
 	fmt.Printf("\n%d %s [Rerun:%s]\n\n", a, w.command, w.reRunDuration)
 
-	// w.spider.BroadcastMessage(1, []byte(fmt.Sprintf("ReRun : %d", a)), socket.Connection{ID: "SPIDER"})
 	w.spider.BroadcastMessage(1, []byte("RELOAD"), socket.Connection{ID: "SPIDER"})
 
 	helper.KillProcess(w.shellProcess)

@@ -64,8 +64,8 @@ func main() {
 	)
 
 	mux := http.NewServeMux()
-
-	loggedMux := requestLogger(mux)
+	corsMux := corsPolicy(mux)
+	loggedMux := requestLogger(corsMux)
 
 	server := &http.Server{
 		Addr:    ":8080",
@@ -92,7 +92,7 @@ func main() {
 	wg.Add(2)
 	go func() {
 		defer wg.Done()
-		fmt.Println("Server is starting...")
+		fmt.Printf("Server : localhost%s", server.Addr)
 		if err := server.ListenAndServe(); err != http.ErrServerClosed {
 			log.Fatalf("Server error: %v", err)
 		}
@@ -135,6 +135,19 @@ func requestLogger(next http.Handler) http.Handler {
 		// Log the request method and path
 		log.Printf("Request: %s %s", r.Method, r.URL.Path)
 		// Call the next handler
+		next.ServeHTTP(w, r)
+	})
+}
+
+func corsPolicy(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		if r.Method == "OPTIONS" {
+			return
+		}
+
 		next.ServeHTTP(w, r)
 	})
 }

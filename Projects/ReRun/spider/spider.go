@@ -1,4 +1,4 @@
-package socket
+package spider
 
 import (
 	"context"
@@ -44,9 +44,6 @@ var upgrader = websocket.Upgrader{
 }
 
 func (s *Spider) StartSpider(wg *sync.WaitGroup) {
-	done := make(chan os.Signal, 1)
-	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-
 	server := createServer(s)
 
 	go s.manageConnections()
@@ -61,6 +58,8 @@ func (s *Spider) StartSpider(wg *sync.WaitGroup) {
 		fmt.Println("Spider stopped")
 	}()
 
+	done := make(chan os.Signal, 1)
+	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
 		<-done
 
@@ -94,7 +93,7 @@ func (s *Spider) manageConnections() {
 	}
 }
 
-// broadcastMessage sends a message to all active connections.
+// BroadcastMessage sends a message to all active connections.
 func (s *Spider) BroadcastMessage(messageType int, message []byte, sender Connection) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -104,7 +103,7 @@ func (s *Spider) BroadcastMessage(messageType int, message []byte, sender Connec
 			continue
 		}
 		err := conn.conn.WriteMessage(messageType, []byte(fmt.Sprintf("%s %s", sender.ID, string(message))))
-		fmt.Printf("Sent to : %s %s\n", conn.ID, string(message))
+		fmt.Printf("-> %s %s\n", sender.ID, string(message))
 
 		if err != nil {
 			fmt.Printf("Error broadcasting message to %s: %v\n", conn.ID, err)

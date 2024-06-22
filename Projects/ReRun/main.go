@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/codeharik/rerun/helper"
-	socket "github.com/codeharik/rerun/spider"
+	"github.com/codeharik/rerun/spider"
 	"github.com/codeharik/rerun/watcher"
 )
 
@@ -53,7 +53,7 @@ func main() {
 	var wg sync.WaitGroup
 	defer wg.Wait()
 
-	s := socket.NewSpider()
+	s := spider.NewSpider()
 	s.StartSpider(&wg)
 
 	w := watcher.NewWatcher(command, rerunTimer, killPorts, directory, s)

@@ -1,4 +1,4 @@
-package socket
+package spider
 
 import (
 	"fmt"
@@ -62,6 +62,7 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 func handlerPage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	fmt.Fprint(w, htmlContent)
+	w.WriteHeader(200)
 }
 
 const htmlContent = `
@@ -71,18 +72,55 @@ const htmlContent = `
     <title>My Web Page</title>
 </head>
 <style>
-	body {
-		background: black;
+	html, body {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		overflow: hidden; /* Prevent scrolling */
+	}
+	iframe {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 80%;
+		height: 80%;
+		border: none; /* Remove default border */
+	}
+	.status {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		background-color: rgba(255, 255, 255, 0.8);
+		padding: 5px 10px;
+		border-radius: 3px;
 	}
 </style>
 <body>
-	<button onclick="sendMessage()">Send Message</button>
+<button onclick="sendMessage()">Send Message</button>
+<iframe id="contentFrame" src=""></iframe>
 </body>
 <script>
 	let socket = new WebSocket("ws://localhost:7359/ws");
 
 	socket.onopen = function(event) {
 		console.log("Connected to WebSocket spider.");
+
+		const iframeUrl = 'http://localhost:8080/docs';
+		const checkInterval = 100; 
+
+		async function checkIframeHealth() {
+			try {
+				const response = await fetch(iframeUrl, { method: 'GET' });
+				if (response.ok) {
+					document.getElementById('contentFrame').src = iframeUrl;
+				} else {
+					setTimeout(checkIframeHealth, checkInterval);
+				}
+			} catch (error) {
+				setTimeout(checkIframeHealth, checkInterval);
+			}
+		}
+		checkIframeHealth();
 	};
 
 	socket.onmessage = function(event) {
