@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"sync"
 	"syscall"
 	"time"
 
@@ -86,27 +87,24 @@ func main() {
 	mux.Handle(dashServer.PathPrefix(), dashServer)
 	docs.SwaggerHandler(mux, "https://cdn.pixabay.com/photo/2017/03/16/21/18/logo-2150297_640.png")
 
-	// Channel to listen for interrupt or termination signal from the OS
-	stop := make(chan os.Signal, 1)
-	signal.Notify(stop, os.Interrupt, os.Kill, syscall.SIGINT, syscall.SIGTERM)
-
-	///////
-	///////
-	///////
-	///////
-	///////
-	defer close(stop)
-	///////
-	///////
-	///////
-	///////
-	///////
-
-	// Channel to signal the completion of the shutdown process
-	serverShutdown := make(chan struct{})
-
+	var wg sync.WaitGroup
+	defer wg.Wait()
+	wg.Add(2)
 	go func() {
-		fmt.Printf("Recieved Signal : %v", <-stop)
+		defer wg.Done()
+		fmt.Println("Server is starting...")
+		if err := server.ListenAndServe(); err != http.ErrServerClosed {
+			log.Fatalf("Server error: %v", err)
+		}
+		fmt.Println("Server shutdown")
+	}()
+
+	// Channel to listen for interrupt or termination signal from the OS
+	done := make(chan os.Signal, 1)
+	signal.Notify(done, os.Interrupt, os.Kill, syscall.SIGINT, syscall.SIGTERM)
+	go func() {
+		<-done
+		defer wg.Done()
 
 		// Initiate graceful shutdown
 		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -115,19 +113,7 @@ func main() {
 		if err := server.Shutdown(ctx); err != nil {
 			log.Fatalf("Error during shutdown: %v", err)
 		}
-		close(serverShutdown)
 	}()
-
-	log.Println("Server is starting...")
-
-	// Start the server
-	if err := server.ListenAndServe(); err != http.ErrServerClosed {
-		log.Fatalf("Server error: %v", err)
-	}
-
-	// Wait for the shutdown process to complete
-	<-serverShutdown
-	log.Println("Server has shut down gracefully")
 }
 
 type LoggingStatter struct {

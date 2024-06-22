@@ -4,39 +4,15 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
-	"os/signal"
 	"sync"
-	"sync/atomic"
-	"syscall"
 	"time"
 
 	"github.com/codeharik/rerun/helper"
-	"github.com/codeharik/rerun/socket"
-
-	"github.com/fsnotify/fsnotify"
-)
-
-var (
-	shellProcess *os.Process
-	childProcess *os.Process
-	counter      int32 = 0
+	socket "github.com/codeharik/rerun/spider"
+	"github.com/codeharik/rerun/watcher"
 )
 
 func main() {
-	var wg sync.WaitGroup
-	wg.Add(1)
-	go func() {
-		socket.StartServer()
-
-		fmt.Println("Stop")
-		wg.Done()
-	}()
-
-	wg.Wait()
-}
-
-func main1() {
 	flagKillPorts := flag.String("k", "", "Optional Kill Ports")
 	flagReRunDelay := flag.Int("t", -1, "Optional Rerun Delay Time in Milliseconds[Min 100]")
 
@@ -74,96 +50,12 @@ func main1() {
 		}
 	}
 
-	watcher, err := fsnotify.NewWatcher()
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer watcher.Close()
-
-	done := make(chan os.Signal)
-	defer close(done)
-	signal.Notify(done, syscall.SIGINT, os.Kill, os.Interrupt)
-
 	var wg sync.WaitGroup
-	wg.Add(1)
 	defer wg.Wait()
 
-	// socket.StartServer()
+	s := socket.NewSpider()
+	s.StartSpider(&wg)
 
-	if rerunTimer >= time.Millisecond*100 {
-		helper.TickerFunction(
-			done,
-			rerunTimer,
-			func() {
-				runCommand(command, killPorts, rerunTimer)
-			},
-		)
-	}
-
-	go func() {
-		defer wg.Done()
-		runCommand(command, killPorts, rerunTimer)
-		for {
-			select {
-			case event, ok := <-watcher.Events:
-				if !ok {
-					return
-				}
-
-				if event.Op&fsnotify.Write == fsnotify.Write || event.Op&fsnotify.Create == fsnotify.Create {
-					fmt.Println("modified file:", event.Name)
-					runCommand(command, killPorts, rerunTimer)
-				}
-
-				if event.Op&fsnotify.Create == fsnotify.Create {
-					info, err := os.Stat(event.Name)
-					if err == nil && info.IsDir() {
-						err = helper.AddRecursive(watcher, event.Name)
-						if err != nil {
-							fmt.Println("error adding directory:", err)
-						}
-					}
-				}
-			case err, ok := <-watcher.Errors:
-				if !ok {
-					return
-				}
-				fmt.Println("error:", err)
-			case <-done:
-				fmt.Println("Stop watcher")
-				if err := watcher.Close(); err != nil {
-					fmt.Println("Failed to stop watcher")
-				}
-				return
-			}
-		}
-	}()
-
-	err = helper.AddRecursive(watcher, directory)
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
-func runCommand(command string, killPort []int, t time.Duration) {
-	helper.ClearScreen()
-
-	atomic.AddInt32(&counter, 1)
-
-	a := atomic.LoadInt32(&counter)
-
-	fmt.Printf("\n%d %s [Rerun:%s]\n\n", a, command, t)
-	// conn.WriteMessage(1, []byte(fmt.Sprintf("ReRun : %d", a)))
-
-	helper.KillProcess(shellProcess)
-	helper.KillProcess(childProcess)
-	helper.PortKiller(killPort)
-
-	cmd := helper.ExecCommand(command)
-
-	helper.Spinner(time.Millisecond * 400)
-
-	helper.CopyProcess(cmd, &shellProcess, &childProcess)
-
-	fmt.Printf("...\n\n")
+	w := watcher.NewWatcher(command, rerunTimer, killPorts, directory, s)
+	w.StartWatcher()
 }
