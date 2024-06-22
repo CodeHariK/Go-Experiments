@@ -1,9 +1,8 @@
-package helper
+package watcher
 
 import (
 	"context"
 	"fmt"
-	"io"
 	"log"
 	"os"
 	"os/exec"
@@ -79,23 +78,36 @@ func CopyProcess(cmd *exec.Cmd, shellProcess **os.Process, childProcess **os.Pro
 
 // Exec Command
 // Copy the command's stdout and stderr to the current process's stdout and stderr
-func ExecCommand(command string) *exec.Cmd {
+func ExecCommand(command string, stdo stdOutSave, stde stdErrSave) *exec.Cmd {
 	cmd := exec.Command("sh", "-c", command)
-	stdoutPipe, err := cmd.StdoutPipe()
-	if err != nil {
-		fmt.Printf("Failed to create stdout pipe: %v\n", err)
-	}
-	stderrPipe, err := cmd.StderrPipe()
-	if err != nil {
-		fmt.Printf("Failed to create stderr pipe: %v\n", err)
-	}
+	// stdoutPipe, err := cmd.StdoutPipe()
+	// if err != nil {
+	// 	fmt.Printf("Failed to create stdout pipe: %v\n", err)
+	// }
+	// stderrPipe, err := cmd.StderrPipe()
+	// if err != nil {
+	// 	fmt.Printf("Failed to create stderr pipe: %v\n", err)
+	// }
+
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = &stdo
+	cmd.Stderr = &stde
 
 	if err := cmd.Start(); err != nil {
 		log.Fatalf("Failed to start command: %v\n", err)
 	}
 
-	go io.Copy(os.Stdout, stdoutPipe)
-	go io.Copy(os.Stderr, stderrPipe)
+	// go func() {
+	// 	if _, err := io.Copy(os.Stdout, stdoutPipe); err != nil {
+	// 		log.Printf("Error copying stdout to os: %v\n", err)
+	// 	}
+	// }()
+
+	// go func() {
+	// 	if _, err := io.Copy(os.Stderr, stderrPipe); err != nil {
+	// 		log.Printf("Error copying stderr to os: %v\n", err)
+	// 	}
+	// }()
 
 	return cmd
 }

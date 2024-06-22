@@ -42,27 +42,25 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			s.removeConn <- connection
 		}()
 		for {
-			messageType, message, err := conn.ReadMessage()
+			_, message, err := conn.ReadMessage()
 			if err != nil {
-				if websocket.IsCloseError(err, websocket.CloseNormalClosure, websocket.CloseGoingAway) {
-					fmt.Printf("Connection closed normally: %s\n", connection.ID)
-				} else {
-					fmt.Printf("Error reading message from %s: %v\n", connection.ID, err)
+				if websocket.IsCloseError(err, websocket.CloseNormalClosure, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+					fmt.Printf("Connection closed : %s %v\n", connection.ID, err)
+					return
 				}
-				return
 			}
 
 			fmt.Printf("%s Received: %s\n", connection.ID, message)
 
-			s.BroadcastMessage(messageType, message, connection)
+			s.BroadcastMessage(string(message), connection)
 		}
 	}()
 }
 
 func handlerPage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	fmt.Fprint(w, htmlContent)
 	w.WriteHeader(200)
+	fmt.Fprint(w, htmlContent)
 }
 
 const htmlContent = `
@@ -76,62 +74,84 @@ const htmlContent = `
 		height: 100%;
 		margin: 0;
 		padding: 0;
-		overflow: hidden; /* Prevent scrolling */
+		overflow: hidden;
 	}
 	iframe {
 		position: absolute;
-		top: 0;
+		bottom: 0;
 		left: 0;
-		width: 80%;
-		height: 80%;
-		border: none; /* Remove default border */
+		width: 100%;
+		height: 100%;
+		border: none;
 	}
-	.status {
-		position: absolute;
-		top: 10px;
-		left: 10px;
-		background-color: rgba(255, 255, 255, 0.8);
-		padding: 5px 10px;
-		border-radius: 3px;
+	.container {
+		display: flex;
+		height: 100%;
+	}
+	.pane {
+		overflow: hidden;
+		position: relative;
+	}
+	.divider {
+		width: 3px;
+		background-color: #aaaaaa11;
+		cursor: ew-resize;
+		position: relative;
+		z-index: 1;
 	}
 </style>
 <body>
-<button onclick="sendMessage()">Send Message</button>
-<iframe id="contentFrame" src=""></iframe>
+	<div class="container">
+        <div class="pane" id="leftPane">
+			<iframe id="contentFrame" src=""></iframe>
+        </div>
+        <div class="divider" id="divider"></div>
+        <div class="pane" id="rightPane">
+			<button onclick="sendMessage()">Send Message</button>
+        </div>
+    </div>
 </body>
 <script>
+	const rightPane = document.getElementById('rightPane');
+
 	let socket = new WebSocket("ws://localhost:7359/ws");
+	const iframeUrl = 'http://localhost:8080/docs';
+	const checkInterval = 100; 
+	
+	async function iframeReload() {
+		document.getElementById('contentFrame').src = ""
+		try {
+			const response = await fetch(iframeUrl, { method: 'GET' });
+			console.log(response)
+			if (response.ok) {
+				document.getElementById('contentFrame').src = iframeUrl;
+				return
+			}
+		} catch (error) {
+			console.log(error)
+		}
+		setTimeout(iframeReload, checkInterval);
+	}
 
 	socket.onopen = function(event) {
 		console.log("Connected to WebSocket spider.");
-
-		const iframeUrl = 'http://localhost:8080/docs';
-		const checkInterval = 100; 
-
-		async function checkIframeHealth() {
-			try {
-				const response = await fetch(iframeUrl, { method: 'GET' });
-				if (response.ok) {
-					document.getElementById('contentFrame').src = iframeUrl;
-				} else {
-					setTimeout(checkIframeHealth, checkInterval);
-				}
-			} catch (error) {
-				setTimeout(checkIframeHealth, checkInterval);
-			}
-		}
-		checkIframeHealth();
+		iframeReload();
 	};
 
 	socket.onmessage = function(event) {
-		if (event.data == "SPIDER RELOAD") {
-			location.reload()
-		} 
-		console.log("-> " + event.data);
+		d = event.data
+		console.log("-> " + d);
+		
+		if (d.startsWith("ReRun")){
+			iframeReload();
+			// location.reload()
+		}
+
+		rightPane.innerHTML += event.data + "<br>"
 	};
 
 	socket.onclose = function(event) {
-		console.log("Disconnected from Spider.");
+		console.log("Disconnected from Spider." + event);
 	};
 
 	socket.onerror = function(event) {
@@ -145,6 +165,52 @@ const htmlContent = `
 		} else {
 			console.log("WebSocket is not open.");
 		}
+	}
+
+
+	////////
+
+
+	const divider = document.getElementById('divider');
+	const leftPane = document.getElementById('leftPane');
+	const container = document.querySelector('.container')
+
+	leftPane.style.width = container.clientWidth * .7 + 'px'
+
+	let isDragging = false;
+
+	divider.addEventListener('mousedown', function(e) {
+		isDragging = true;
+		leftPane.style.pointerEvents = 'none';
+		document.addEventListener('mousemove', onMouseMove);
+		document.addEventListener('mouseup', onMouseUp);
+	});
+
+	function onMouseUp() {
+		isDragging = false;
+		leftPane.style.pointerEvents = 'auto';
+		document.removeEventListener('mousemove', onMouseMove);
+		document.removeEventListener('mouseup', onMouseUp);
+	}
+
+	function onMouseMove(e) {
+		console.log(e.clientX)
+
+		if (!isDragging) return;
+		const containerOffsetLeft = container.offsetLeft;
+		const pointerRelativeXpos = e.clientX - containerOffsetLeft;
+		const containerWidth = container.clientWidth;
+		const dividerWidth = divider.offsetWidth;
+		const minLeftPaneWidth = 100;
+		const minRightPaneWidth = 100;
+
+		if (pointerRelativeXpos < minLeftPaneWidth || pointerRelativeXpos > containerWidth - minRightPaneWidth - dividerWidth) {
+			return;
+		}
+
+		const leftPaneWidth = pointerRelativeXpos;
+		leftPane.style.width = e.clientX - containerOffsetLeft + 'px';
+		rightPane.style.width = containerWidth - e.clientX - dividerWidth + 'px';
 	}
 </script>
 </html>

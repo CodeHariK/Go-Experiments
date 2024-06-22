@@ -12,6 +12,8 @@ func TickerFunction(t time.Duration, fn func()) {
 	done := make(chan os.Signal)
 	signal.Notify(done, syscall.SIGINT, os.Kill, os.Interrupt)
 
+	// con, cancel := context.WithCancel()
+
 	go func() {
 		ticker := time.NewTicker(t)
 
@@ -20,6 +22,10 @@ func TickerFunction(t time.Duration, fn func()) {
 			select {
 			case <-ticker.C:
 				fn()
+			// case <-con.Done():
+			// 	fmt.Println("Timer stopped")
+			// 	ticker.Stop()
+			// 	return
 			case <-done:
 				fmt.Println("Timer stopped")
 				ticker.Stop()

@@ -73,16 +73,6 @@ func main() {
 	}
 
 	fmt.Printf("Server Pid %d\n", os.Getpid())
-	// process, err := os.FindProcess(os.Getpid())
-	// go func() {
-	// 	time.Sleep(50 * time.Second)
-	// 	if err != nil {
-	// 		log.Fatalf("Failed to find process: %v", err)
-	// 	}
-	// 	if err := process.Signal(syscall.SIGINT); err != nil {
-	// 		log.Fatalf("Failed to send signal: %v", err)
-	// 	}
-	// }()
 
 	mux.Handle(dashServer.PathPrefix(), dashServer)
 	docs.SwaggerHandler(mux, "https://cdn.pixabay.com/photo/2017/03/16/21/18/logo-2150297_640.png")
@@ -92,7 +82,7 @@ func main() {
 	wg.Add(2)
 	go func() {
 		defer wg.Done()
-		fmt.Printf("Server : localhost%s", server.Addr)
+		fmt.Printf("Server : localhost%s\n", server.Addr)
 		if err := server.ListenAndServe(); err != http.ErrServerClosed {
 			log.Fatalf("Server error: %v", err)
 		}
@@ -133,7 +123,7 @@ func (ls LoggingStatter) TimingDuration(metric string, val time.Duration, rate f
 func requestLogger(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Log the request method and path
-		log.Printf("Request: %s %s", r.Method, r.URL.Path)
+		fmt.Printf("Request: %s %s", r.Method, r.URL.Path)
 		// Call the next handler
 		next.ServeHTTP(w, r)
 	})

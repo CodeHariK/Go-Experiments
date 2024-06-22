@@ -94,7 +94,7 @@ func (s *Spider) manageConnections() {
 }
 
 // BroadcastMessage sends a message to all active connections.
-func (s *Spider) BroadcastMessage(messageType int, message []byte, sender Connection) {
+func (s *Spider) BroadcastMessage(message string, sender Connection) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
@@ -102,7 +102,7 @@ func (s *Spider) BroadcastMessage(messageType int, message []byte, sender Connec
 		if conn == sender {
 			continue
 		}
-		err := conn.conn.WriteMessage(messageType, []byte(fmt.Sprintf("%s %s", sender.ID, string(message))))
+		err := conn.conn.WriteMessage(1, []byte(fmt.Sprintf("%s %s", sender.ID, message)))
 		fmt.Printf("-> %s %s\n", sender.ID, string(message))
 
 		if err != nil {

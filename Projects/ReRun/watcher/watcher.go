@@ -84,7 +84,7 @@ func (w *watcher) StartWatcher() {
 				if event.Op&fsnotify.Create == fsnotify.Create {
 					info, err := os.Stat(event.Name)
 					if err == nil && info.IsDir() {
-						err = helper.AddRecursive(watcher, event.Name)
+						err = AddRecursive(watcher, event.Name)
 						if err != nil {
 							fmt.Println("error adding directory:", err)
 						}
@@ -112,14 +112,14 @@ func (w *watcher) StartWatcher() {
 		}
 	}()
 
-	err = helper.AddRecursive(watcher, w.directory)
+	err = AddRecursive(watcher, w.directory)
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
 func (w *watcher) runCommand() {
-	helper.ClearScreen()
+	// helper.ClearScreen()
 
 	atomic.AddInt32(&w.counter, 1)
 
@@ -127,17 +127,27 @@ func (w *watcher) runCommand() {
 
 	fmt.Printf("\n%d %s [Rerun:%s]\n\n", a, w.command, w.reRunDuration)
 
-	w.spider.BroadcastMessage(1, []byte("RELOAD"), socket.Connection{ID: "SPIDER"})
+	w.spider.BroadcastMessage(fmt.Sprintf("ReRun %d", a), socket.Connection{ID: "SPIDER"})
 
-	helper.KillProcess(w.shellProcess)
-	helper.KillProcess(w.childProcess)
-	helper.PortKiller(w.killPorts)
+	KillProcess(w.shellProcess)
+	KillProcess(w.childProcess)
+	PortKiller(w.killPorts)
 
-	cmd := helper.ExecCommand(w.command)
+	stdo := stdOutSave{fn: func(s string) {
+		fmt.Println("\n\nout")
+
+		w.spider.BroadcastMessage(fmt.Sprintf("Output %s", s), socket.Connection{ID: "SPIDER"})
+	}}
+	stde := stdErrSave{fn: func(s string) {
+		fmt.Println("\n\nerr")
+		w.spider.BroadcastMessage(fmt.Sprintf("Error %s", s), socket.Connection{ID: "SPIDER"})
+	}}
+
+	cmd := ExecCommand(w.command, stdo, stde)
 
 	helper.Spinner(time.Millisecond * 400)
 
-	helper.CopyProcess(cmd, &w.shellProcess, &w.childProcess)
+	CopyProcess(cmd, &w.shellProcess, &w.childProcess)
 
 	fmt.Printf("...\n\n")
 }

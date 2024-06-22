@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a sample swagger for Fiber",
-        "title": "Fiber Example APsI",
+        "title": "Fiber Example API",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
