@@ -134,12 +134,9 @@ func (w *watcher) runCommand() {
 	PortKiller(w.killPorts)
 
 	stdo := stdOutSave{fn: func(s string) {
-		fmt.Println("\n\nout")
-
 		w.spider.BroadcastMessage(fmt.Sprintf("Output %s", s), socket.Connection{ID: "SPIDER"})
 	}}
 	stde := stdErrSave{fn: func(s string) {
-		fmt.Println("\n\nerr")
 		w.spider.BroadcastMessage(fmt.Sprintf("Error %s", s), socket.Connection{ID: "SPIDER"})
 	}}
 

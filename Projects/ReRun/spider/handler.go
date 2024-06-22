@@ -142,9 +142,9 @@ const htmlContent = `
 		d = event.data
 		console.log("-> " + d);
 		
-		if (d.startsWith("ReRun")){
-			iframeReload();
-			// location.reload()
+		if (d.includes("ReRun")){
+			// iframeReload();
+			location.reload()
 		}
 
 		rightPane.innerHTML += event.data + "<br>"
@@ -194,8 +194,6 @@ const htmlContent = `
 	}
 
 	function onMouseMove(e) {
-		console.log(e.clientX)
-
 		if (!isDragging) return;
 		const containerOffsetLeft = container.offsetLeft;
 		const pointerRelativeXpos = e.clientX - containerOffsetLeft;
