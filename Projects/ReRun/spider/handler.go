@@ -37,43 +37,76 @@ func (s *Spider) handleLog(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, s.stdOutLogs[idString])
 }
 
-func (s *Spider) handleExecute(command string) {
-	stdOutLogs := logger.CreateStdOutSave(
-		make(map[string][]string),
-		func(p []byte) (n int, err error) {
-			s.BroadcastMessage(fmt.Sprintf("Console Output %s", string(p)), Connection{ID: "SPIDER"})
-			return os.Stdout.Write(p)
-		},
-	)
+func (s *Spider) handleExecute(cancelTerminalChan chan bool, command ...string) {
+	go func() {
+		s.runningCommand = true
 
-	stdErrLogs := logger.CreateStdOutSave(
-		make(map[string][]string),
-		func(p []byte) (n int, err error) {
-			s.BroadcastMessage(fmt.Sprintf("Console Error %s", string(p)), Connection{ID: "SPIDER"})
-			return os.Stderr.Write(p)
-		},
-	)
+		stdOutLogs := logger.CreateStdOutSave(
+			make(map[string][]string),
+			func(p []byte) (n int, err error) {
+				s.BroadcastMessage(fmt.Sprintf("Console Output %s", string(p)), Connection{ID: "SPIDER"})
+				// return os.Stdout.Write(p)
+				return len(p), nil
+			},
+		)
 
-	// Execute the command
-	cmd := exec.Command("sh", "-c", command)
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = stdOutLogs
-	cmd.Stderr = stdErrLogs
+		stdErrLogs := logger.CreateStdOutSave(
+			make(map[string][]string),
+			func(p []byte) (n int, err error) {
+				s.BroadcastMessage(fmt.Sprintf("Console Error %s", string(p)), Connection{ID: "SPIDER"})
+				// return os.Stderr.Write(p)
+				return len(p), nil
+			},
+		)
 
-	// output, err := cmd.CombinedOutput()
-	// if err != nil {
-	// 	fmt.Printf("Exec Error : %v", err)
-	// }
+		// Execute the command
+		cmd := exec.Command("sh", append([]string{"-c"}, command...)...)
+		cmd.Stdin = os.Stdin
+		cmd.Stdout = stdOutLogs
+		cmd.Stderr = stdErrLogs
 
-	// s.BroadcastMessage(fmt.Sprintf("Console %s", string(output)), Connection{ID: "SPIDER"})
+		// output, err := cmd.CombinedOutput()
+		// if err != nil {
+		// 	fmt.Printf("Exec Error : %v", err)
+		// }
 
-	if err := cmd.Start(); err != nil {
-		fmt.Printf("Error Exec : %v", err)
-	}
+		// s.BroadcastMessage(fmt.Sprintf("Console %s", string(output)), Connection{ID: "SPIDER"})
 
-	if err := cmd.Wait(); err != nil {
-		fmt.Printf("Error Wait : %v", err)
-	}
+		go func() {
+			fmt.Println("--------------------")
+			fmt.Println("Wait Terminal Chan")
+			fmt.Println("--------------------")
+
+			<-cancelTerminalChan
+
+			fmt.Println("--------------------")
+			fmt.Println("Cancel Terminal Chan")
+			fmt.Println("--------------------")
+
+			if err := cmd.Process.Kill(); err != nil {
+				fmt.Printf("Cmd Process Kill : %v\n", err)
+			}
+
+			fmt.Println("--------------------")
+			fmt.Println("Killed Terminal Chan")
+			fmt.Println("--------------------")
+
+			s.runningCommand = false
+		}()
+
+		if err := cmd.Start(); err != nil {
+			fmt.Printf("Error Exec : %v\n", err)
+		}
+
+		// // Wait for the command to finish
+		// if err := cmd.Wait(); err != nil {
+		// 	fmt.Printf("Command execution failed: %v\n", err)
+		// }
+
+		fmt.Println("...")
+		fmt.Println("Command execution completed successfully.")
+		fmt.Println("...")
+	}()
 }
 
 func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
@@ -90,6 +123,8 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Adding %s\n", connection.ID)
 	s.addConn <- connection
+
+	cancelTerminalChan := make(chan bool)
 
 	go func() {
 		defer func() {
@@ -112,9 +147,30 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			fmt.Printf("%s Received: %s\n", connection.ID, message)
 
 			command := strings.Split(string(message), ":")
+			fmt.Println("*")
 			fmt.Println(command)
-			if len(command) > 1 {
-				s.handleExecute(command[1])
+			fmt.Println(string(message) == "SPIDER:Console:Cancel")
+			fmt.Println(s.runningCommand)
+			fmt.Println("*")
+			// SPIDER:Console:Cancel
+			if string(message) == "SPIDER:Console:Cancel" {
+				if s.runningCommand {
+					fmt.Println("++++++++++++++++++++")
+					fmt.Println("cancelTerminalChan 1")
+					fmt.Println("++++++++++++++++++++")
+					cancelTerminalChan <- true
+				}
+				continue
+			}
+			// SPIDER:Console:ping google.com
+			if len(command) > 2 && command[1] == "Console" {
+				if s.runningCommand {
+					fmt.Println("====================")
+					fmt.Println("cancelTerminalChan 2")
+					fmt.Println("====================")
+					cancelTerminalChan <- true
+				}
+				s.handleExecute(cancelTerminalChan, command[2:]...)
 			}
 
 			s.BroadcastMessage(string(message), connection)
@@ -206,8 +262,9 @@ const htmlContent = `
         <div class="divider" id="divider"></div>
         <div class="pane">
 			<button onclick="sendMessage()">Send Message</button>
+			<input type="text" id="commandInput" placeholder="Type command and press Enter">
+			<button onclick="cancelTerminal()">Cancel</button>
 			<div id="terminal">
-				<input type="text" id="commandInput" placeholder="Type command and press Enter">
 			</div>
 			<div id="statusPane">
 			</div>
@@ -218,6 +275,7 @@ const htmlContent = `
 <script>
 	const rightPane = document.getElementById('rightPane');
 	const statusPane = document.getElementById('statusPane');
+	const terminal = document.getElementById('terminal');
 
 	let socket = new WebSocket("ws://localhost:7359/ws");
 	const iframeUrl = 'http://localhost:8080/docs';
@@ -243,11 +301,9 @@ const htmlContent = `
 
 	socket.onmessage = function(event) {
 		d = event.data
-		console.log("-> " + d);
-		console.log(d.startsWith("SPIDER:Console"))
 		
 		if (d.startsWith("SPIDER:Console")){
-			console.log("console terminal : " + Math.random())
+			terminal.innerHTML = d
 			return
 		}
 
@@ -280,6 +336,7 @@ const htmlContent = `
 			}
 		}
 
+		console.log("-> " + d);
 		const newLog = document.createElement("div");
 		newLog.innerHTML = d.replace(/\n/g, "<br>");
 		newLog.classList.add("Output");
@@ -302,6 +359,15 @@ const htmlContent = `
 		if (socket.readyState === WebSocket.OPEN) {
 			socket.send("Hello, spider!");
 			console.log("Hello, spider!");
+		} else {
+			console.log("WebSocket is not open.");
+		}
+	}
+
+	function cancelTerminal() {
+		if (socket.readyState === WebSocket.OPEN) {
+			socket.send("SPIDER:Console:Cancel");
+			console.log("SPIDER:Console:Cancel");
 		} else {
 			console.log("WebSocket is not open.");
 		}
@@ -361,8 +427,8 @@ const htmlContent = `
         if (event.key === 'Enter') {
             const command = input.value;
             if (socket.readyState === WebSocket.OPEN) {
-				console.log("Console:"+command)
-				socket.send("Console:"+command);
+				console.log("SPIDER:Console:"+command)
+				socket.send("SPIDER:Console:"+command);
                 input.value = '';
             } else {
                 console.log("WebSocket is not open.");

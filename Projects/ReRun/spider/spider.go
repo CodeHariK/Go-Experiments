@@ -25,6 +25,8 @@ type Spider struct {
 	addConn    chan Connection
 	removeConn chan Connection
 
+	runningCommand bool
+
 	stdOutLogs map[string][]string
 	stdErrLogs map[string][]string
 }
@@ -112,7 +114,7 @@ func (s *Spider) BroadcastMessage(message string, sender Connection) {
 			continue
 		}
 		err := conn.conn.WriteMessage(1, []byte(fmt.Sprintf("%s:%s", sender.ID, message)))
-		fmt.Printf("-> %s %s\n", sender.ID, string(message))
+		fmt.Printf("-> %s:%s\n", sender.ID, string(message))
 
 		if err != nil {
 			fmt.Printf("Error broadcasting message to %s: %v\n", conn.ID, err)
