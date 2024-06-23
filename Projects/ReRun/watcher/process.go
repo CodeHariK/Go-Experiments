@@ -78,8 +78,8 @@ func CopyProcess(cmd *exec.Cmd, shellProcess **os.Process, childProcess **os.Pro
 
 // Exec Command
 // Copy the command's stdout and stderr to the current process's stdout and stderr
-func ExecCommand(command string, stdo stdOutSave, stde stdErrSave) *exec.Cmd {
-	cmd := exec.Command("sh", "-c", command)
+func (w *watcher) ExecCommand() *exec.Cmd {
+	cmd := exec.Command("sh", "-c", w.command)
 	// stdoutPipe, err := cmd.StdoutPipe()
 	// if err != nil {
 	// 	fmt.Printf("Failed to create stdout pipe: %v\n", err)
@@ -90,8 +90,8 @@ func ExecCommand(command string, stdo stdOutSave, stde stdErrSave) *exec.Cmd {
 	// }
 
 	cmd.Stdin = os.Stdin
-	cmd.Stdout = &stdo
-	cmd.Stderr = &stde
+	cmd.Stdout = &w.stdOutLogs
+	cmd.Stderr = &w.stdErrLogs
 
 	if err := cmd.Start(); err != nil {
 		log.Fatalf("Failed to start command: %v\n", err)

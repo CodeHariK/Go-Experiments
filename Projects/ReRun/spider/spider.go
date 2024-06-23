@@ -24,13 +24,22 @@ type Spider struct {
 	conns      map[string]Connection
 	addConn    chan Connection
 	removeConn chan Connection
+
+	stdOutLogs map[string][]string
+	stdErrLogs map[string][]string
 }
 
-func NewSpider() *Spider {
+func NewSpider(
+	stdOutLogs map[string][]string,
+	stdErrLogs map[string][]string,
+) *Spider {
 	return &Spider{
 		conns:      make(map[string]Connection),
 		addConn:    make(chan Connection),
 		removeConn: make(chan Connection),
+
+		stdOutLogs: stdOutLogs,
+		stdErrLogs: stdErrLogs,
 	}
 }
 
@@ -102,7 +111,7 @@ func (s *Spider) BroadcastMessage(message string, sender Connection) {
 		if conn == sender {
 			continue
 		}
-		err := conn.conn.WriteMessage(1, []byte(fmt.Sprintf("%s %s", sender.ID, message)))
+		err := conn.conn.WriteMessage(1, []byte(fmt.Sprintf("%s:%s", sender.ID, message)))
 		fmt.Printf("-> %s %s\n", sender.ID, string(message))
 
 		if err != nil {

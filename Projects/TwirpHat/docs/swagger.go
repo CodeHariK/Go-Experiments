@@ -95,7 +95,7 @@ func SwaggerHandler(app *http.ServeMux, logo string) {
 			img.style.padding = '15px'
 			// searchDiv.appendChild(img);
 		}, 2000);
-    </script>
+    // </script>
 </body>
 
 </html>`, logo)))

@@ -5,13 +5,15 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"strconv"
 	"sync"
 	"sync/atomic"
 	"syscall"
 	"time"
 
 	"github.com/codeharik/rerun/helper"
-	socket "github.com/codeharik/rerun/spider"
+	"github.com/codeharik/rerun/logger"
+	"github.com/codeharik/rerun/spider"
 	"github.com/fsnotify/fsnotify"
 )
 
@@ -25,7 +27,10 @@ type watcher struct {
 	killPorts     []int
 	directory     string
 
-	spider *socket.Spider
+	spider *spider.Spider
+
+	stdOutLogs logger.StdLogSave
+	stdErrLogs logger.StdLogSave
 }
 
 func NewWatcher(
@@ -34,15 +39,34 @@ func NewWatcher(
 	killPorts []int,
 	directory string,
 
-	spider *socket.Spider,
+	spiderServer *spider.Spider,
+
+	stdOutLogs map[string][]string,
+	stdErrLogs map[string][]string,
 ) *watcher {
 	return &watcher{
+		stdOutLogs: *logger.CreateStdOutSave(
+			stdOutLogs,
+			func(p []byte) (n int, err error) {
+				spiderServer.BroadcastMessage(fmt.Sprintf("Output %s", string(p)), spider.Connection{ID: "SPIDER"})
+				return os.Stdout.Write(p)
+			},
+		),
+
+		stdErrLogs: *logger.CreateStdOutSave(
+			stdErrLogs,
+			func(p []byte) (n int, err error) {
+				spiderServer.BroadcastMessage(fmt.Sprintf("Error %s", string(p)), spider.Connection{ID: "SPIDER"})
+				return os.Stderr.Write(p)
+			},
+		),
+
 		command:       command,
 		reRunDuration: reRunDuration,
 		killPorts:     killPorts,
 		directory:     directory,
 
-		spider: spider,
+		spider: spiderServer,
 	}
 }
 
@@ -119,7 +143,7 @@ func (w *watcher) StartWatcher() {
 }
 
 func (w *watcher) runCommand() {
-	// helper.ClearScreen()
+	helper.ClearScreen()
 
 	atomic.AddInt32(&w.counter, 1)
 
@@ -127,20 +151,16 @@ func (w *watcher) runCommand() {
 
 	fmt.Printf("\n%d %s [Rerun:%s]\n\n", a, w.command, w.reRunDuration)
 
-	w.spider.BroadcastMessage(fmt.Sprintf("ReRun %d", a), socket.Connection{ID: "SPIDER"})
+	w.spider.BroadcastMessage(fmt.Sprintf("ReRun %d", a), spider.Connection{ID: "SPIDER"})
 
 	KillProcess(w.shellProcess)
 	KillProcess(w.childProcess)
 	PortKiller(w.killPorts)
 
-	stdo := stdOutSave{fn: func(s string) {
-		w.spider.BroadcastMessage(fmt.Sprintf("Output %s", s), socket.Connection{ID: "SPIDER"})
-	}}
-	stde := stdErrSave{fn: func(s string) {
-		w.spider.BroadcastMessage(fmt.Sprintf("Error %s", s), socket.Connection{ID: "SPIDER"})
-	}}
+	w.stdOutLogs.Group = strconv.Itoa(int(a))
+	w.stdErrLogs.Group = strconv.Itoa(int(a))
 
-	cmd := ExecCommand(w.command, stdo, stde)
+	cmd := w.ExecCommand()
 
 	helper.Spinner(time.Millisecond * 400)
 
