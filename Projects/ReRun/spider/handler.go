@@ -8,6 +8,7 @@ import (
 	"os/exec"
 	"strings"
 
+	"github.com/codeharik/rerun/helper"
 	"github.com/codeharik/rerun/logger"
 	"github.com/gorilla/websocket"
 )
@@ -35,7 +36,7 @@ func (s *Spider) handleLog(w http.ResponseWriter, r *http.Request) {
 
 	idString := r.PathValue("id")
 
-	fmt.Fprint(w, s.stdOutLogs[idString])
+	fmt.Fprint(w, s.stdOutLogs[idString], s.stdErrLogs[idString])
 }
 
 func (s *Spider) handleExecute(command ...string) {
@@ -217,6 +218,12 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(string(message) == "SPIDER:Console:Cancel")
 			fmt.Println(s.runningCommand)
 			fmt.Println("*")
+
+			if string(message) == "SPIDER:PWD" {
+				helper.Pwd(s.directory)
+				s.BroadcastMessage(fmt.Sprintf("PWD:%s", helper.Pwd(s.directory)), Connection{ID: "SPIDER"})
+
+			}
 
 			if string(message) == "SPIDER:Console:Cancel" {
 				if s.cancelFunc != nil {

@@ -1,6 +1,7 @@
-package watcher
+package helper
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -59,4 +60,18 @@ func Tree(root string) (*TreeNode, error) {
 	}
 
 	return node, nil
+}
+
+func Pwd(directory string) string {
+	tree, err := Tree(directory)
+	if err != nil {
+		panic(err)
+	}
+
+	jsonData, err := json.MarshalIndent(tree, "", "  ")
+	if err != nil {
+		panic(err)
+	}
+
+	return string(jsonData)
 }

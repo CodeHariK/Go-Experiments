@@ -56,7 +56,7 @@ func main() {
 	stdOutLogs := make(map[string][]string)
 	stdErrLogs := make(map[string][]string)
 
-	spider := spider.NewSpider(stdOutLogs, stdErrLogs)
+	spider := spider.NewSpider(directory, stdOutLogs, stdErrLogs)
 	spider.StartSpider(&wg)
 
 	w := watcher.NewWatcher(

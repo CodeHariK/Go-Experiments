@@ -21,6 +21,8 @@ type Connection struct {
 }
 
 type Spider struct {
+	directory string
+
 	mu         sync.Mutex
 	conns      map[string]Connection
 	addConn    chan Connection
@@ -35,10 +37,13 @@ type Spider struct {
 }
 
 func NewSpider(
+	directory string,
 	stdOutLogs map[string][]string,
 	stdErrLogs map[string][]string,
 ) *Spider {
 	return &Spider{
+		directory: directory,
+
 		conns:      make(map[string]Connection),
 		addConn:    make(chan Connection),
 		removeConn: make(chan Connection),

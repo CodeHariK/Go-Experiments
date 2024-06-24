@@ -184,6 +184,7 @@
         cursor: 'row-resize'
     })
 
+    const treeview = document.getElementById('treeview');
     const logsPane = document.getElementById('logsPane');
     const statusPane = document.getElementById('statusPane');
     const terminal = document.getElementById('terminal');
@@ -211,27 +212,21 @@
     };
 
     socket.onmessage = function (event) {
-        let d = event.data
+        let message = event.data
 
-        if (d.startsWith("SPIDER:Console:Output")) {
-            terminal.innerHTML += "<p class='Output'>" + d + "</p>"
-        }
-        if (d.startsWith("SPIDER:Console:Error")) {
-            terminal.innerHTML += "<p class='Output Error'>" + d + "</p>"
-        }
-        if (d.startsWith("SPIDER:Logs:Output")) {
-            logsPane.innerHTML += "<p class='Output'>" + d + "</p>"
-        }
-        if (d.startsWith("SPIDER:Logs:Error")) {
-            logsPane.innerHTML += "<p class='Output Error'>" + d + "</p>"
-        }
+        append(message, "SPIDER:PWD:", treeview, false)
+        append(message, "SPIDER:Console:Output:", terminal, true)
+        append(message, "SPIDER:Console:Error:", terminal, true)
+        append(message, "SPIDER:Logs:Output:", logsPane, true)
+        append(message, "SPIDER:Logs:Error:", logsPane, true)
 
-        if (d.startsWith("SPIDER:ReRun")) {
-            location.reload()
+        if (message.startsWith("SPIDER:ReRun")) {
+            // location.reload()
+            iframeReload()
             logsPane.innerHTML = ""
             statusPane.innerHTML = ""
 
-            let matches = d.match(/\d+/);
+            let matches = message.match(/\d+/);
             if (matches) {
                 let num = Number(matches[0]);
                 console.log(num);
@@ -239,6 +234,7 @@
                 for (let i = 1; i <= num; i++) {
                     const button = document.createElement('button');
                     button.innerText = i;
+                    button.classList.add("btn", "btn-1");
                     button.addEventListener('click', async function (event) {
                         console.log(i)
                         try {
@@ -277,12 +273,26 @@
     window.cancelTerminal = cancelTerminal;
 
 
+    function append(message, code, box, clear) {
+        if (clear) {
+            box.innerHTML = ""
+        }
+        if (message.startsWith(code)) {
+            if (code.includes("Error")) {
+                box.innerHTML += "<p class='Output Error'>" + message.replace(code, "").trim() + "</p>"
+            } else {
+                box.innerHTML += "<p class='Output'>" + message.replace(code, "").trim() + "</p>"
+            }
+        }
+        box.scrollTop = box.scrollHeight;
+    }
+
     const input = document.getElementById('commandInput');
     input.addEventListener('keypress', function (event) {
         if (event.key === 'Enter') {
             const command = input.value;
             if (socket.readyState === WebSocket.OPEN) {
-                console.log("SPIDER:Console:" + command)
+                append(command, "", terminal, true)
                 socket.send("SPIDER:Console:" + command);
                 input.value = '';
             } else {

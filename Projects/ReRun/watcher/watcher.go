@@ -105,23 +105,13 @@ func (w *watcher) StartWatcher() {
 
 					w.runCommand()
 
-					// tree, err := Tree(w.directory)
-					// if err != nil {
-					// 	panic(err)
-					// }
-
-					// jsonData, err := json.MarshalIndent(tree, "", "  ")
-					// if err != nil {
-					// 	panic(err)
-					// }
-
-					// w.spider.BroadcastMessage(fmt.Sprintf("PWD:%s", string(jsonData)), spider.Connection{ID: "SPIDER"})
+					w.spider.BroadcastMessage(fmt.Sprintf("PWD:%s", helper.Pwd(w.directory)), spider.Connection{ID: "SPIDER"})
 				}
 
 				if event.Op&fsnotify.Create == fsnotify.Create {
 					info, err := os.Stat(event.Name)
 					if err == nil && info.IsDir() {
-						err = AddRecursive(watcher, event.Name)
+						err = helper.AddRecursive(watcher, event.Name)
 						if err != nil {
 							fmt.Println("error adding directory:", err)
 						}
@@ -149,7 +139,7 @@ func (w *watcher) StartWatcher() {
 		}
 	}()
 
-	err = AddRecursive(watcher, w.directory)
+	err = helper.AddRecursive(watcher, w.directory)
 	if err != nil {
 		log.Fatal(err)
 	}
