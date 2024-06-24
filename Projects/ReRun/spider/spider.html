@@ -40,6 +40,13 @@
         color: red;
     }
 
+    #statusPane .btn {
+        width: 24px;
+        height: 24px;
+        padding: 0px;
+        margin: 1px;
+    }
+
     .btn {
         flex: 1 1 auto;
         margin: 5px;
@@ -71,7 +78,7 @@
     }
 
     #commandInput {
-        width: 70%;
+        flex: 12;
         padding: 10px;
         font-size: 16px;
         border: none;
@@ -87,6 +94,16 @@
 
     #commandInput::placeholder {
         color: #999;
+    }
+
+    #commandBox {
+        display: flex;
+        align-items: center;
+    }
+
+    #commandBox button {
+        flex: 3;
+        padding: 10px 20px;
     }
 
     .monaco-editor {
@@ -157,7 +174,6 @@
     <div id="outputWindow" class="split split-horizontal">
         <iframe id="contentFrame" src=""></iframe>
     </div>
-
 
     <div id="consoleBox" class="split split-horizontal">
 
@@ -274,7 +290,7 @@
                 for (let i = 1; i <= num; i++) {
                     const button = document.createElement('button');
                     button.innerText = i;
-                    button.classList.add("btn", "btn-1");
+                    button.classList.add("btn", "btn-3");
                     button.addEventListener('click', async function (event) {
                         try {
                             const response = await fetch(logsUrl + i, { method: 'GET' });
