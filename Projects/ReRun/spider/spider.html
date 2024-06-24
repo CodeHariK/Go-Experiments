@@ -12,6 +12,7 @@
         margin: 0;
         padding: 0;
         overflow: hidden;
+        font-family: monospace;
     }
 
     iframe {
@@ -116,10 +117,40 @@
         height: 100%;
         float: left;
     }
+
+    #file-tree {
+        padding: 0px;
+    }
+
+    .file-list ul {
+        list-style-type: none;
+        padding-left: 6px;
+    }
+
+    .folder-root>span.folder-name {
+        font-weight: bold;
+        cursor: pointer;
+        color: #896da3;
+    }
+
+    .folder-root.closed>ul {
+        display: none;
+    }
+
+    .folder-root.open>ul {
+        display: block;
+    }
+
+    .file-list li span {
+        cursor: pointer;
+        white-space: nowrap;
+    }
 </style>
 
 <body>
-    <div id="treeview" class="split split-horizontal"></div>
+    <div id="treeview" class="split split-horizontal">
+        <ul id="file-tree" class="file-tree"></ul>
+    </div>
 
     <div id="codeeditor" class="split split-horizontal"></div>
 
@@ -188,6 +219,7 @@
     const logsPane = document.getElementById('logsPane');
     const statusPane = document.getElementById('statusPane');
     const terminal = document.getElementById('terminal');
+    const fileTreeContainer = document.getElementById('file-tree');
 
     let socket = new WebSocket("ws://localhost:7359/ws");
     const iframeUrl = 'http://localhost:8080/docs';
@@ -208,17 +240,26 @@
 
     socket.onopen = function (event) {
         console.log("Connected to WebSocket spider.");
+        socket.send("SPIDER:PWD")
         iframeReload();
     };
 
     socket.onmessage = function (event) {
         let message = event.data
 
-        append(message, "SPIDER:PWD:", treeview, false)
-        append(message, "SPIDER:Console:Output:", terminal, true)
-        append(message, "SPIDER:Console:Error:", terminal, true)
-        append(message, "SPIDER:Logs:Output:", logsPane, true)
-        append(message, "SPIDER:Logs:Error:", logsPane, true)
+        if (message.startsWith("SPIDER:PWD:")) {
+            fileTreeContainer.appendChild(
+                generateFileTreeHTML(
+                    JSON.parse(
+                        message.replace("SPIDER:PWD:", "").trim())));
+
+            fileTree('file-tree');
+        }
+
+        append(message, "SPIDER:Console:Output:", terminal, false)
+        append(message, "SPIDER:Console:Error:", terminal, false)
+        append(message, "SPIDER:Logs:Output:", logsPane, false)
+        append(message, "SPIDER:Logs:Error:", logsPane, false)
 
         if (message.startsWith("SPIDER:ReRun")) {
             // location.reload()
@@ -229,17 +270,14 @@
             let matches = message.match(/\d+/);
             if (matches) {
                 let num = Number(matches[0]);
-                console.log(num);
 
                 for (let i = 1; i <= num; i++) {
                     const button = document.createElement('button');
                     button.innerText = i;
                     button.classList.add("btn", "btn-1");
                     button.addEventListener('click', async function (event) {
-                        console.log(i)
                         try {
                             const response = await fetch(logsUrl + i, { method: 'GET' });
-                            console.log(logsUrl + i)
                             let body = await response.text()
                             if (response.ok) {
                                 logsPane.innerHTML = body;
@@ -292,7 +330,7 @@
         if (event.key === 'Enter') {
             const command = input.value;
             if (socket.readyState === WebSocket.OPEN) {
-                append(command, "", terminal, true)
+                append(command, "", terminal, false)
                 socket.send("SPIDER:Console:" + command);
                 input.value = '';
             } else {
@@ -301,6 +339,59 @@
         }
     });
 
+    function generateFileTreeHTML(node, path = '') {
+        const ul = document.createElement('ul');
+        const currentPath = path ? `${path}/${node.name}` : node.name;
+
+        if (node.is_dir) {
+            const li = document.createElement('li');
+            li.innerHTML = `<span class="folder-name" data-open="true">&#11153; ${node.name}</span>`;
+            ul.appendChild(li);
+
+            const childrenUl = document.createElement('ul');
+            node.children.forEach(child => {
+                childrenUl.appendChild(generateFileTreeHTML(child, currentPath));
+            });
+            li.appendChild(childrenUl);
+
+            li.querySelector('span.folder-name').addEventListener('click', function () {
+                const isOpen = this.getAttribute('data-open') === 'true';
+                this.innerHTML = isOpen ? `&#11041; ${node.name}` : `&#11153; ${node.name}`;
+                this.setAttribute('data-open', !isOpen);
+                li.querySelector('ul').style.display = isOpen ? 'none' : 'block';
+            });
+        } else {
+            const li = document.createElement('li');
+            li.innerHTML = `<span>${node.name}</span>`;
+            li.querySelector('span').addEventListener('click', () => {
+                console.log(currentPath);
+            });
+            ul.appendChild(li);
+        }
+
+        return ul;
+    }
+
+    function fileTree(elementId) {
+        NodeList.prototype.has = function (selector) {
+            return Array.from(this).filter(e => e.querySelector(selector));
+        };
+
+        var element = document.getElementById(elementId);
+        element.classList.add('file-list');
+        var liElementsInideUl = element.querySelectorAll('li');
+        liElementsInideUl.has('ul').forEach(li => {
+            li.classList.add('folder-root', 'closed', 'open');
+            var spanFolderElementsInsideLi = li.querySelectorAll('span.folder-name');
+            spanFolderElementsInsideLi.forEach(span => {
+                if (span.parentNode.nodeName === 'LI') {
+                    span.onclick = function (e) {
+                        span.parentNode.classList.toggle('open');
+                    };
+                }
+            });
+        });
+    }
 </script>
 
 </html>
