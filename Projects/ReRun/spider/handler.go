@@ -1,6 +1,7 @@
 package spider
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"os"
@@ -37,77 +38,143 @@ func (s *Spider) handleLog(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, s.stdOutLogs[idString])
 }
 
-func (s *Spider) handleExecute(cancelTerminalChan chan bool, command ...string) {
-	go func() {
-		s.runningCommand = true
+func (s *Spider) handleExecute(command ...string) {
+	stdOutLogs := logger.CreateStdOutSave(
+		make(map[string][]string),
+		func(p []byte) (n int, err error) {
+			s.BroadcastMessage(fmt.Sprintf("Console:Output:%s", string(p)), Connection{ID: "SPIDER"})
+			// return os.Stdout.Write(p)
+			return len(p), nil
+		},
+	)
 
-		stdOutLogs := logger.CreateStdOutSave(
-			make(map[string][]string),
-			func(p []byte) (n int, err error) {
-				s.BroadcastMessage(fmt.Sprintf("Console Output %s", string(p)), Connection{ID: "SPIDER"})
-				// return os.Stdout.Write(p)
-				return len(p), nil
-			},
-		)
+	stdErrLogs := logger.CreateStdOutSave(
+		make(map[string][]string),
+		func(p []byte) (n int, err error) {
+			s.BroadcastMessage(fmt.Sprintf("Console:Error:%s", string(p)), Connection{ID: "SPIDER"})
+			// return os.Stderr.Write(p)
+			return len(p), nil
+		},
+	)
 
-		stdErrLogs := logger.CreateStdOutSave(
-			make(map[string][]string),
-			func(p []byte) (n int, err error) {
-				s.BroadcastMessage(fmt.Sprintf("Console Error %s", string(p)), Connection{ID: "SPIDER"})
-				// return os.Stderr.Write(p)
-				return len(p), nil
-			},
-		)
+	ctx, cancel := context.WithCancel(context.Background())
+	cmd := exec.CommandContext(ctx, "sh", append([]string{"-c"}, command...)...)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = stdOutLogs
+	cmd.Stderr = stdErrLogs
 
-		// Execute the command
-		cmd := exec.Command("sh", append([]string{"-c"}, command...)...)
-		cmd.Stdin = os.Stdin
-		cmd.Stdout = stdOutLogs
-		cmd.Stderr = stdErrLogs
+	// Cancel any existing command before starting a new one
+	if s.cancelFunc != nil {
+		fmt.Println("Cancelling previous running command")
+		s.cancelFunc()
+		s.wg.Wait()
+		fmt.Println("Cancelled previous running command")
+	}
 
-		// output, err := cmd.CombinedOutput()
-		// if err != nil {
-		// 	fmt.Printf("Exec Error : %v", err)
-		// }
+	s.mu.Lock()
+	s.runningCommand = cmd
+	s.cancelFunc = cancel
+	s.mu.Unlock()
 
-		// s.BroadcastMessage(fmt.Sprintf("Console %s", string(output)), Connection{ID: "SPIDER"})
-
-		go func() {
-			fmt.Println("--------------------")
-			fmt.Println("Wait Terminal Chan")
-			fmt.Println("--------------------")
-
-			<-cancelTerminalChan
-
-			fmt.Println("--------------------")
-			fmt.Println("Cancel Terminal Chan")
-			fmt.Println("--------------------")
-
-			if err := cmd.Process.Kill(); err != nil {
-				fmt.Printf("Cmd Process Kill : %v\n", err)
-			}
-
-			fmt.Println("--------------------")
-			fmt.Println("Killed Terminal Chan")
-			fmt.Println("--------------------")
-
-			s.runningCommand = false
-		}()
-
-		if err := cmd.Start(); err != nil {
-			fmt.Printf("Error Exec : %v\n", err)
-		}
-
-		// // Wait for the command to finish
-		// if err := cmd.Wait(); err != nil {
-		// 	fmt.Printf("Command execution failed: %v\n", err)
-		// }
-
-		fmt.Println("...")
-		fmt.Println("Command execution completed successfully.")
-		fmt.Println("...")
-	}()
+	s.wg.Add(1)
+	fmt.Println("Going to start")
+	go s.executeCommandWithContext(ctx, cmd)
 }
+
+func (s *Spider) executeCommandWithContext(ctx context.Context, command *exec.Cmd) {
+	defer s.wg.Done()
+
+	fmt.Println("Executing command:", command.Args)
+
+	if err := command.Start(); err != nil {
+		fmt.Printf("Error starting command: %v\n", err)
+		return
+	}
+
+	done := make(chan error)
+	go func() {
+		fmt.Println("---NOT-Done----")
+		done <- command.Wait()
+		fmt.Println("---Done----")
+	}()
+
+	select {
+	case <-ctx.Done():
+		fmt.Println("Command cancelled")
+		if err := command.Process.Kill(); err != nil {
+			fmt.Printf("Error killing command: %v\n", err)
+		}
+	case err := <-done:
+		if err != nil {
+			fmt.Printf("Command execution failed: %v\n", err)
+		} else {
+			fmt.Println("Command executed successfully")
+		}
+	}
+
+	fmt.Println("~~~~~~~~~~")
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	s.runningCommand = nil
+	s.cancelFunc = nil
+}
+
+// func (s *Spider) handleExecute(command ...string) {
+// 	go func() {
+// 		stdOutLogs := logger.CreateStdOutSave(
+// 			make(map[string][]string),
+// 			func(p []byte) (n int, err error) {
+// 				s.BroadcastMessage(fmt.Sprintf("Console Output %s", string(p)), Connection{ID: "SPIDER"})
+// 				// return os.Stdout.Write(p)
+// 				return len(p), nil
+// 			},
+// 		)
+
+// 		stdErrLogs := logger.CreateStdOutSave(
+// 			make(map[string][]string),
+// 			func(p []byte) (n int, err error) {
+// 				s.BroadcastMessage(fmt.Sprintf("Console Error %s", string(p)), Connection{ID: "SPIDER"})
+// 				// return os.Stderr.Write(p)
+// 				return len(p), nil
+// 			},
+// 		)
+
+// 		// Execute the command
+// 		s.runningCommand = exec.Command("sh", append([]string{"-c"}, command...)...)
+// 		s.runningCommand.Stdin = os.Stdin
+// 		s.runningCommand.Stdout = stdOutLogs
+// 		s.runningCommand.Stderr = stdErrLogs
+
+// 		// output, err := cmd.CombinedOutput()
+// 		// if err != nil {
+// 		// 	fmt.Printf("Exec Error : %v", err)
+// 		// }
+
+// 		// s.BroadcastMessage(fmt.Sprintf("Console %s", string(output)), Connection{ID: "SPIDER"})
+
+// 		fmt.Println("-----")
+// 		fmt.Println("Start")
+// 		fmt.Println("-----")
+// 		if err := s.runningCommand.Start(); err != nil {
+// 			fmt.Println("---------")
+// 			fmt.Printf("Error Exec : %v\n", err)
+// 			fmt.Println("---------")
+// 		}
+
+// 		// Wait for the command to finish
+// 		if err := s.runningCommand.Wait(); err != nil {
+// 			fmt.Println("---------")
+// 			fmt.Printf("Command execution failed: %v\n", err)
+// 			fmt.Println("---------")
+// 		}
+
+// 		fmt.Println("---------")
+// 		fmt.Println("Command execution completed successfully.")
+// 		fmt.Println("---------")
+
+// 		s.runningCommand = nil
+// 	}()
+// }
 
 func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
@@ -123,8 +190,6 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("Adding %s\n", connection.ID)
 	s.addConn <- connection
-
-	cancelTerminalChan := make(chan bool)
 
 	go func() {
 		defer func() {
@@ -152,28 +217,64 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(string(message) == "SPIDER:Console:Cancel")
 			fmt.Println(s.runningCommand)
 			fmt.Println("*")
-			// SPIDER:Console:Cancel
+
 			if string(message) == "SPIDER:Console:Cancel" {
-				if s.runningCommand {
-					fmt.Println("++++++++++++++++++++")
-					fmt.Println("cancelTerminalChan 1")
-					fmt.Println("++++++++++++++++++++")
-					cancelTerminalChan <- true
+				if s.cancelFunc != nil {
+					fmt.Println("Cancelling previous running command")
+					s.cancelFunc()
+					s.wg.Wait()
+					fmt.Println("Cancelled previous running command")
 				}
+
 				continue
 			}
-			// SPIDER:Console:ping google.com
+
+			// Handle New Command
 			if len(command) > 2 && command[1] == "Console" {
-				if s.runningCommand {
-					fmt.Println("====================")
-					fmt.Println("cancelTerminalChan 2")
-					fmt.Println("====================")
-					cancelTerminalChan <- true
-				}
-				s.handleExecute(cancelTerminalChan, command[2:]...)
+				s.handleExecute(command[2:]...)
 			}
 
-			s.BroadcastMessage(string(message), connection)
+			// // SPIDER:Console:Cancel
+			// if string(message) == "SPIDER:Console:Cancel" {
+			// 	if s.runningCommand != nil {
+			// 		fmt.Println("++++++++++++++++++++")
+			// 		fmt.Println("cancelTerminalChan 1")
+			// 		fmt.Println("++++++++++++++++++++")
+
+			// 		if err := s.runningCommand.Process.Kill(); err != nil {
+			// 			fmt.Printf("Cmd Process Kill : %v\n", err)
+			// 		}
+			// 	}
+			// 	continue
+			// }
+			// // SPIDER:Console:ping google.com
+			// if len(command) > 2 && command[1] == "Console" {
+			// 	if s.runningCommand != nil {
+			// 		fmt.Println("====================")
+			// 		fmt.Println("cancelTerminalChan 2")
+			// 		fmt.Println("====================")
+
+			// 		if err := s.runningCommand.Process.Kill(); err != nil {
+			// 			fmt.Println("---------")
+			// 			fmt.Printf("Cmd Process Kill : %v\n", err)
+			// 			fmt.Println("---------")
+			// 		}
+
+			// 		if err := s.runningCommand.Wait(); err != nil {
+			// 			fmt.Println("---------")
+			// 			fmt.Printf("Cmd execution failed: %v\n", err)
+			// 			fmt.Println("---------")
+			// 		}
+
+			// 		// fmt.Println("=====")
+			// 		// fmt.Println("sleep")
+			// 		// time.Sleep(1 * time.Second)
+			// 		// fmt.Println("=====")
+			// 	}
+			// 	s.handleExecute(command[2:]...)
+			// }
+
+			s.BroadcastMessage(fmt.Sprintf("Message:%s", string(message)), connection)
 		}
 	}()
 }
@@ -181,260 +282,11 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 func handlePage(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	w.WriteHeader(200)
-	fmt.Fprint(w, htmlContent)
+	// fmt.Fprint(w, htmlContent)
+
+	http.ServeFile(w, r, "/Users/Shared/Go/Go-Experiments/Projects/ReRun/spider/spider.html")
 }
 
 const htmlContent = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>ReRun</title>
-</head>
-<style>
-	html, body {
-		height: 100%;
-		margin: 0;
-		padding: 0;
-		overflow: hidden;
-	}
-	iframe {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 102%;
-		height: 100%;
-		border: none;
-	}
-	.container {
-		display: flex;
-		height: 100%;
-	}
-	.pane {
-		overflow: hidden;
-		position: relative;
-	}
-	#rightPane {
-		overflow-y: scroll;
-	}
-	#statusPane {
-		overflow-x: scroll;
-	}
-	.divider {
-		width: 3px;
-		background-color: #aaaaaa11;
-		cursor: ew-resize;
-		position: relative;
-		z-index: 1;
-	}
-	.Output {
-		padding: 5px;
-		font-family: monospace;
-		color: black;
-	}
-	.Error {
-		color: red;
-	}
 
-	#commandInput {
-		width: 80%;
-		padding: 10px;
-		font-size: 16px;
-		border: 2px solid #ccc;
-		border-radius: 4px;
-		box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
-		outline: none;
-		transition: border-color 0.3s;
-	}
-
-	#commandInput:focus {
-		border-color: #007bff;
-	}
-
-	#commandInput::placeholder {
-		color: #999;
-	}
-</style>
-<body>
-	<div class="container">
-        <div class="pane" id="leftPane">
-			<iframe id="contentFrame" src=""></iframe>
-        </div>
-        <div class="divider" id="divider"></div>
-        <div class="pane">
-			<button onclick="sendMessage()">Send Message</button>
-			<input type="text" id="commandInput" placeholder="Type command and press Enter">
-			<button onclick="cancelTerminal()">Cancel</button>
-			<div id="terminal">
-			</div>
-			<div id="statusPane">
-			</div>
-			<div id="rightPane"></div>
-        </div>
-    </div>
-</body>
-<script>
-	const rightPane = document.getElementById('rightPane');
-	const statusPane = document.getElementById('statusPane');
-	const terminal = document.getElementById('terminal');
-
-	let socket = new WebSocket("ws://localhost:7359/ws");
-	const iframeUrl = 'http://localhost:8080/docs';
-	const logsUrl = 'http://localhost:7359/logs/';
-	const checkInterval = 100;
-	
-	async function iframeReload() {
-		document.getElementById('contentFrame').src = ""
-		try {
-			const response = await fetch(iframeUrl, { method: 'HEAD' });
-			if (response.ok) {
-				document.getElementById('contentFrame').src = iframeUrl;
-				return
-			}
-		} catch (error) {}
-		setTimeout(iframeReload, checkInterval);
-	}
-
-	socket.onopen = function(event) {
-		console.log("Connected to WebSocket spider.");
-		iframeReload();
-	};
-
-	socket.onmessage = function(event) {
-		d = event.data
-		
-		if (d.startsWith("SPIDER:Console")){
-			terminal.innerHTML = d
-			return
-		}
-
-		if (d.startsWith("SPIDER:ReRun")){
-			iframeReload();
-			rightPane.innerHTML = ""
-			statusPane.innerHTML = ""
-
-			let matches = d.match(/\d+/);
-			if (matches) {
-				let num = Number(matches[0]);
-				console.log(num);
-
-				for (let i = 1; i <= num; i++) {
-					const button = document.createElement('button');
-					button.innerText = i;
-					button.addEventListener('click', async function(event){
-						console.log(i)
-						try {
-							const response = await fetch(logsUrl+i, { method: 'GET' });
-							console.log(logsUrl+i)
-							let body = await response.text() 
-							if (response.ok) {
-								rightPane.innerHTML = body;
-							}
-						} catch (error) {}
-					});
-					statusPane.appendChild(button);
-				}
-			}
-		}
-
-		console.log("-> " + d);
-		const newLog = document.createElement("div");
-		newLog.innerHTML = d.replace(/\n/g, "<br>");
-		newLog.classList.add("Output");
-		if (d.toLowerCase().includes("error")) {
-			newLog.classList.add("Error");
-		}
-		rightPane.appendChild(newLog);
-	};
-
-	socket.onclose = function(event) {
-		console.log("Disconnected from Spider." + event);
-		location.reload()
-	};
-
-	socket.onerror = function(event) {
-		console.error('Spider error:', event);
-	};
-
-	function sendMessage() {
-		if (socket.readyState === WebSocket.OPEN) {
-			socket.send("Hello, spider!");
-			console.log("Hello, spider!");
-		} else {
-			console.log("WebSocket is not open.");
-		}
-	}
-
-	function cancelTerminal() {
-		if (socket.readyState === WebSocket.OPEN) {
-			socket.send("SPIDER:Console:Cancel");
-			console.log("SPIDER:Console:Cancel");
-		} else {
-			console.log("WebSocket is not open.");
-		}
-	}
-
-
-	////////
-
-
-	const divider = document.getElementById('divider');
-	const leftPane = document.getElementById('leftPane');
-	const container = document.querySelector('.container')
-
-	leftPane.style.width = container.clientWidth * .7 + 'px'
-	rightPane.style.width = container.clientWidth * .3 + 'px'
-
-	let isDragging = false;
-
-	divider.addEventListener('mousedown', function(e) {
-		isDragging = true;
-		leftPane.style.pointerEvents = 'none';
-		document.addEventListener('mousemove', onMouseMove);
-		document.addEventListener('mouseup', onMouseUp);
-	});
-
-	function onMouseUp() {
-		isDragging = false;
-		leftPane.style.pointerEvents = 'auto';
-		document.removeEventListener('mousemove', onMouseMove);
-		document.removeEventListener('mouseup', onMouseUp);
-	}
-
-	function onMouseMove(e) {
-		if (!isDragging) return;
-		const containerOffsetLeft = container.offsetLeft;
-		const pointerRelativeXpos = e.clientX - containerOffsetLeft;
-		const containerWidth = container.clientWidth;
-		const dividerWidth = divider.offsetWidth;
-		const minLeftPaneWidth = 100;
-		const minRightPaneWidth = 100;
-
-		if (pointerRelativeXpos < minLeftPaneWidth || pointerRelativeXpos > containerWidth - minRightPaneWidth - dividerWidth) {
-			return;
-		}
-
-		const leftPaneWidth = pointerRelativeXpos;
-		leftPane.style.width = e.clientX - containerOffsetLeft + 'px';
-		rightPane.style.width = containerWidth - e.clientX - dividerWidth + 'px';
-	}
-
-
-	///////
-
-
-	const input = document.getElementById('commandInput');
-	input.addEventListener('keypress', function (event) {
-        if (event.key === 'Enter') {
-            const command = input.value;
-            if (socket.readyState === WebSocket.OPEN) {
-				console.log("SPIDER:Console:"+command)
-				socket.send("SPIDER:Console:"+command);
-                input.value = '';
-            } else {
-                console.log("WebSocket is not open.");
-            }
-        }
-    });
-</script>
-</html>
 `

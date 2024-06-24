@@ -48,7 +48,7 @@ func NewWatcher(
 		stdOutLogs: *logger.CreateStdOutSave(
 			stdOutLogs,
 			func(p []byte) (n int, err error) {
-				spiderServer.BroadcastMessage(fmt.Sprintf("Output %s", string(p)), spider.Connection{ID: "SPIDER"})
+				spiderServer.BroadcastMessage(fmt.Sprintf("Logs:Output:%s", string(p)), spider.Connection{ID: "SPIDER"})
 				return os.Stdout.Write(p)
 			},
 		),
@@ -56,7 +56,7 @@ func NewWatcher(
 		stdErrLogs: *logger.CreateStdOutSave(
 			stdErrLogs,
 			func(p []byte) (n int, err error) {
-				spiderServer.BroadcastMessage(fmt.Sprintf("Error %s", string(p)), spider.Connection{ID: "SPIDER"})
+				spiderServer.BroadcastMessage(fmt.Sprintf("Logs:Error:%s", string(p)), spider.Connection{ID: "SPIDER"})
 				return os.Stderr.Write(p)
 			},
 		),
@@ -102,7 +102,20 @@ func (w *watcher) StartWatcher() {
 
 				if event.Op&fsnotify.Write == fsnotify.Write || event.Op&fsnotify.Create == fsnotify.Create {
 					fmt.Println("modified file:", event.Name)
+
 					w.runCommand()
+
+					// tree, err := Tree(w.directory)
+					// if err != nil {
+					// 	panic(err)
+					// }
+
+					// jsonData, err := json.MarshalIndent(tree, "", "  ")
+					// if err != nil {
+					// 	panic(err)
+					// }
+
+					// w.spider.BroadcastMessage(fmt.Sprintf("PWD:%s", string(jsonData)), spider.Connection{ID: "SPIDER"})
 				}
 
 				if event.Op&fsnotify.Create == fsnotify.Create {
@@ -151,7 +164,7 @@ func (w *watcher) runCommand() {
 
 	fmt.Printf("\n%d %s [Rerun:%s]\n\n", a, w.command, w.reRunDuration)
 
-	w.spider.BroadcastMessage(fmt.Sprintf("ReRun %d", a), spider.Connection{ID: "SPIDER"})
+	w.spider.BroadcastMessage(fmt.Sprintf("ReRun:%d", a), spider.Connection{ID: "SPIDER"})
 
 	KillProcess(w.shellProcess)
 	KillProcess(w.childProcess)

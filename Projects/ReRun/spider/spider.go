@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"os/exec"
 	"os/signal"
 	"sync"
 	"syscall"
@@ -25,7 +26,9 @@ type Spider struct {
 	addConn    chan Connection
 	removeConn chan Connection
 
-	runningCommand bool
+	runningCommand *exec.Cmd
+	cancelFunc     context.CancelFunc
+	wg             sync.WaitGroup
 
 	stdOutLogs map[string][]string
 	stdErrLogs map[string][]string

@@ -23,3 +23,40 @@ func AddRecursive(watcher *fsnotify.Watcher, directory string) error {
 		return nil
 	})
 }
+
+// TreeNode represents a node in the directory tree
+type TreeNode struct {
+	Name     string      `json:"name"`
+	IsDir    bool        `json:"is_dir"`
+	Children []*TreeNode `json:"children,omitempty"`
+}
+
+// Tree function to build the directory tree structure
+func Tree(root string) (*TreeNode, error) {
+	info, err := os.Stat(root)
+	if err != nil {
+		return nil, err
+	}
+
+	node := &TreeNode{
+		Name:  info.Name(),
+		IsDir: info.IsDir(),
+	}
+
+	if info.IsDir() {
+		files, err := os.ReadDir(root)
+		if err != nil {
+			return nil, err
+		}
+
+		for _, file := range files {
+			childNode, err := Tree(filepath.Join(root, file.Name()))
+			if err != nil {
+				return nil, err
+			}
+			node.Children = append(node.Children, childNode)
+		}
+	}
+
+	return node, nil
+}

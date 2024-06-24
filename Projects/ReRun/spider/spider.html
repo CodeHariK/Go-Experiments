@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>ReRun</title>
+</head>
+<style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    iframe {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 102%;
+        height: 100%;
+        border: none;
+    }
+
+    #outputWindow {
+        overflow: hidden;
+        position: relative;
+    }
+
+    .Output {
+        padding: 2px;
+        margin: 0px;
+        font-family: monospace;
+        color: black;
+    }
+
+    .Error {
+        color: red;
+    }
+
+    .btn {
+        flex: 1 1 auto;
+        margin: 5px;
+        padding: 5px;
+        text-align: center;
+        text-transform: uppercase;
+        transition: 0.5s;
+        background-size: 200% auto;
+        color: white;
+        border: none;
+        box-shadow: 0 0 20px #eee;
+        border-radius: 5px;
+    }
+
+    .btn:hover {
+        background-position: right center;
+    }
+
+    .btn-1 {
+        background-image: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
+    }
+
+    .btn-2 {
+        background-image: linear-gradient(to right, #fbc2eb 0%, #a6c1ee 51%, #fbc2eb 100%);
+    }
+
+    .btn-3 {
+        background-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 51%, #84fab0 100%);
+    }
+
+    #commandInput {
+        width: 70%;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+        box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    #commandInput:focus {
+        border-color: #007bff;
+    }
+
+    #commandInput::placeholder {
+        color: #999;
+    }
+
+    .monaco-editor {
+        width: 100% !important;
+        height: 100%;
+    }
+
+    .split {
+        box-sizing: border-box;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .gutter {
+        background-color: #e0e0e087;
+    }
+
+    .gutter.gutter-horizontal {
+        cursor: col-resize;
+    }
+
+    .gutter.gutter-vertical {
+        cursor: row-resize;
+    }
+
+    .split.split-horizontal,
+    .gutter.gutter-horizontal {
+        height: 100%;
+        float: left;
+    }
+</style>
+
+<body>
+    <div id="treeview" class="split split-horizontal"></div>
+
+    <div id="codeeditor" class="split split-horizontal"></div>
+
+    <div id="outputWindow" class="split split-horizontal">
+        <iframe id="contentFrame" src=""></iframe>
+    </div>
+
+
+    <div id="consoleBox" class="split split-horizontal">
+
+        <div id="statusPane" class="split"></div>
+
+        <div id="logsPane" class="split"></div>
+
+        <div id="terminal" class="split"></div>
+
+        <div id="commandBox" class="split">
+            <input type="text" id="commandInput" placeholder="Type command and press Enter">
+            <button class="btn btn-1" onclick="cancelTerminal()">Cancel</button>
+        </div>
+    </div>
+
+
+</body>
+
+<script type="module">
+    import * as monaco from 'https://cdn.jsdelivr.net/npm/monaco-editor@0.50.0/+esm';
+    import Split from 'https://cdn.jsdelivr.net/npm/split.js@1.6.5/+esm';
+
+    function x() {
+        console.log("Hello world!");
+    }
+
+    const editor = monaco.editor.create(document.getElementById('codeeditor'), {
+        value: x.toString(),
+        language: 'javascript',
+        theme: 'vs-dark',
+    });
+
+    setTimeout(function () {
+        editor.layout()
+    }, 100)
+
+    Split(['#treeview', '#codeeditor', '#outputWindow', '#consoleBox'], {
+        sizes: [10, 30, 30, 30],
+        minSize: 2,
+        gutterSize: 3,
+        cursor: 'col-resize',
+        onDrag: function (sizes) {
+            editor.layout()
+        },
+        onDragEnd: function (sizes) {
+            localStorage.setItem('split-sizes', JSON.stringify(sizes))
+        },
+    })
+
+    Split(['#statusPane', '#logsPane', "#terminal", "#commandBox"], {
+        direction: 'vertical',
+        sizes: [5, 70, 20, 5],
+        minSize: 2,
+        gutterSize: 3,
+        cursor: 'row-resize'
+    })
+
+    const logsPane = document.getElementById('logsPane');
+    const statusPane = document.getElementById('statusPane');
+    const terminal = document.getElementById('terminal');
+
+    let socket = new WebSocket("ws://localhost:7359/ws");
+    const iframeUrl = 'http://localhost:8080/docs';
+    const logsUrl = 'http://localhost:7359/logs/';
+    const checkInterval = 100;
+
+    async function iframeReload() {
+        document.getElementById('contentFrame').src = ""
+        try {
+            const response = await fetch(iframeUrl, { method: 'HEAD' });
+            if (response.ok) {
+                document.getElementById('contentFrame').src = iframeUrl;
+                return
+            }
+        } catch (error) { }
+        setTimeout(iframeReload, checkInterval);
+    }
+
+    socket.onopen = function (event) {
+        console.log("Connected to WebSocket spider.");
+        iframeReload();
+    };
+
+    socket.onmessage = function (event) {
+        let d = event.data
+
+        if (d.startsWith("SPIDER:Console:Output")) {
+            terminal.innerHTML += "<p class='Output'>" + d + "</p>"
+        }
+        if (d.startsWith("SPIDER:Console:Error")) {
+            terminal.innerHTML += "<p class='Output Error'>" + d + "</p>"
+        }
+        if (d.startsWith("SPIDER:Logs:Output")) {
+            logsPane.innerHTML += "<p class='Output'>" + d + "</p>"
+        }
+        if (d.startsWith("SPIDER:Logs:Error")) {
+            logsPane.innerHTML += "<p class='Output Error'>" + d + "</p>"
+        }
+
+        if (d.startsWith("SPIDER:ReRun")) {
+            location.reload()
+            logsPane.innerHTML = ""
+            statusPane.innerHTML = ""
+
+            let matches = d.match(/\d+/);
+            if (matches) {
+                let num = Number(matches[0]);
+                console.log(num);
+
+                for (let i = 1; i <= num; i++) {
+                    const button = document.createElement('button');
+                    button.innerText = i;
+                    button.addEventListener('click', async function (event) {
+                        console.log(i)
+                        try {
+                            const response = await fetch(logsUrl + i, { method: 'GET' });
+                            console.log(logsUrl + i)
+                            let body = await response.text()
+                            if (response.ok) {
+                                logsPane.innerHTML = body;
+                            }
+                        } catch (error) { }
+                    });
+                    statusPane.appendChild(button);
+                }
+            }
+            return
+        }
+    };
+
+    socket.onclose = function (event) {
+        console.log("Disconnected from Spider." + event);
+        location.reload()
+    };
+
+    socket.onerror = function (event) {
+        console.error('Spider error:', event);
+    };
+
+    function cancelTerminal() {
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send("SPIDER:Console:Cancel");
+            console.log("SPIDER:Console:Cancel");
+        } else {
+            console.log("WebSocket is not open.");
+        }
+    }
+    window.cancelTerminal = cancelTerminal;
+
+
+    const input = document.getElementById('commandInput');
+    input.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            const command = input.value;
+            if (socket.readyState === WebSocket.OPEN) {
+                console.log("SPIDER:Console:" + command)
+                socket.send("SPIDER:Console:" + command);
+                input.value = '';
+            } else {
+                console.log("WebSocket is not open.");
+            }
+        }
+    });
+
+</script>
+
+</html>
