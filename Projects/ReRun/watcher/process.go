@@ -111,3 +111,58 @@ func (w *watcher) ExecCommand() *exec.Cmd {
 
 	return cmd
 }
+
+// func executeCommand(command string) {
+// 	cmdMutex.Lock()
+
+// 	fmt.Println(command)
+
+// 	currentCmd = exec.Command("sh", "-c", command)
+
+// 	stdoutPipe, err := currentCmd.StdoutPipe()
+// 	if err != nil {
+// 		logCh <- fmt.Sprintf("Error creating stdout pipe: %v", err)
+// 		return
+// 	}
+
+// 	stderrPipe, err := currentCmd.StderrPipe()
+// 	if err != nil {
+// 		logCh <- fmt.Sprintf("Error creating stderr pipe: %v", err)
+// 		return
+// 	}
+
+// 	// Start the command
+// 	if err := currentCmd.Start(); err != nil {
+// 		logCh <- fmt.Sprintf("Error starting command: %v", err)
+// 		return
+// 	}
+
+// 	// Function to read from pipe and send to channel
+// 	readPipe := func(pipe *bufio.Reader, prefix string) {
+// 		for {
+// 			line, err := pipe.ReadBytes('\n')
+// 			if len(line) > 0 {
+// 				logCh <- fmt.Sprintf("%s: %s", prefix, bytes.TrimRight(line, "\n"))
+// 			}
+// 			if err != nil {
+// 				if err.Error() != "EOF" {
+// 					logCh <- fmt.Sprintf("Error reading %s pipe: %v", prefix, err)
+// 				}
+// 				break
+// 			}
+// 		}
+// 	}
+
+// 	// Read stdout and stderr in separate goroutines
+// 	stdoutReader := bufio.NewReader(stdoutPipe)
+// 	stderrReader := bufio.NewReader(stderrPipe)
+
+// 	go readPipe(stdoutReader, "STDOUT")
+// 	go readPipe(stderrReader, "STDERR")
+
+// 	fmt.Println("Wait")
+
+// 	if err := currentCmd.Wait(); err != nil {
+// 		logCh <- fmt.Sprintf("Error waiting for command: %v", err)
+// 	}
+// }

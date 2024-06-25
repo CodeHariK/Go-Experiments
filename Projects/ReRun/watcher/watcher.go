@@ -14,14 +14,18 @@ import (
 	"github.com/codeharik/rerun/helper"
 	"github.com/codeharik/rerun/logger"
 	"github.com/codeharik/rerun/spider"
+	"github.com/codeharik/rerun/types"
 	"github.com/fsnotify/fsnotify"
 )
 
 type watcher struct {
+	rerun *types.ReRun
+
 	shellProcess *os.Process
 	childProcess *os.Process
 	counter      int32
 
+	cmdMutex      sync.Mutex
 	command       string
 	reRunDuration time.Duration
 	killPorts     []int
@@ -34,6 +38,8 @@ type watcher struct {
 }
 
 func NewWatcher(
+	rerun *types.ReRun,
+
 	command string,
 	reRunDuration time.Duration,
 	killPorts []int,
@@ -44,6 +50,8 @@ func NewWatcher(
 	stdLogs map[string][]string,
 ) *watcher {
 	return &watcher{
+		rerun: rerun,
+
 		stdOutLogs: *logger.CreateStdOutSave(
 			stdLogs,
 			func(s string, append func(string)) (n int, err error) {
@@ -163,6 +171,9 @@ func (w *watcher) runCommand() {
 	KillProcess(w.childProcess)
 	PortKiller(w.killPorts)
 
+	w.cmdMutex.Lock()
+	defer w.cmdMutex.Unlock()
+
 	w.stdOutLogs.Group = strconv.Itoa(int(a))
 	w.stdErrLogs.Group = strconv.Itoa(int(a))
 
@@ -171,8 +182,6 @@ func (w *watcher) runCommand() {
 	helper.Spinner(time.Millisecond * 400)
 
 	CopyProcess(cmd, &w.shellProcess, &w.childProcess)
-
-	w.spider.BroadcastMessage(fmt.Sprintf("Running:%d", a), spider.Connection{ID: "SPIDER"})
 
 	fmt.Printf("...\n\n")
 }

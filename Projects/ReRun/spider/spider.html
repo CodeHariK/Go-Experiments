@@ -192,7 +192,7 @@
 
 </body>
 
-<!-- <script type="module">
+<script type="module">
     import * as monaco from 'https://cdn.jsdelivr.net/npm/monaco-editor@0.50.0/+esm';
     import Split from 'https://cdn.jsdelivr.net/npm/split.js@1.6.5/+esm';
 
@@ -240,10 +240,19 @@
     let socket = new WebSocket("ws://localhost:7359/ws");
     const iframeUrl = 'http://localhost:8080/docs';
     const logsUrl = 'http://localhost:7359/logs/';
+    // let heartbeatTimer;
 
     socket.onopen = function (event) {
         console.log("Connected to WebSocket spider.");
         socket.send("SPIDER:PWD")
+
+        // heartbeatTimer = setInterval(function () {
+        //     if (socket.readyState === WebSocket.OPEN) {
+        //         socket.send(JSON.stringify({ type: 'heartbeat' }));
+        //     } else {
+
+        //     }
+        // }, 5000);
     };
 
     socket.onmessage = function (event) {
@@ -268,9 +277,9 @@
         if (message.startsWith("SPIDER:ReRun")) {
             // location.reload()
         }
-        if (message.startsWith("SPIDER:Logs:Output:Server : localhost:8080")) {
+        if (message.startsWith("SPIDER:Logs:Output")) {
             console.log(iframeUrl)
-            // document.getElementById('contentFrame').src = iframeUrl
+            document.getElementById('contentFrame').src = iframeUrl
             statusRender(message)
         }
     };
@@ -279,6 +288,10 @@
         console.log("Disconnected from Spider." + event);
 
         // location.reload()
+
+        // if (heartbeatTimer) {
+        //     clearInterval(heartbeatTimer);
+        // }
     };
 
     socket.onerror = function (event) {
@@ -404,28 +417,6 @@
             }
         }
     }
-</script> -->
-
-
-<script>
-    let socket = new WebSocket("ws://localhost:7359/ws");
-
-    socket.onopen = function (event) {
-        console.log("Connected to WebSocket spider.");
-    };
-
-    socket.onmessage = function (event) {
-        let message = event.data
-        console.log(message.slice(0, 10))
-    };
-
-    socket.onclose = function (event) {
-        console.error("Disconnected from Spider:", event);
-    };
-
-    socket.onerror = function (event) {
-        console.error('Spider error:', event);
-    };
 </script>
 
 </html>
