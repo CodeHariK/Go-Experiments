@@ -284,8 +284,8 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 }
 
 func handlePage(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "text/html")
-	w.WriteHeader(200)
+	// w.Header().Set("Content-Type", "text/html")
+	// w.WriteHeader(200)
 	// fmt.Fprint(w, htmlContent)
 
 	http.ServeFile(w, r, "/Users/Shared/Go/Go-Experiments/Projects/ReRun/spider/spider.html")

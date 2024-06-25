@@ -27,4 +27,4 @@ go get github.com/codeharik/rerun
 go install github.com/codeharik/rerun
 ```
 
-go run main.go  -k=8080  ./example "go run example/main.go"
+go run main.go  -k=8080  ./example "go run example/server/main.go"

@@ -12,9 +12,8 @@ func main() {
 		w.WriteHeader(200)
 
 		fmt.Println("GET docs")
-		fmt.Fprintln(w, "Html")
-
 		fmt.Fprint(os.Stderr, `Html`)
+		fmt.Fprintln(w, `<body style="background:black;color:white;text-align: center;align-content: center;font: 30px monospace;"><span>Hello</span></body>`)
 	})
 
 	fmt.Println("Server:8080")

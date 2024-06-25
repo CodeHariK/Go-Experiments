@@ -259,6 +259,7 @@
         let message = event.data
 
         if (message.startsWith("SPIDER:PWD:")) {
+            fileTreeContainer.innerHTML = ""
             fileTreeContainer.appendChild(
                 generateFileTreeHTML(
                     JSON.parse(
