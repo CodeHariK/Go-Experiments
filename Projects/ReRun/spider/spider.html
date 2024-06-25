@@ -192,7 +192,7 @@
 
 </body>
 
-<script type="module">
+<!-- <script type="module">
     import * as monaco from 'https://cdn.jsdelivr.net/npm/monaco-editor@0.50.0/+esm';
     import Split from 'https://cdn.jsdelivr.net/npm/split.js@1.6.5/+esm';
 
@@ -240,24 +240,10 @@
     let socket = new WebSocket("ws://localhost:7359/ws");
     const iframeUrl = 'http://localhost:8080/docs';
     const logsUrl = 'http://localhost:7359/logs/';
-    const checkInterval = 100;
-
-    async function iframeReload() {
-        document.getElementById('contentFrame').src = ""
-        try {
-            const response = await fetch(iframeUrl, { method: 'HEAD' });
-            if (response.ok) {
-                document.getElementById('contentFrame').src = iframeUrl;
-                return
-            }
-        } catch (error) { }
-        setTimeout(iframeReload, checkInterval);
-    }
 
     socket.onopen = function (event) {
         console.log("Connected to WebSocket spider.");
         socket.send("SPIDER:PWD")
-        iframeReload();
     };
 
     socket.onmessage = function (event) {
@@ -270,6 +256,7 @@
                         message.replace("SPIDER:PWD:", "").trim())));
 
             fileTree('file-tree');
+            return
         }
 
         append(message, "SPIDER:Console:Output:", terminal, false)
@@ -277,39 +264,21 @@
         append(message, "SPIDER:Logs:Output:", logsPane, false)
         append(message, "SPIDER:Logs:Error:", logsPane, false)
 
+        console.log(message)
         if (message.startsWith("SPIDER:ReRun")) {
             // location.reload()
-            iframeReload()
-            logsPane.innerHTML = ""
-            statusPane.innerHTML = ""
-
-            let matches = message.match(/\d+/);
-            if (matches) {
-                let num = Number(matches[0]);
-
-                for (let i = 1; i <= num; i++) {
-                    const button = document.createElement('button');
-                    button.innerText = i;
-                    button.classList.add("btn", "btn-3");
-                    button.addEventListener('click', async function (event) {
-                        try {
-                            const response = await fetch(logsUrl + i, { method: 'GET' });
-                            let body = await response.text()
-                            if (response.ok) {
-                                logsPane.innerHTML = body;
-                            }
-                        } catch (error) { }
-                    });
-                    statusPane.appendChild(button);
-                }
-            }
-            return
+        }
+        if (message.startsWith("SPIDER:Logs:Output:Server : localhost:8080")) {
+            console.log(iframeUrl)
+            // document.getElementById('contentFrame').src = iframeUrl
+            statusRender(message)
         }
     };
 
     socket.onclose = function (event) {
         console.log("Disconnected from Spider." + event);
-        location.reload()
+
+        // location.reload()
     };
 
     socket.onerror = function (event) {
@@ -408,6 +377,55 @@
             });
         });
     }
+
+    function statusRender(message) {
+        logsPane.innerHTML = ""
+        statusPane.innerHTML = ""
+
+        let matches = message.match(/\d+/);
+        if (matches) {
+            let num = Number(matches[0]);
+
+            for (let i = 1; i <= num; i++) {
+                const button = document.createElement('button');
+                button.innerText = i;
+                button.classList.add("btn", "btn-3");
+                button.addEventListener('click', async function (event) {
+                    try {
+                        const response = await fetch(logsUrl + i, { method: 'GET' });
+                        let body = await response.text()
+                        console.log(body)
+                        if (response.ok) {
+                            logsPane.innerHTML = body;
+                        }
+                    } catch (error) { }
+                });
+                statusPane.appendChild(button);
+            }
+        }
+    }
+</script> -->
+
+
+<script>
+    let socket = new WebSocket("ws://localhost:7359/ws");
+
+    socket.onopen = function (event) {
+        console.log("Connected to WebSocket spider.");
+    };
+
+    socket.onmessage = function (event) {
+        let message = event.data
+        console.log(message.slice(0, 10))
+    };
+
+    socket.onclose = function (event) {
+        console.error("Disconnected from Spider:", event);
+    };
+
+    socket.onerror = function (event) {
+        console.error('Spider error:', event);
+    };
 </script>
 
 </html>

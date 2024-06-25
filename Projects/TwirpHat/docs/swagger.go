@@ -60,43 +60,44 @@ func SwaggerHandler(app *http.ServeMux, logo string) {
 
 <body>
 	<div id="redoc-container"></div>
-    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"> </script>
-	<script>
-        Redoc.init('/docs/swagger.json', {
-            theme: {
-				sidebar: {					
-					backgroundColor: '#43395d',
-					textColor: '#ffffff'
-				},
-				rightPanel: {					
-					backgroundColor: '#43395d',
-				},
-                colors: {
-                    primary: {
-                        main: '#5a5a5a'
-                    }
-                },
-                typography: {
-                    fontSize: '16px',
-                    fontFamily: 'Roboto, sans-serif',
-                    headings: {
-                        fontFamily: 'Montserrat, sans-serif'
-                    }
-                }
-            }
-        }, document.getElementById('redoc-container'))
-
-		setTimeout(() => {
-			var searchDiv = document.querySelector('div[role="search"]');
-			var img = document.createElement('img');
-			img.src = '%s';
-			img.style.width = '200px'
-			img.style.borderRadius = '20px'
-			img.style.padding = '15px'
-			// searchDiv.appendChild(img);
-		}, 2000);
-    // </script>
 </body>
+
+<script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"> </script>
+<script>
+	Redoc.init('/docs/swagger.json', {
+		theme: {
+			sidebar: {					
+				backgroundColor: '#43395d',
+				textColor: '#ffffff'
+			},
+			rightPanel: {					
+				backgroundColor: '#43395d',
+			},
+			colors: {
+				primary: {
+					main: '#5a5a5a'
+				}
+			},
+			typography: {
+				fontSize: '16px',
+				fontFamily: 'Roboto, sans-serif',
+				headings: {
+					fontFamily: 'Montserrat, sans-serif'
+				}
+			}
+		}
+	}, document.getElementById('redoc-container'))
+
+	setTimeout(() => {
+		var searchDiv = document.querySelector('div[role="search"]');
+		var img = document.createElement('img');
+		img.src = '%s';
+		img.style.width = '200px'
+		img.style.borderRadius = '20px'
+		img.style.padding = '15px'
+		// searchDiv.appendChild(img);
+	}, 2000);
+</script>
 
 </html>`, logo)))
 	})

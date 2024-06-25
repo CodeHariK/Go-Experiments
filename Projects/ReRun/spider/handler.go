@@ -42,7 +42,7 @@ func (s *Spider) handleLog(w http.ResponseWriter, r *http.Request) {
 func (s *Spider) handleExecute(command ...string) {
 	stdOutLogs := logger.CreateStdOutSave(
 		make(map[string][]string),
-		func(p []byte) (n int, err error) {
+		func(p string, append func(string)) (n int, err error) {
 			s.BroadcastMessage(fmt.Sprintf("Console:Output:%s", string(p)), Connection{ID: "SPIDER"})
 			// return os.Stdout.Write(p)
 			return len(p), nil
@@ -51,7 +51,7 @@ func (s *Spider) handleExecute(command ...string) {
 
 	stdErrLogs := logger.CreateStdOutSave(
 		make(map[string][]string),
-		func(p []byte) (n int, err error) {
+		func(p string, append func(string)) (n int, err error) {
 			s.BroadcastMessage(fmt.Sprintf("Console:Error:%s", string(p)), Connection{ID: "SPIDER"})
 			// return os.Stderr.Write(p)
 			return len(p), nil
@@ -194,7 +194,6 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 	go func() {
 		defer func() {
-			fmt.Printf("Removing %s\n", connection.ID)
 			s.removeConn <- connection
 		}()
 		for {
@@ -206,11 +205,9 @@ func (s *Spider) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 					websocket.CloseAbnormalClosure,
 				) {
 					fmt.Printf("Connection closed : %s %v\n", connection.ID, err)
-					return
 				}
+				break
 			}
-
-			fmt.Printf("%s Received: %s\n", connection.ID, message)
 
 			command := strings.Split(string(message), ":")
 			fmt.Println("*")

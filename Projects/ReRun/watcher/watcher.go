@@ -41,23 +41,24 @@ func NewWatcher(
 
 	spiderServer *spider.Spider,
 
-	stdOutLogs map[string][]string,
-	stdErrLogs map[string][]string,
+	stdLogs map[string][]string,
 ) *watcher {
 	return &watcher{
 		stdOutLogs: *logger.CreateStdOutSave(
-			stdOutLogs,
-			func(p []byte) (n int, err error) {
-				spiderServer.BroadcastMessage(fmt.Sprintf("Logs:Output:%s", string(p)), spider.Connection{ID: "SPIDER"})
-				return os.Stdout.Write(p)
+			stdLogs,
+			func(s string, append func(string)) (n int, err error) {
+				append("Output:" + s)
+				spiderServer.BroadcastMessage(fmt.Sprintf("Logs:Output:%s", s), spider.Connection{ID: "SPIDER"})
+				return os.Stdout.Write([]byte(s))
 			},
 		),
 
 		stdErrLogs: *logger.CreateStdOutSave(
-			stdErrLogs,
-			func(p []byte) (n int, err error) {
-				spiderServer.BroadcastMessage(fmt.Sprintf("Logs:Error:%s", string(p)), spider.Connection{ID: "SPIDER"})
-				return os.Stderr.Write(p)
+			stdLogs,
+			func(s string, append func(string)) (n int, err error) {
+				append("Error:" + s)
+				spiderServer.BroadcastMessage(fmt.Sprintf("Logs:Error:%s", s), spider.Connection{ID: "SPIDER"})
+				return os.Stderr.Write([]byte(s))
 			},
 		),
 
@@ -78,6 +79,8 @@ func (w *watcher) StartWatcher() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	w.runCommand()
 
 	if w.reRunDuration >= time.Millisecond*100 {
 		helper.TickerFunction(
@@ -168,6 +171,8 @@ func (w *watcher) runCommand() {
 	helper.Spinner(time.Millisecond * 400)
 
 	CopyProcess(cmd, &w.shellProcess, &w.childProcess)
+
+	w.spider.BroadcastMessage(fmt.Sprintf("Running:%d", a), spider.Connection{ID: "SPIDER"})
 
 	fmt.Printf("...\n\n")
 }

@@ -1,14 +1,17 @@
 package logger
 
+import "sync"
+
 type StdLogSave struct {
+	mu          sync.Mutex
 	savedOutput map[string][]string
 	Group       string
-	fn          func(p []byte) (n int, err error)
+	fn          func(string, func(string)) (n int, err error)
 }
 
 func CreateStdOutSave(
 	savedOutput map[string][]string,
-	fn func(p []byte) (n int, err error),
+	fn func(string, func(string)) (n int, err error),
 ) *StdLogSave {
 	return &StdLogSave{
 		savedOutput: savedOutput,
@@ -17,10 +20,13 @@ func CreateStdOutSave(
 }
 
 func (so *StdLogSave) Write(p []byte) (n int, err error) {
-	so.savedOutput[so.Group] = append(so.savedOutput[so.Group], string(p))
-
 	// jsonData, _ := json.MarshalIndent(so.savedOutput, "", "  ")
 	// fmt.Println(string(jsonData))
 
-	return so.fn(p)
+	return so.fn(string(p), func(x string) {
+		so.mu.Lock()
+		defer so.mu.Unlock()
+
+		so.savedOutput[so.Group] = append(so.savedOutput[so.Group], x)
+	})
 }

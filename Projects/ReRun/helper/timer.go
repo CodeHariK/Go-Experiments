@@ -17,7 +17,6 @@ func TickerFunction(t time.Duration, fn func()) {
 	go func() {
 		ticker := time.NewTicker(t)
 
-		fn()
 		for {
 			select {
 			case <-ticker.C:
