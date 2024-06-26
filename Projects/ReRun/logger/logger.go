@@ -3,7 +3,7 @@ package logger
 import "sync"
 
 type StdLogSave struct {
-	mu          sync.Mutex
+	mu          sync.RWMutex
 	savedOutput map[string][]string
 	Group       string
 	fn          func(string, func(string)) (n int, err error)

@@ -13,6 +13,8 @@ High-performance binary message protocol with support for bidirectional messagin
 
 * [ProgrammingPercy Mastering WebSockets With Go - An in-depth tutorial](https://www.youtube.com/watch?v=pKpKv9MKN-E&ab_channel=ProgrammingPercy)
 * [ProgrammingPercy Mastering WebSockets With Go](https://programmingpercy.tech/blog/mastering-websockets-with-go/)
+* [Going Infinite, handling 1 millions websockets connections in Go](https://www.youtube.com/watch?v=LI1YTFMi8W4)
+* [How to scale WebSockets to millions of connections](https://www.youtube.com/watch?v=vXJsJ52vwAA)
 
 * [RFC6455](https://www.rfc-editor.org/rfc/rfc6455)
 

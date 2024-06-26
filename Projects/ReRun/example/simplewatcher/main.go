@@ -175,16 +175,18 @@ func handleConnections(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 
-		if messageType == websocket.PingMessage {
+		switch messageType {
+		case websocket.TextMessage:
+			log.Printf("recv: %s", message)
+		case websocket.PingMessage:
+			fmt.Println("Pong")
 			err := ws.WriteMessage(websocket.PongMessage, nil)
 			if err != nil {
 				log.Printf("pong error: %v", err)
 			}
-			continue
+		case websocket.PongMessage:
+			log.Println("pong received")
 		}
-
-		// Handle the received message
-		log.Printf("recv: %s", message)
 	}
 }
 
@@ -220,51 +222,40 @@ func handlePage(w http.ResponseWriter, r *http.Request) {
     <span>Hello</span>
     <script>
         let socket;
-        const reconnectInterval = 5000; // 5 seconds
-        const pingInterval = 10000; // 10 seconds
-        let pingTimeout;
+		let retryCount = 0;
+		const maxRetries = 5;
 
-        function connect() {
-            socket = new WebSocket('ws://localhost:7359/ws');
+		function connect() {
+			socket = new WebSocket('ws://localhost:7359/ws');
 
-            socket.onopen = function(event) {
-                console.log('WebSocket connection established.');
-                // Start pinging the server
-                ping();
-            };
+			socket.onopen = function(event) {
+				console.log('WebSocket connection established.');
+				retryCount = 0;  // Reset the retry count upon successful connection
+			};
 
-            socket.onmessage = function(event) {
-                console.log('Message from server:', event.data);
-                // Reset ping timer on any message from server
-                clearTimeout(pingTimeout);
-                ping();
-            };
+			socket.onmessage = function(event) {
+				console.log('Message from server:', event.data);
+			};
 
-            socket.onclose = function(event) {
-                console.log('WebSocket closed:', event);
-                // Try to reconnect
-                clearTimeout(pingTimeout);
-                setTimeout(connect, reconnectInterval);
-            };
+			socket.onclose = function(event) {
+				console.log('WebSocket closed:', event);
+				if (retryCount < maxRetries) {
+					const retryDelay = Math.pow(3, retryCount) * 400;
+					console.log('Retrying in '+retryDelay+'ms...');
+					setTimeout(connect, retryDelay);
+					retryCount++;
+				} else {
+					console.log('Max retries reached. No further attempts will be made.');
+				}
+			};
 
-            socket.onerror = function(error) {
-                console.error('WebSocket error:', error);
-                // Close socket on error to trigger reconnection logic
-                socket.close();
-            };
-        }
+			socket.onerror = function(error) {
+				console.error('WebSocket error:', error);
+				socket.close();
+			};
+		}
 
-        function ping() {
-            if (socket.readyState === WebSocket.OPEN) {
-                socket.send(JSON.stringify({type: 'ping'}));
-                pingTimeout = setTimeout(() => {
-                    console.log('Ping timeout, closing socket.');
-                    socket.close();
-                }, pingInterval);
-            }
-        }
-
-        connect();
+		connect();
     </script>
 </body>
 </html>`)

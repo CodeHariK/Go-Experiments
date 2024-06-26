@@ -1,38 +1,3 @@
-// package main
-
-// import (
-// 	"log"
-
-// 	"github.com/gorilla/websocket"
-// )
-
-// func main() {
-// 	// Connect to the WebSocket server
-// 	u := "ws://localhost:7359/ws"
-// 	c, _, err := websocket.DefaultDialer.Dial(u, nil)
-// 	if err != nil {
-// 		log.Fatal("dial:", err)
-// 	}
-// 	defer c.Close()
-
-// 	done := make(chan struct{})
-
-// 	// Read messages from the server
-// 	go func() {
-// 		defer close(done)
-// 		for {
-// 			_, message, err := c.ReadMessage()
-// 			if err != nil {
-// 				log.Println("read:", err)
-// 				return
-// 			}
-// 			log.Printf("recv: %s", message)
-// 		}
-// 	}()
-
-// 	<-done
-// }
-
 package main
 
 import (
@@ -51,17 +16,22 @@ func main() {
 	signal.Notify(interrupt, os.Interrupt)
 
 	for {
-		err := connectAndListen(interrupt)
-		if err != nil {
-			log.Printf("Connection error: %v", err)
-			time.Sleep(time.Second * 2) // Wait before trying to reconnect
-		} else {
-			break
+		select {
+		case <-interrupt:
+			return
+		default:
+			err := connectAndListen()
+			if err != nil {
+				log.Printf("Connection error: %v", err)
+				time.Sleep(time.Second * 2)
+			} else {
+				break
+			}
 		}
 	}
 }
 
-func connectAndListen(interrupt chan os.Signal) error {
+func connectAndListen() error {
 	u := "ws://localhost:7359/ws"
 	c, _, err := websocket.DefaultDialer.Dial(u, nil)
 	if err != nil {
@@ -88,27 +58,18 @@ func connectAndListen(interrupt chan os.Signal) error {
 
 	for {
 		select {
-		case <-done:
-			return nil
 		case <-ticker.C:
-			err := c.WriteMessage(websocket.TextMessage, []byte(`{"type":"ping"}`))
+			err := c.WriteMessage(websocket.PingMessage, nil)
 			if err != nil {
 				log.Println("write:", err)
 				return nil
 			}
-		case <-interrupt:
+		case <-done:
 			log.Println("interrupt")
-
-			// Cleanly close the connection by sending a close message and then
-			// waiting (with timeout) for the server to close the connection.
 			err := c.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
 			if err != nil {
 				log.Printf("write close: %v", err)
 				return err
-			}
-			select {
-			case <-done:
-			case <-time.After(time.Second):
 			}
 			return nil
 		}
