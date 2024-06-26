@@ -67,8 +67,6 @@ func (s *Spider) StartSpider(wg *sync.WaitGroup) {
 
 	go s.manageConnections()
 
-	// go s.sendHeartbeat()
-
 	wg.Add(1)
 	go func() {
 		defer wg.Done()
@@ -131,20 +129,3 @@ func (s *Spider) BroadcastMessage(message string, sender Connection) {
 		}
 	}
 }
-
-// func (s *Spider) sendHeartbeat() {
-// 	ticker := time.NewTicker(5 * time.Second)
-// 	defer ticker.Stop()
-
-// 	for range ticker.C {
-// 		s.mu.Lock()
-// 		defer s.mu.Unlock()
-
-// 		for _, conn := range s.conns {
-// 			if err := conn.conn.WriteMessage(websocket.PingMessage, nil); err != nil {
-// 				fmt.Printf("Error sending heartbeat: %v", err)
-// 				s.removeConn <- conn
-// 			}
-// 		}
-// 	}
-// }

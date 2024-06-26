@@ -260,7 +260,7 @@
             }
 
             attempts++;
-            if (attempts < 20) {
+            if (attempts < 8) {
                 interval *= 2;
                 setTimeout(tryRequest, interval);
             } else {
@@ -268,7 +268,7 @@
             }
         };
 
-        tryRequest(); // Start the first attempt
+        tryRequest();
     }
 
     connect()
@@ -369,6 +369,24 @@
         }
     });
 
+    async function fetchFile(filePath) {
+        const url = `http://localhost:7359/file?filepath=${encodeURIComponent(filePath)}`;
+
+        try {
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const data = await response.text();
+
+            editor.setValue(data);
+        } catch (error) {
+            console.error('Error fetching file:', error);
+        }
+    }
+
     function generateFileTreeHTML(node, path = '') {
         const ul = document.createElement('ul');
         const currentPath = path ? `${path}/${node.name}` : node.name;
@@ -395,6 +413,7 @@
             li.innerHTML = `<span>${node.name}</span>`;
             li.querySelector('span').addEventListener('click', () => {
                 console.log(currentPath);
+                fetchFile(currentPath)
             });
             ul.appendChild(li);
         }

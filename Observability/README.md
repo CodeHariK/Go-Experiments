@@ -82,6 +82,7 @@
 
 * [Kubernetes Monitoring Made Easy with Prometheus | KodeKloud](https://www.youtube.com/watch?v=6xmWr7p5TE0&ab_channel=KodeKloud)
 
+* [PromQL Explained: Mastering Data Types, Selectors, and Modifiers | KodeKloud](https://www.youtube.com/watch?v=yntN95sQOFc)
 * [Prometheus](https://www.youtube.com/playlist?list=PLrMP04WSdCjrL4OBnaqXRy8X3XEd7ZrKf)
 * [Prometheus and Grafana Tutorial](https://www.youtube.com/playlist?list=PLdsu0umqbb8NxUs8r8BIUe9-PhcoZyojA)
 * [Kubernetes Observe](https://www.youtube.com/playlist?list=PL6VBQyIvTlRiLxk2z4FWEViPXimlCARiW)

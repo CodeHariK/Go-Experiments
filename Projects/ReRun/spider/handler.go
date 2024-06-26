@@ -3,6 +3,7 @@ package spider
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"os/exec"
@@ -16,6 +17,7 @@ import (
 func createServer(s *Spider) *http.Server {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handlePage)
+	mux.HandleFunc("GET /file", serverFile)
 
 	mux.HandleFunc("GET /logs/{id}", func(w http.ResponseWriter, r *http.Request) {
 		s.handleLog(w, r)
@@ -289,6 +291,32 @@ func handlePage(w http.ResponseWriter, r *http.Request) {
 	// fmt.Fprint(w, htmlContent)
 
 	http.ServeFile(w, r, "/Users/Shared/Go/Go-Experiments/Projects/ReRun/spider/spider.html")
+}
+
+func serverFile(w http.ResponseWriter, r *http.Request) {
+	filePath := r.URL.Query().Get("filepath")
+	if filePath == "" {
+		http.Error(w, "Missing filepath parameter", http.StatusBadRequest)
+		return
+	}
+
+	// Open the file
+	file, err := os.Open(filePath)
+	if err != nil {
+		http.Error(w, fmt.Sprintf("Unable to open file: %v", err), http.StatusInternalServerError)
+		return
+	}
+	defer file.Close()
+
+	w.Header().Set("Content-Type", "text/plain")
+
+	// Copy the file content to the response writer
+	if _, err := io.Copy(w, file); err != nil {
+		http.Error(w, fmt.Sprintf("Unable to copy file content to response: %v", err), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
 
 const htmlContent = `
