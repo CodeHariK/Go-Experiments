@@ -64,7 +64,7 @@ func NewWatcher(
 		stdErrLogs: *logger.CreateStdOutSave(
 			stdLogs,
 			func(s string, append func(string)) (n int, err error) {
-				append("Error:" + s)
+				// append("Error:" + s)
 				spiderServer.BroadcastMessage(fmt.Sprintf("Logs:Error:%s", s), spider.Connection{ID: "SPIDER"})
 				return os.Stderr.Write([]byte(s))
 			},
