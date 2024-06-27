@@ -36,3 +36,12 @@ Queue : Expiration, Delay, Atmostonce, Atleastonce, exactlyonce, waitsuntilmessa
 * L4 works on packets, does not know anything above it.
 * Round robin, weighted rr, least connection, ip hash, url hash
 * HealthCheck, Connection Polling, Proxy, Request Tracing, Stats, Discovery, Header Manipulation
+
+## Rate Limiters
+
+* https://github.com/mennanov/limiters
+* https://github.com/uber-go/ratelimit
+
+* https://konghq.com/blog/engineering/how-to-design-a-scalable-rate-limiting-algorithm
+
+* [How I RATE LIMIT my Production API in Golang](https://www.youtube.com/watch?v=m5oyY9fgZPs)
