@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 )
 
 func main() {
@@ -13,8 +12,7 @@ func main() {
 		w.WriteHeader(200)
 
 		fmt.Println("GET docs")
-		fmt.Fprint(os.Stderr, `GET docs error\n`)
-		fmt.Fprintln(w, `<body style="background:black;color:white;text-align: center;align-content: center;font: 30px monospace;"><span>Hello</span></body>`)
+		fmt.Fprintln(w, `<body style="background:white;color:purple;text-align: center;align-content: center;font: 30px monospace;"><span>Hello</span></body>`)
 	})
 
 	http.ListenAndServe(":8080", corsMiddleware(mux))

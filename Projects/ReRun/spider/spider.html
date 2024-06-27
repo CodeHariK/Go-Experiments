@@ -215,7 +215,10 @@
     const editor = monaco.editor.create(document.getElementById('codeeditor'), {
         value: "",
         language: 'go',
-        theme: 'vs-dark',
+        theme: 'vs',
+        minimap: {
+            enabled: false
+        },
     });
 
     setTimeout(function () {
