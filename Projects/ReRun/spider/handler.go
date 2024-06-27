@@ -2,22 +2,26 @@ package spider
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"os/exec"
+	"sort"
 	"strings"
 
 	"github.com/codeharik/rerun/helper"
 	"github.com/codeharik/rerun/logger"
+	"github.com/codeharik/rerun/types"
 	"github.com/gorilla/websocket"
 )
 
 func createServer(s *Spider) *http.Server {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handlePage)
-	mux.HandleFunc("GET /file", serverFile)
+	mux.HandleFunc("GET /file", getFileHandler)
+	mux.HandleFunc("POST /save", saveFileHandler)
 
 	mux.HandleFunc("GET /logs/{id}", func(w http.ResponseWriter, r *http.Request) {
 		s.handleLog(w, r)
@@ -32,18 +36,32 @@ func createServer(s *Spider) *http.Server {
 	return &server
 }
 
-func (s *Spider) handleLog(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
+func CombineAndSortLogs(logs1, logs2 []types.LogEntry) []types.LogEntry {
+	combinedLogs := append(logs1, logs2...)
 
+	sort.Slice(combinedLogs, func(i, j int) bool {
+		return combinedLogs[i].Timestamp.Before(combinedLogs[j].Timestamp)
+	})
+
+	return combinedLogs
+}
+
+func (s *Spider) handleLog(w http.ResponseWriter, r *http.Request) {
 	idString := r.PathValue("id")
 
-	fmt.Fprint(w, s.stdOutLogs[idString], s.stdErrLogs[idString])
+	jsonData, err := json.Marshal(CombineAndSortLogs(s.stdOutLogs[idString], s.stdErrLogs[idString]))
+	if err != nil {
+		http.Error(w, "Error encoding combined logs to JSON", http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(200)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jsonData)
 }
 
 func (s *Spider) handleExecute(command ...string) {
 	stdOutLogs := logger.CreateStdOutSave(
-		make(map[string][]string),
+		make(map[string][]types.LogEntry),
 		func(p string, append func(string)) (n int, err error) {
 			s.BroadcastMessage(fmt.Sprintf("Console:Output:%s", string(p)), Connection{ID: "SPIDER"})
 			// return os.Stdout.Write(p)
@@ -52,7 +70,7 @@ func (s *Spider) handleExecute(command ...string) {
 	)
 
 	stdErrLogs := logger.CreateStdOutSave(
-		make(map[string][]string),
+		make(map[string][]types.LogEntry),
 		func(p string, append func(string)) (n int, err error) {
 			s.BroadcastMessage(fmt.Sprintf("Console:Error:%s", string(p)), Connection{ID: "SPIDER"})
 			// return os.Stderr.Write(p)
@@ -293,7 +311,44 @@ func handlePage(w http.ResponseWriter, r *http.Request) {
 	http.ServeFile(w, r, "/Users/Shared/Go/Go-Experiments/Projects/ReRun/spider/spider.html")
 }
 
-func serverFile(w http.ResponseWriter, r *http.Request) {
+type SaveRequest struct {
+	CurrentFile string `json:"currentFile"`
+	Content     string `json:"content"`
+}
+
+func saveFileHandler(w http.ResponseWriter, r *http.Request) {
+	var req SaveRequest
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+		http.Error(w, "Invalid request payload", http.StatusBadRequest)
+		return
+	}
+
+	fmt.Println(r)
+	fmt.Println(r.Body)
+	fmt.Println(req)
+
+	if req.CurrentFile == "" {
+		http.Error(w, "File path cannot be empty", http.StatusBadRequest)
+		return
+	}
+
+	if _, err := os.Stat(req.CurrentFile); os.IsNotExist(err) {
+		http.Error(w, "File does not exist", http.StatusBadRequest)
+		return
+	}
+
+	// Write updated content
+	err := os.WriteFile(req.CurrentFile, []byte(req.Content), 0o644)
+	if err != nil {
+		http.Error(w, "Error updating file", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintln(w, "Content updated successfully")
+}
+
+func getFileHandler(w http.ResponseWriter, r *http.Request) {
 	filePath := r.URL.Query().Get("filepath")
 	if filePath == "" {
 		http.Error(w, "Missing filepath parameter", http.StatusBadRequest)

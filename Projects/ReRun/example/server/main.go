@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -11,10 +12,8 @@ func main() {
 		w.Header().Set("Content-Type", "text/html")
 		w.WriteHeader(200)
 
-		// fmt.Println(r)
-
 		fmt.Println("GET docs")
-		// fmt.Fprint(os.Stderr, `Html`)
+		fmt.Fprint(os.Stderr, `GET docs error\n`)
 		fmt.Fprintln(w, `<body style="background:black;color:white;text-align: center;align-content: center;font: 30px monospace;"><span>Hello</span></body>`)
 	})
 

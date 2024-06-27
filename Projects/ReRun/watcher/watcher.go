@@ -47,13 +47,14 @@ func NewWatcher(
 
 	spiderServer *spider.Spider,
 
-	stdLogs map[string][]string,
+	stdOutLogs map[string][]types.LogEntry,
+	stdErrLogs map[string][]types.LogEntry,
 ) *watcher {
 	return &watcher{
 		rerun: rerun,
 
 		stdOutLogs: *logger.CreateStdOutSave(
-			stdLogs,
+			stdOutLogs,
 			func(s string, append func(string)) (n int, err error) {
 				append("Output:" + s)
 				spiderServer.BroadcastMessage(fmt.Sprintf("Logs:Output:%s", s), spider.Connection{ID: "SPIDER"})
@@ -62,9 +63,9 @@ func NewWatcher(
 		),
 
 		stdErrLogs: *logger.CreateStdOutSave(
-			stdLogs,
+			stdErrLogs,
 			func(s string, append func(string)) (n int, err error) {
-				// append("Error:" + s)
+				append("Error:" + s)
 				spiderServer.BroadcastMessage(fmt.Sprintf("Logs:Error:%s", s), spider.Connection{ID: "SPIDER"})
 				return os.Stderr.Write([]byte(s))
 			},

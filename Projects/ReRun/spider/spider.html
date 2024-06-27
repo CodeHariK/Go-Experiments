@@ -166,6 +166,7 @@
 
 <body>
     <div id="treeview" class="split split-horizontal">
+        <button class="btn btn-3" onclick="saveContent()">Save</button>
         <ul id="file-tree" class="file-tree"></ul>
     </div>
 
@@ -189,26 +190,42 @@
         </div>
     </div>
 
-
 </body>
 
 <script type="module">
     import * as monaco from 'https://cdn.jsdelivr.net/npm/monaco-editor@0.50.0/+esm';
     import Split from 'https://cdn.jsdelivr.net/npm/split.js@1.6.5/+esm';
 
-    function x() {
-        console.log("Hello world!");
-    }
+    var languageMappings = {
+        '.js': 'javascript',
+        '.ts': 'typescript',
+        '.py': 'python',
+        '.java': 'java',
+        '.cpp': 'cpp',
+        '.php': 'php',
+        '.go': 'go',
+        '.html': 'html',
+        '.css': 'css',
+        '.json': 'json',
+        '.yaml': 'yaml',
+        '.xml': 'xml',
+        '.md': 'markdown',
+    };
 
     const editor = monaco.editor.create(document.getElementById('codeeditor'), {
-        value: x.toString(),
-        language: 'javascript',
+        value: "",
+        language: 'go',
         theme: 'vs-dark',
     });
 
     setTimeout(function () {
         editor.layout()
     }, 100)
+    window.addEventListener('resize', function handleResize() {
+        setTimeout(function () {
+            editor.layout()
+        }, 100)
+    });
 
     Split(['#treeview', '#codeeditor', '#outputWindow', '#consoleBox'], {
         sizes: [10, 30, 30, 30],
@@ -240,6 +257,7 @@
     let socket;
     let retryCount = 0;
     const maxRetries = 5;
+    const testUrl = 'http://localhost:8080';
     const iframeUrl = 'http://localhost:8080/docs';
     const logsUrl = 'http://localhost:7359/logs/';
 
@@ -249,7 +267,7 @@
 
         const tryRequest = async () => {
             try {
-                const response = await fetch('http://localhost:8080', { method: 'HEAD' });
+                const response = await fetch(testUrl, { method: 'HEAD' });
                 if (response) {
                     console.log('Server is alive');
                     document.getElementById('contentFrame').src = iframeUrl
@@ -296,19 +314,17 @@
                 return
             }
 
-            append(message, "SPIDER:Console:Output:", terminal, false)
-            append(message, "SPIDER:Console:Error:", terminal, false)
-            append(message, "SPIDER:Logs:Output:", logsPane, false)
-            append(message, "SPIDER:Logs:Error:", logsPane, false)
-
             console.log(message)
             if (message.startsWith("SPIDER:ReRun")) {
                 console.log(iframeUrl)
                 checkServerStatus();
-            }
-            if (message.startsWith("SPIDER:Logs:Output")) {
                 statusRender(message)
             }
+
+            append(message, "SPIDER:Console:Output:", terminal, false)
+            append(message, "SPIDER:Console:Error:", terminal, false)
+            append(message, "SPIDER:Logs:Output:", logsPane, false)
+            append(message, "SPIDER:Logs:Error:", logsPane, false)
         };
 
         socket.onclose = function (event) {
@@ -369,6 +385,14 @@
         }
     });
 
+    // Event listener for keydown events
+    document.addEventListener('keydown', function handleSaveShortcut(event) {
+        if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+            event.preventDefault();
+            saveContent();
+        }
+    });
+
     async function fetchFile(filePath) {
         const url = `http://localhost:7359/file?filepath=${encodeURIComponent(filePath)}`;
 
@@ -382,10 +406,43 @@
             const data = await response.text();
 
             editor.setValue(data);
+            var fileExtension = filePath.substr(filePath.lastIndexOf('.')).toLowerCase();
+            if (languageMappings[fileExtension]) {
+                monaco.editor.setModelLanguage(editor.getModel(), languageMappings[fileExtension]);
+            } else {
+                console.log('Unsupported file extension or language');
+            }
+
         } catch (error) {
             console.error('Error fetching file:', error);
         }
     }
+
+    async function saveContent() {
+        const content = editor.getValue();
+
+        if (!currentFile) {
+            return;
+        }
+        console.log(JSON.stringify({ currentFile, content }))
+
+        const response = await fetch('http://localhost:7359/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ currentFile, content })
+        });
+
+        if (response.ok) {
+            console.log('Content saved successfully');
+        } else {
+            console.log('Error saving content');
+        }
+    }
+    window.saveContent = saveContent;
+
+    let currentFile;
 
     function generateFileTreeHTML(node, path = '') {
         const ul = document.createElement('ul');
@@ -404,7 +461,7 @@
 
             li.querySelector('span.folder-name').addEventListener('click', function () {
                 const isOpen = this.getAttribute('data-open') === 'true';
-                this.innerHTML = isOpen ? `&#11041; ${node.name}` : `&#11153; ${node.name}`;
+                this.innerHTML = isOpen ? `&#9654; ${node.name}` : `&#11153; ${node.name}`;
                 this.setAttribute('data-open', !isOpen);
                 li.querySelector('ul').style.display = isOpen ? 'none' : 'block';
             });
@@ -412,8 +469,9 @@
             const li = document.createElement('li');
             li.innerHTML = `<span>${node.name}</span>`;
             li.querySelector('span').addEventListener('click', () => {
-                console.log(currentPath);
                 fetchFile(currentPath)
+                currentFile = currentPath
+                console.log(currentPath);
             });
             ul.appendChild(li);
         }
@@ -460,7 +518,16 @@
                         let body = await response.text()
                         console.log(body)
                         if (response.ok) {
-                            logsPane.innerHTML = body;
+
+                            const logs = JSON.parse(body);
+                            const logsPane = document.getElementById('logsPane');
+                            logsPane.innerHTML = logs.map(log => {
+                                if (log.log.includes("Error")) {
+                                    return "<p class='Output Error'>" + log.log.replace("Error:", "").trim() + "</p>"
+                                } else {
+                                    return "<p class='Output'>" + log.log.replace("Output:", "").trim() + "</p>"
+                                }
+                            }).join('');
                         }
                     } catch (error) { }
                 });

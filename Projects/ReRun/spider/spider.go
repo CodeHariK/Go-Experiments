@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/codeharik/rerun/types"
 	"github.com/gorilla/websocket"
 )
 
@@ -32,14 +33,14 @@ type Spider struct {
 	cancelFunc     context.CancelFunc
 	wg             sync.WaitGroup
 
-	stdOutLogs map[string][]string
-	stdErrLogs map[string][]string
+	stdOutLogs map[string][]types.LogEntry
+	stdErrLogs map[string][]types.LogEntry
 }
 
 func NewSpider(
 	directory string,
-	stdOutLogs map[string][]string,
-	stdErrLogs map[string][]string,
+	stdOutLogs map[string][]types.LogEntry,
+	stdErrLogs map[string][]types.LogEntry,
 ) *Spider {
 	return &Spider{
 		directory: directory,

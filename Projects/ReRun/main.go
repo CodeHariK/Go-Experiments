@@ -56,16 +56,18 @@ func main() {
 	var wg sync.WaitGroup
 	defer wg.Wait()
 
-	stdLogs := make(map[string][]string)
+	stdOutLogs := make(map[string][]types.LogEntry)
+	stdErrLogs := make(map[string][]types.LogEntry)
 
-	spider := spider.NewSpider(directory, stdLogs, stdLogs)
+	spider := spider.NewSpider(directory, stdOutLogs, stdErrLogs)
 	spider.StartSpider(&wg)
 
 	w := watcher.NewWatcher(
 		&rerun,
 		command, rerunTimer, killPorts, directory,
 		spider,
-		stdLogs,
+		stdOutLogs,
+		stdErrLogs,
 	)
 	w.StartWatcher()
 }
