@@ -1,9 +1,0 @@
-Server:
-  Host: localhost
-  Port: 3000
-Mongo:
-  Host: checkout-cluster.jmd9xrl.mongodb.net
-  AppName: Checkout-cluster
-  Database: ty_case
-  UserName : hoopaunbounded
-  Password : A9zeZa2nDkcJ3njm

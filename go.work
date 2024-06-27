@@ -11,7 +11,6 @@ use (
 
 	./Profiling
 	./Projects
-	./Projects/Checkout-System
 	./Projects/Chess/glee
 	./Projects/GreenGoblin
 	./Projects/RSSAggregator
