@@ -26,6 +26,8 @@
 
 ## Level 3
 
+* [How to deploy your website to production in 30 minutes](https://www.youtube.com/watch?v=gViEtIJ1DCw)
+
 ## Distributed System
 
 * [Distributed Systems lecture series](https://www.youtube.com/playlist?list=PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB)
@@ -155,6 +157,8 @@
 * https://eda-visuals.boyney.io/
 
 * [System Design Pratiksha](https://www.youtube.com/playlist?list=PLWp3jRAb6-XWmlu9R96p3xp0G_F3kdq3x)
+
+* [I coded Zerodha's Trading Algorithm in 1 hour](https://www.youtube.com/watch?v=aEMBp9Bqfwc)
 
 * [Exponent System Design](https://www.youtube.com/playlist?list=PLrtCHHeadkHp92TyPt1Fj452_VGLipJnL)
 
