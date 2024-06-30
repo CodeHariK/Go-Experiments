@@ -12,6 +12,7 @@ use (
 	./Profiling
 	./Projects
 	./Projects/Chess/glee
+	./Projects/CryptoExchange
 	./Projects/GreenGoblin
 	./Projects/RSSAggregator
 	./Projects/ReRun
