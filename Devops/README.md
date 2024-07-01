@@ -18,3 +18,5 @@
 * https://www.digitalocean.com/community/tutorials/how-to-progressively-deliver-releases-using-flagger-on-digitalocean-kubernetes
 
 * https://www.digitalocean.com/community/tutorials/how-to-manage-your-kubernetes-configurations-with-kustomize
+
+* [DevOps Real time Projects](https://www.youtube.com/playlist?list=PLl4APkPHzsUUhsVS8_pdJz2kxv4bg7hu8)

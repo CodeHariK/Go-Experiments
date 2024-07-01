@@ -175,9 +175,13 @@
 * Exponent
 * [Design Tinder - System Design Interview](https://www.youtube.com/watch?v=iyLqwyFL0Zc)
 
+* [System Design Walkthroughs](https://www.youtube.com/playlist?list=PL5q3E8eRUieWtYLmRU3z94-vGRcwKr9tM)
+
 * Kiki
 * [How Pinterest Scaled to 11 Million Users With Only 6 Engineers](https://www.youtube.com/watch?v=QRlP6BI1PFA)
 * [How Instagram Scaled to 14 Million Users With Only 3 Engineers](https://www.youtube.com/watch?v=TdhXPsDXdAI)
+
+* [System design mock interviews](https://www.youtube.com/playlist?list=PLf3F6FcQwgqEpnucyupbIqzxyvFOz9uDq)
 
 * InterviewPen
 * [System Design](https://www.youtube.com/playlist?list=PLPkuArhPxxQGkbl-_STo8FFxBBB4ri-tl)

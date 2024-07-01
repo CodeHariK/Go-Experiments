@@ -36,6 +36,8 @@
 
 * https://github.com/open-telemetry/opentelemetry-demo
 
+* https://github.com/open-telemetry/opentelemetry-operator
+
 * [Efficient Debugging and Logging with OpenTelemetry in Go](https://www.youtube.com/watch?v=5rjTdA6BM1E)
 * https://github.com/kostyay/gorm-opentelemetry
 * https://github.com/kostyay/otel-demo
@@ -50,6 +52,10 @@
 * [Instrument for better performance in your app in Go (part 1:trace)](https://codelabs.developers.google.com/codelabs/otel-cloudtrace-go)
 * [Instrument for better performance in your app in Go (part 2:profiler)](https://codelabs.developers.google.com/cloud-profiler-go)
 * [Google Managed Prometheus with OpenTelemetry](https://medium.com/google-cloud/google-managed-prometheus-with-opentelemetry-1a1fd1f0ae8a)
+
+* https://github.com/avillela/otel-target-allocator-talk/tree/main
+* https://geekingoutpodcast.substack.com/p/prometheus-and-opentelemetry-better
+* [Prometheus and OpenTelemetry: Better Together](https://www.youtube.com/watch?v=LJd1pJ0k28g)
 
 * [OpenTelemetry Golang Tutorial (Tracing in Grafana & Kubernetes & Tempo)](https://www.youtube.com/watch?v=ZIN7H00ulQw)
 
@@ -77,6 +83,7 @@
 * [client_golang](https://pkg.go.dev/github.com/prometheus/client_golang/prometheus#section-readme)
 * [Monitoring cAdvisor with Prometheus](https://github.com/google/cadvisor/blob/master/docs/storage/prometheus.md)
 
+* [How to monitor ...?](https://www.youtube.com/playlist?list=PLiMWaCMwGJXmvZU4E1TNYddF2P5OZ5Dx2)
 * [How to Monitor/Instrument Golang with Prometheus (Counter - Gauge - Histogram - Summary)](https://www.youtube.com/watch?v=WUBjlJzI2a0)
 * [Prometheus Fundamentals](https://www.youtube.com/playlist?list=PLyBW7UHmEXgylLwxdVbrBQJ-fJ_jMvh8h)
 
@@ -90,6 +97,8 @@
 * [Beautiful Dashboards with Grafana and Prometheus - Monitoring Kubernetes Tutorial](https://www.youtube.com/watch?v=fzny5uUaAeY&ab_channel=TechnoTim)
 * [How Prometheus Monitoring Works | Explaining Prometheus Architectur](https://www.youtube.com/watch?v=f4W_eEJC-20)
 * [Mastering Prometheus: Installation and Systemd Setup Guide](https://www.youtube.com/watch?v=cl9JlW0nzzE)
+
+* [Project 5: Setup Monitoring and Alerting on Kubernetes | Prometheus and Grafana Tutorial](https://www.youtube.com/watch?v=gBdyIv9d_O8)
 
 * [Full Kubernetes tutorial on Docker, KinD, kubectl, Helm, Prometheus, Grafana](https://www.youtube.com/watch?v=SeQevrW176A)
 
@@ -119,6 +128,8 @@
 * [Grafana Loki querying basics, log based metrics and setting alerts on logs](https://www.youtube.com/watch?v=VEGYgPiAazk)i
 
 ## Tempo
+
+* https://grafana.com/docs/grafana/latest/datasources/tempo/
 
 * https://grafana.com/docs/tempo/latest/
 

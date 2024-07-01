@@ -28,10 +28,12 @@ func NewMetrics(reg prometheus.Registerer) *metrics {
 				Help: "No of request handled by Ping handler",
 			},
 		),
-		cpuTemp: prometheus.NewGauge(prometheus.GaugeOpts{
-			Name: "cpu_temperature_celsius",
-			Help: "Current temperature of the CPU.",
-		}),
+		cpuTemp: prometheus.NewGauge(
+			prometheus.GaugeOpts{
+				Name: "cpu_temperature_celsius",
+				Help: "Current temperature of the CPU.",
+			},
+		),
 		hdFailures: prometheus.NewCounterVec(
 			prometheus.CounterOpts{
 				Name: "hd_errors_total",
@@ -39,12 +41,15 @@ func NewMetrics(reg prometheus.Registerer) *metrics {
 			},
 			[]string{"device"},
 		),
-		responseTimeHistogram: prometheus.NewHistogramVec(prometheus.HistogramOpts{
-			Namespace: "namespace",
-			Name:      "http_server_request_duration_seconds",
-			Help:      "Histogram of response time for handler in seconds",
-			Buckets:   []float64{.005, .01, .025, .05, .1, .25, .5, 1, 2.5, 5, 10},
-		}, []string{"route", "method", "status_code"}),
+		responseTimeHistogram: prometheus.NewHistogramVec(
+			prometheus.HistogramOpts{
+				Namespace: "namespace",
+				Name:      "http_server_request_duration_seconds",
+				Help:      "Histogram of response time for handler in seconds",
+				Buckets:   []float64{.005, .01, .025, .05, .1, .25, .5, 1, 2.5, 5, 10},
+			},
+			[]string{"route", "method", "status_code"},
+		),
 	}
 	reg.MustRegister(m.pingCounter)
 	reg.MustRegister(m.cpuTemp)
@@ -120,12 +125,12 @@ func main() {
 		w.Write([]byte("The time is: " + tm))
 	}), *m))
 
-	http.Handle("/hello", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, r.RequestURI)
 		log.Println(r.RequestURI)
 		tm := time.Now().String()
 		w.Write([]byte("The time is: " + tm))
-	}))
+	})
 
 	log.Fatal(http.ListenAndServe(":8090", nil))
 }

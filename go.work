@@ -8,11 +8,11 @@ use (
 	./GoRuntime
 
 	./Kubernetes/Example/kubedemo
+	./Observability/newrelic-opentelemetry-examples
 
 	./Profiling
 	./Projects
 	./Projects/Chess/glee
-	./Projects/CryptoExchange
 	./Projects/GreenGoblin
 	./Projects/RSSAggregator
 	./Projects/ReRun
