@@ -3,6 +3,8 @@
 * https://grafana.com/community/
 * https://play.grafana.org/dashboards
 
+* https://killercoda.com/grafana-labs
+
 * https://microbs.io/docs/apps/ecommerce/
 
 * [Open source observability explained - the Grafana Labs stack](https://www.youtube.com/watch?v=WSW1urIXsfA)
