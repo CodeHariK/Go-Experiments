@@ -40,6 +40,8 @@
 
 * https://github.com/open-telemetry/opentelemetry-operator
 
+* https://uptrace.dev/opentelemetry/
+
 * [Efficient Debugging and Logging with OpenTelemetry in Go](https://www.youtube.com/watch?v=5rjTdA6BM1E)
 * https://github.com/kostyay/gorm-opentelemetry
 * https://github.com/kostyay/otel-demo

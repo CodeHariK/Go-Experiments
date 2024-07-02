@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"go.opentelemetry.io/contrib/bridges/otelslog"
 	"go.opentelemetry.io/otel"
@@ -25,6 +26,7 @@ var (
 	meter                = otel.Meter(name)
 	logger               = otelslog.NewLogger(name)
 	fibonacciInvocations metric.Int64Counter
+	opHistogram          metric.Int64Histogram
 )
 
 type fibonacciResponse struct {
@@ -38,6 +40,14 @@ func init() {
 	fibonacciInvocations, err = meter.Int64Counter(
 		"fibonacci.invocations",
 		metric.WithDescription("Measures the number of times the fibonacci method is invoked."),
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	opHistogram, err = meter.Int64Histogram(
+		"some.prefix.duration",
+		metric.WithDescription("Duration of some operation"),
 	)
 	if err != nil {
 		panic(err)
@@ -72,6 +82,8 @@ func calculateFibonacci(ctx context.Context, n int) (int, error) {
 	ctx, span := tracer.Start(ctx, "fibonacci")
 	defer span.End()
 
+	t1 := time.Now()
+
 	span.SetAttributes(attribute.Int("fibonacci.n", n))
 
 	if n < 1 || n > 90 {
@@ -84,10 +96,10 @@ func calculateFibonacci(ctx context.Context, n int) (int, error) {
 		return 0, err
 	}
 
-	var result = 1
+	result := 1
 	if n > 2 {
-		var a = 0
-		var b = 1
+		a := 0
+		b := 1
 
 		for i := 1; i < n; i++ {
 			result = a + b
@@ -95,6 +107,10 @@ func calculateFibonacci(ctx context.Context, n int) (int, error) {
 			b = result
 		}
 	}
+
+	dur := time.Since(t1)
+
+	opHistogram.Record(ctx, dur.Microseconds())
 
 	span.SetAttributes(attribute.Int("fibonacci.result", result))
 	fibonacciInvocations.Add(ctx, 1, metric.WithAttributes(attribute.Bool("fibonacci.valid.n", true)))
