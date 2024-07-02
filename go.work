@@ -8,7 +8,9 @@ use (
 	./GoRuntime
 
 	./Kubernetes/Example/kubedemo
+	./Observability/dice
 	./Observability/newrelic-opentelemetry-examples
+	./Observability/otel-collector
 
 	./Profiling
 	./Projects
