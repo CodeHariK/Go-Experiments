@@ -1,6 +1,6 @@
 # Go Experiments
 
-## Style Guide
+## Go Guide
 
 * [Learn Go with Tests](https://quii.gitbook.io/learn-go-with-tests/)
 * [Go Style Guide](https://github.com/uber-go/guide/blob/master/style.md)
@@ -9,16 +9,16 @@
 * [Go Patterns](https://github.com/tmrts/go-patterns)
 * [100 Go Mistakes and How to Avoid Them](https://100go.co)
 
+* [Workshop: Practical Go](https://www.youtube.com/watch?v=gi7t6Pl9rxE)
+* [Go For TypeScript Developers - Use Your TypeScript Skills to Learn Go](https://www.youtube.com/watch?v=ptuQ7xncV7A)
+* [Intermediate level Golang](https://www.youtube.com/playlist?list=PLSozy2hb5kKPpIJnpZ2sSMfjVjP0tyJYG)
+
 * Writing An Interpreter In Go
 * Writing A Compiler In Go
 
 ## Level 1
 
 * [Grpc & Protocol Buffers](GrpcGo/README.md)
-
-* [Workshop: Practical Go](https://www.youtube.com/watch?v=gi7t6Pl9rxE)
-
-* [Go For TypeScript Developers - Use Your TypeScript Skills to Learn Go](https://www.youtube.com/watch?v=ptuQ7xncV7A)
 
 ## Level 2
 
