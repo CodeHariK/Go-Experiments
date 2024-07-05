@@ -30,11 +30,26 @@
 
 ## Distributed System
 
+* [The Raft Consensus Algorithm](https://www.youtube.com/watch?v=rVe_F_4H_60)
+* [You Must Build A Raft](https://www.youtube.com/watch?v=Hm_m4MIXn9Q)
+* [Distributed Consensus with Raft](https://www.youtube.com/watch?v=RHDP_KCrjUc)
+* [Designing for Understandability: The Raft Consensus Algorithm](https://www.youtube.com/watch?v=vYp4LYbnnW8)
 * [Distributed Systems lecture series](https://www.youtube.com/playlist?list=PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB)
 * [Raft - The Understandable Distributed Protocol](https://www.youtube.com/watch?v=ro2fU8_mr2w)
 * [Understand RAFT without breaking your brain](https://www.youtube.com/watch?v=IujMVjKvWP4)
 * [Mastering the Raft Consensus Algorithm: A Comprehensive Tutorial in Distributed Systems](https://www.youtube.com/watch?v=ZyqAbQkpeUo)
 * [Raft, Build Your Own Distributed System Using Go](https://www.youtube.com/watch?v=8XbxQ1Epi5w)
+
+* https://raft.github.io/raft.pdf
+
+* https://github.com/ongardie/raft.tla
+
+* https://github.com/eatonphil/goraft
+* https://github.com/eliben/raft
+
+* [Implementing the Raft distributed consensus protocol in Go](https://notes.eatonphil.com/2023-05-25-raft.html)
+* [Implementation of the Raft Consensus Algorithm](https://dzone.com/articles/implementation-of-the-raft-consensus-algorithm-usi)
+* https://eli.thegreenplace.net/2020/implementing-raft-part-0-introduction/
 
 ### Microservices
 
