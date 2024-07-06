@@ -15,7 +15,6 @@ use (
 	./Profiling
 	./Projects
 	./Projects/Chess/glee
-	./Projects/Craft
 	./Projects/GreenGoblin
 	./Projects/RSSAggregator
 	./Projects/ReRun
