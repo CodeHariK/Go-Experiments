@@ -26,3 +26,41 @@
 ## Design
 
 * [The Google File System - Paper Explained](https://www.youtube.com/watch?v=LXhgFAZroG8&list=PLsdq-3Z1EPT2XEJ0AmF02LBK1RFNd-jK8&index=1)
+
+### Database
+
+* https://planetscale.com/learn/courses/database-scaling/scaling/when-to-scale
+
+* Sharding -> Spliting Database, Horizontal Scaling and no joins, Partition -> Splitting Data, Vertical Scaling
+
+* [The Secret Sauce Behind NoSQL: LSM Tree](https://www.youtube.com/watch?v=I6jB0nM9SKU) 
+
+* [Which Database Model to Choose?](https://www.youtube.com/watch?v=9mdadNspP_M)
+* [Learn Database Normalization - 1NF, 2NF, 3NF, 4NF, 5NF](https://www.youtube.com/playlist?list=PLNITTkCQVxeXryTQvY0JBWTyN9ynxxPH8)
+
+* Anton
+* [What is Database Sharding?](https://www.youtube.com/watch?v=XP98YCr-iXQ)
+
+* Arpit
+* [Database Sharding and Partitioning](https://www.youtube.com/watch?v=wXvljefXyEo)
+* [How do indexes make databases read faster?](https://www.youtube.com/watch?v=3G293is403I)
+* [How to handle database outages?](https://www.youtube.com/watch?v=UT_TVldzA64)
+
+### Postgres
+
+* [5 Secrets for making PostgreSQL run BLAZING FAST. How to improve database performance.](https://www.youtube.com/watch?v=YON9PliOYFk)
+* [Database Tuning at Zerodha](https://www.youtube.com/watch?v=XB2lF_Z9cbs)
+
+* [What is Database Sharding?](https://www.youtube.com/watch?v=XP98YCr-iXQ)
+
+* [PostgresSQL](https://www.youtube.com/playlist?list=PLQnljOFTspQWGrOqslniFlRcwxyY94cjj)
+
+* [Database Configurations with Google Cloud SQL](https://www.youtube.com/watch?v=q6noaMAnk5s)
+* [GCP Cloud SQL | Google Cloud Platform: For PostgreSQL | PgAdmin + SSL](https://www.youtube.com/watch?v=iBArrntzWcU)
+
+* [PostgreSQL High-Availability](https://www.youtube.com/playlist?list=PLBrWqg4Ny6vVwwrxjgEtJgdreMVbWkBz0)
+
+* [PostgreSQL performance tips you have never seen before](https://www.youtube.com/watch?v=m8ogrogKjXo)
+
+* [Practical Partitioning in Production with #PostgreSQL](https://www.youtube.com/watch?v=edQZauVU-ws)
+* [Don't make these mistakes with #PostgreSQL!](https://www.youtube.com/watch?v=vxuPW4Ottrk)
