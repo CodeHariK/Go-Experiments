@@ -1,0 +1,19 @@
+# To learn more about the skaffold.yaml schema visit
+# https://skaffold.dev/docs/references/yaml/
+apiVersion: skaffold/v4beta11
+kind: Config
+build:
+  artifacts:
+    - image: go-hello-world
+      context: .
+  tagPolicy:
+    sha256: {}
+manifests:
+  rawYaml:
+    - kubernetes-manifests/**
+deploy:
+  kubectl: {}
+profiles:
+  - name: cloudbuild
+    build:
+      googleCloudBuild: {}
