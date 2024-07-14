@@ -40,6 +40,10 @@
 * [How to Deploy An Nginx Ingress Controller in AWS EKS](https://www.youtube.com/watch?v=gvKi7wZHbLU)
 * [Native EKS Ingress: AWS Load Balancer Controller & 5 Examples (Terraform, TLS, IngressGroup, IP)](https://www.youtube.com/watch?v=ZfjpWOC5eoE)
 
+## RBAC
+
+* [RBAC in Kubernetes Hands-On | RBAC | Kubernetes](https://www.youtube.com/watch?v=FRKTTTBwl9c)
+
 ## Tools
 
 * [Kustomize: The Best Way to Manage Your Kubernetes Configs](https://www.youtube.com/watch?v=spCdNeNCuFU)

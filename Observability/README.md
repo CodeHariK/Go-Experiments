@@ -103,6 +103,7 @@
 * [Mastering Prometheus: Installation and Systemd Setup Guide](https://www.youtube.com/watch?v=cl9JlW0nzzE)
 
 * [Project 5: Setup Monitoring and Alerting on Kubernetes | Prometheus and Grafana Tutorial](https://www.youtube.com/watch?v=gBdyIv9d_O8)
+* [Ultimate DevOps Monitoring Project Prometheus Alert](https://www.youtube.com/watch?v=0Ec_VeO60m8)
 
 * [Full Kubernetes tutorial on Docker, KinD, kubectl, Helm, Prometheus, Grafana](https://www.youtube.com/watch?v=SeQevrW176A)
 
