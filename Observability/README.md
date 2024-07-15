@@ -91,6 +91,8 @@
 * [How to Monitor/Instrument Golang with Prometheus (Counter - Gauge - Histogram - Summary)](https://www.youtube.com/watch?v=WUBjlJzI2a0)
 * [Prometheus Fundamentals](https://www.youtube.com/playlist?list=PLyBW7UHmEXgylLwxdVbrBQJ-fJ_jMvh8h)
 
+* [Deploying Prometheus and Grafana in Kubernetes | Observability | Prometheus | Grafana | NodeExporter](https://www.youtube.com/watch?v=c9A2yjnNuHA)
+
 * [Kubernetes Monitoring Made Easy with Prometheus | KodeKloud](https://www.youtube.com/watch?v=6xmWr7p5TE0&ab_channel=KodeKloud)
 
 * [PromQL Explained: Mastering Data Types, Selectors, and Modifiers | KodeKloud](https://www.youtube.com/watch?v=yntN95sQOFc)
