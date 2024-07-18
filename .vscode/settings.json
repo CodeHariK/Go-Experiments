@@ -3,6 +3,10 @@
         {
             "filePath": "Projects/Checkout-System",
             "group": "Default"
+        },
+        {
+            "filePath": "Temporal/hello-world-project-template-go/workflow.go",
+            "group": "Default"
         }
     ],
     "files.associations": {
