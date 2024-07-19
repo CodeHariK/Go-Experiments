@@ -27,6 +27,8 @@ use (
 
 	./Protocols
 	./Protocols/Nats/Check
+
+	./Temporal/ecommerce
 	./Temporal/hello-world
 	./Temporal/money-transfer
 
