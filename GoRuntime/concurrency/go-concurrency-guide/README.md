@@ -1371,7 +1371,7 @@ import (
 )
 
 func main() {
-    ProcessRequest("jane", "abc123")
+    ProcessRequest("task", "abc123")
 }
 
 func ProcessRequest(userID, authToken string) {
