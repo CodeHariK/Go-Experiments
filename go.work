@@ -16,12 +16,16 @@ use (
 	./Projects
 	./Projects/Chess/glee
 	./Projects/GreenGoblin
+	./Projects/OAuth
 	./Projects/RSSAggregator
 	./Projects/ReRun
 	./Projects/SwaggerGo
 	./Projects/TerminalWizard
 	./Projects/TwirpHat
+	./Projects/fullstack-go-htmx
+	./Projects/go-api-auth
 	./Projects/goredis
+	./Projects/gorilla-sessions-tutorial
 	./Projects/raft/part1
 	./Projects/torrent-client
 
