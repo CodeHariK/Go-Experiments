@@ -7,6 +7,10 @@
         {
             "filePath": "Temporal/hello-world-project-template-go/workflow.go",
             "group": "Default"
+        },
+        {
+            "filePath": "Projects/sandslash/main.go",
+            "group": "Default"
         }
     ],
     "files.associations": {

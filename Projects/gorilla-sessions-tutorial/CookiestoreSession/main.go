@@ -50,7 +50,7 @@ func main() {
 	router.HandleFunc("/logout", logout)
 	router.HandleFunc("/forbidden", forbidden)
 	router.HandleFunc("/secret", secret)
-	http.ListenAndServe(":8080", router)
+	http.ListenAndServe(":3000", router)
 }
 
 // index serves the index html file
@@ -167,7 +167,7 @@ func forbidden(w http.ResponseWriter, r *http.Request) {
 // on error returns an empty user
 func getUser(s *sessions.Session) User {
 	val := s.Values["user"]
-	var user = User{}
+	user := User{}
 	user, ok := val.(User)
 	if !ok {
 		return User{Authenticated: false}

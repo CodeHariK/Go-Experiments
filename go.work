@@ -23,10 +23,10 @@ use (
 	./Projects/TerminalWizard
 	./Projects/TwirpHat
 	./Projects/fullstack-go-htmx
-	./Projects/go-api-auth
 	./Projects/goredis
 	./Projects/gorilla-sessions-tutorial
 	./Projects/raft/part1
+	./Projects/sandslash
 	./Projects/torrent-client
 
 	./Protocols
