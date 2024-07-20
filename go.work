@@ -22,7 +22,6 @@ use (
 	./Projects/SwaggerGo
 	./Projects/TerminalWizard
 	./Projects/TwirpHat
-	./Projects/fullstack-go-htmx
 	./Projects/goredis
 	./Projects/gorilla-sessions-tutorial
 	./Projects/raft/part1
