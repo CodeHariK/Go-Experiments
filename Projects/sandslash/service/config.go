@@ -46,9 +46,11 @@ type Config struct {
 		BetaAccess bool `json:"beta_access"`
 	} `json:"feature_flags"`
 	Session struct {
-		MaxAge   int  `json:"max_age"`
-		HttpOnly bool `json:"http_only"`
-		Secure   bool `json:"secure"`
+		MaxAge        int    `json:"max_age"`
+		HttpOnly      bool   `json:"http_only"`
+		Secure        bool   `json:"secure"`
+		AuthKey       string `json:"auth_key"`
+		EncryptionKey string `json:"encryption_key"`
 	} `json:"session"`
 }
 

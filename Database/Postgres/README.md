@@ -1,7 +1,7 @@
 # Postgres
 
 ```sql
-docker run --name goddess -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:alpine
+docker run --name goddess -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres
 docker exec -it goddess psql -U root
 
 docker compose up -d

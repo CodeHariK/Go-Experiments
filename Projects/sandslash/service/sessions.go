@@ -7,17 +7,12 @@ import (
 
 	"sandslash/types"
 
-	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 )
 
 func CreateSessionStore(cfg Config) *sessions.CookieStore {
-	authKeyOne := securecookie.GenerateRandomKey(64)
-	encryptionKeyOne := securecookie.GenerateRandomKey(32)
-
 	store := sessions.NewCookieStore(
-		authKeyOne,
-		encryptionKeyOne,
+		[]byte(cfg.Session.AuthKey), []byte(cfg.Session.EncryptionKey),
 	)
 
 	store.Options = &sessions.Options{
