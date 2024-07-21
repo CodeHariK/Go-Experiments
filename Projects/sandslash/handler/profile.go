@@ -1,27 +1,21 @@
 package handler
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
+	"sandslash/store/query/user"
 	"sandslash/types"
 )
 
-// type Item struct {
-// 	ID          int    `db:"id"`
-// 	Name        string `db:"name"`
-// 	Description string `db:"description"`
-// }
-
-// items := []Item{
-// 	{Name: "Item 1", Description: "Description for item 1"},
-// 	{Name: "Item 2", Description: "Description for item 2"},
-// 	{Name: "Item 3", Description: "Description for item 3"},
-// 	{Name: "Item 4", Description: "Description for item 4"},
-// }
-
 func (h *Handler) Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello How are you")
+	h.store.UserStore.CreateUser(context.Background(), user.CreateUserParams{
+		Username: "superuser",
+	})
+	users, _ := h.store.UserStore.ListUsers(context.Background())
+
+	fmt.Fprintln(w, users)
 }
 
 func HandleProfile(w http.ResponseWriter, r *http.Request) {

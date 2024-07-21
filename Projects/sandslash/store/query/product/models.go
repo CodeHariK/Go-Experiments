@@ -2,7 +2,7 @@
 // versions:
 //   sqlc v1.26.0
 
-package query
+package product
 
 import (
 	"github.com/jackc/pgx/v5/pgtype"
@@ -82,5 +82,5 @@ type User struct {
 	UpdatedAt   pgtype.Timestamp `json:"updated_at"`
 	PhoneNumber string           `json:"phone_number"`
 	LastLogin   pgtype.Timestamp `json:"last_login"`
-	Address     pgtype.Text      `json:"address"`
+	LocationID  pgtype.Int4      `json:"location_id"`
 }

@@ -3,7 +3,7 @@
 //   sqlc v1.26.0
 // source: user.sql
 
-package query
+package user
 
 import (
 	"context"
@@ -22,7 +22,7 @@ INSERT INTO
         "updated_at",
         "phone_number",
         "last_login",
-        "address"
+        "location_id"
     )
 VALUES (
         $1,
@@ -48,7 +48,7 @@ type CreateUserParams struct {
 	UpdatedAt   pgtype.Timestamp `json:"updated_at"`
 	PhoneNumber string           `json:"phone_number"`
 	LastLogin   pgtype.Timestamp `json:"last_login"`
-	Address     pgtype.Text      `json:"address"`
+	LocationID  pgtype.Int4      `json:"location_id"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (int32, error) {
@@ -61,7 +61,7 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (int32, 
 		arg.UpdatedAt,
 		arg.PhoneNumber,
 		arg.LastLogin,
-		arg.Address,
+		arg.LocationID,
 	)
 	var id int32
 	err := row.Scan(&id)
@@ -88,7 +88,7 @@ SELECT
     "updated_at",
     "phone_number",
     "last_login",
-    "address"
+    "location_id"
 FROM "users"
 WHERE
     "id" = $1
@@ -107,7 +107,7 @@ func (q *Queries) GetUserByID(ctx context.Context, id int32) (User, error) {
 		&i.UpdatedAt,
 		&i.PhoneNumber,
 		&i.LastLogin,
-		&i.Address,
+		&i.LocationID,
 	)
 	return i, err
 }
@@ -123,7 +123,7 @@ SELECT
     "updated_at",
     "phone_number",
     "last_login",
-    "address"
+    "location_id"
 FROM "users"
 `
 
@@ -133,7 +133,7 @@ func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []User
+	items := []User{}
 	for rows.Next() {
 		var i User
 		if err := rows.Scan(
@@ -146,7 +146,7 @@ func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
 			&i.UpdatedAt,
 			&i.PhoneNumber,
 			&i.LastLogin,
-			&i.Address,
+			&i.LocationID,
 		); err != nil {
 			return nil, err
 		}
@@ -169,7 +169,7 @@ SET
     "updated_at" = COALESCE($7, "updated_at"),
     "phone_number" = COALESCE($8, "phone_number"),
     "last_login" = COALESCE($9, "last_login"),
-    "address" = COALESCE($10, "address")
+    "location_id" = COALESCE($10, "location_id")
 WHERE
     "id" = $1
 RETURNING
@@ -182,7 +182,7 @@ RETURNING
     "updated_at",
     "phone_number",
     "last_login",
-    "address"
+    "location_id"
 `
 
 type UpdateUserParams struct {
@@ -195,7 +195,7 @@ type UpdateUserParams struct {
 	UpdatedAt   pgtype.Timestamp `json:"updated_at"`
 	PhoneNumber string           `json:"phone_number"`
 	LastLogin   pgtype.Timestamp `json:"last_login"`
-	Address     pgtype.Text      `json:"address"`
+	LocationID  pgtype.Int4      `json:"location_id"`
 }
 
 func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error) {
@@ -209,7 +209,7 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 		arg.UpdatedAt,
 		arg.PhoneNumber,
 		arg.LastLogin,
-		arg.Address,
+		arg.LocationID,
 	)
 	var i User
 	err := row.Scan(
@@ -222,7 +222,7 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 		&i.UpdatedAt,
 		&i.PhoneNumber,
 		&i.LastLogin,
-		&i.Address,
+		&i.LocationID,
 	)
 	return i, err
 }

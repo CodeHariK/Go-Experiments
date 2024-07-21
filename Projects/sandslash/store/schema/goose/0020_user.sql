@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS "users" (
     "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "phone_number" VARCHAR(15) NOT NULL,
     "last_login" TIMESTAMP,
-    "address" VARCHAR(255)
+    "location_id" INTEGER REFERENCES "locations" ("id") ON UPDATE NO ACTION ON DELETE SET NULL
 );
 
 CREATE INDEX "idx_users_email" ON "users" ("email");

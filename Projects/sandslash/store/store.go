@@ -7,11 +7,15 @@ import (
 
 	"sandslash/service"
 
+	"sandslash/store/query/product"
+	"sandslash/store/query/user"
+
 	"github.com/jackc/pgx/v5"
 )
 
 type Store struct {
-	Db *pgx.Conn
+	UserStore    *user.Queries
+	ProductStore *product.Queries
 }
 
 func ConnectDatabase(config service.Config) Store {
@@ -33,6 +37,7 @@ func ConnectDatabase(config service.Config) Store {
 	}
 
 	return Store{
-		Db: conn,
+		UserStore:    user.New(conn),
+		ProductStore: product.New(conn),
 	}
 }

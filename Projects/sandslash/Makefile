@@ -1,86 +1,44 @@
-# Define variables for both PostgreSQL URLs
+PROJECT := star
+POSTGRES_URL := postgres://superuser:secret@localhost:5432/test?sslmode=disable
 DEV_URL := docker+postgres://_/postgres:alpine/dev
 SCHEMA_FILE := store/schema/schema.sql
 FILE_SCHEMA_FILE := file://store/schema/schema.sql
 SCHEMA_DIR := file://store/schema
 
-# Command to list all defined targets with descriptions
-list-commands:
-	@echo "Available targets:"
-	@echo "  schema-inspect-local:     		Inspect schema with local PostgreSQL URL"
-	@echo "  schema-apply-local:       		Apply schema with local PostgreSQL URL"
-	@echo "  migrate-push-local:       		Push migrations with local PostgreSQL URL"
-	@echo "  migrate-hash-local:       		Hash migrations with local PostgreSQL URL"
-	@echo "  schema-inspect-web-local: 		Inspect schema via web with local PostgreSQL URL"
-	@echo "  schema-inspect-remote:    		Inspect schema with remote PostgreSQL URL"
-	@echo "  schema-apply-remote:      		Apply schema with remote PostgreSQL URL"
-	@echo "  migrate-push-remote:      		Push migrations with remote PostgreSQL URL"
-	@echo "  migrate-hash-remote:      		Hash migrations with remote PostgreSQL URL"
-	@echo "  schema-inspect-web-remote:		Inspect schema via web with remote PostgreSQL URL"
-	@echo "  all-local:                		Run all steps for local PostgreSQL"
-	@echo "  all-remote:               		Run all steps for remote PostgreSQL"
+help:
+	@echo "Available commands:"
+	@echo "  ainspect       - Inspect schema and output to $(SCHEMA_FILE)"
+	@echo "  aapply         - Apply schema to database using $(FILE_SCHEMA_FILE) and $(DEV_URL)"
+	@echo "  apush          - Push migrations to $(DEV_URL) from $(SCHEMA_DIR)"
+	@echo "  ahash          - Hash migrations from $(SCHEMA_DIR)"
+	@echo "  aweb           - Inspect schema using web interface"
+	@echo "  all            - Run all commands: ainspect, aapply, apush, ahash, aweb"
+	@echo "  help           - Display this help message"
 
-# Rule to inspect the schema with the local PostgreSQL URL
-schema-inspect-local:
+ainspect:
 	atlas schema inspect \
-		-u $(POSTGRES_URL_LOCAL) \
+		-u $(POSTGRES_URL) \
 		--format '{{ sql . }}' > $(SCHEMA_FILE)
-
-# Rule to apply the schema with the local PostgreSQL URL
-schema-apply-local:
+aapply:
 	atlas schema apply \
-		-u $(POSTGRES_URL_LOCAL) \
+		-u $(POSTGRES_URL) \
 		--to $(FILE_SCHEMA_FILE) \
 		--dev-url "$(DEV_URL)"
-
-# Rule to push migrations with the local PostgreSQL URL
-migrate-push-local:
-	atlas migrate push star \
+apush:
+	atlas migrate push $(PROJECT) \
 		--dev-url "$(DEV_URL)" \
 		--dir $(SCHEMA_DIR)
-
-# Rule to hash migrations with the local PostgreSQL URL
-migrate-hash-local:
+ahash:
 	atlas migrate hash --dir $(SCHEMA_DIR)
-
-# Rule to inspect schema via web with the local PostgreSQL URL
-schema-inspect-web-local:
+aweb:
 	atlas schema inspect \
-		-u $(POSTGRES_URL_LOCAL) \
+		-u $(POSTGRES_URL) \
 		--web
+all: schema-inspect schema-apply migrate-push migrate-hash schema-inspect-web
 
-# Rule to inspect the schema with the remote PostgreSQL URL
-schema-inspect-remote:
-	atlas schema inspect \
-		-u $(POSTGRES_URL_REMOTE) \
-		--format '{{ sql . }}' > $(SCHEMA_FILE)
-
-# Rule to apply the schema with the remote PostgreSQL URL
-schema-apply-remote:
-	atlas schema apply \
-		-u $(POSTGRES_URL_REMOTE) \
-		--to $(FILE_SCHEMA_FILE) \
-		--dev-url "$(DEV_URL)"
-
-# Rule to push migrations with the remote PostgreSQL URL
-migrate-push-remote:
-	atlas migrate push star \
-		--dev-url "$(DEV_URL)" \
-		--dir $(SCHEMA_DIR)
-
-# Rule to hash migrations with the remote PostgreSQL URL
-migrate-hash-remote:
-	atlas migrate hash --dir $(SCHEMA_DIR)
-
-# Rule to inspect schema via web with the remote PostgreSQL URL
-schema-inspect-web-remote:
-	atlas schema inspect \
-		-u $(POSTGRES_URL_REMOTE) \
-		--web
-
-# Default target to run all steps for local PostgreSQL
-all-local: schema-inspect-local schema-apply-local migrate-push-local migrate-hash-local schema-inspect-web-local
-
-# Default target to run all steps for remote PostgreSQL
-all-remote: schema-inspect-remote schema-apply-remote migrate-push-remote migrate-hash-remote schema-inspect-web-remote
-
+gup:
+	goose -dir store/schema/goose postgres $(POSTGRES_URL) up
+gdown:
+	goose -dir store/schema/goose postgres $(POSTGRES_URL) down-to 0
+gstatus:
+	goose -dir store/schema/goose postgres $(POSTGRES_URL) status

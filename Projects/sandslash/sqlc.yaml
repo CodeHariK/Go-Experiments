@@ -1,11 +1,24 @@
 version: "2"
 sql:
   - engine: "postgresql"
-    queries: "store/schema/sql/"
+    queries: "store/schema/sql/user.sql"
     schema: "store/schema/schema.sql"
     gen:
       go:
-        package: "query"
-        out: "store/query"
+        package: "user"
+        out: "store/query/user"
         sql_package: "pgx/v5"
         emit_json_tags: true
+        emit_prepared_queries: true
+        emit_empty_slices: true
+  - engine: "postgresql"
+    queries: "store/schema/sql/product.sql"
+    schema: "store/schema/schema.sql"
+    gen:
+      go:
+        package: "product"
+        out: "store/query/product"
+        sql_package: "pgx/v5"
+        emit_json_tags: true
+        emit_prepared_queries: true
+        emit_empty_slices: true

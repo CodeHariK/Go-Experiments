@@ -9,7 +9,7 @@ INSERT INTO
         "updated_at",
         "phone_number",
         "last_login",
-        "address"
+        "location_id"
     )
 VALUES (
         $1,
@@ -36,7 +36,7 @@ SELECT
     "updated_at",
     "phone_number",
     "last_login",
-    "address"
+    "location_id"
 FROM "users"
 WHERE
     "id" = $1;
@@ -52,7 +52,7 @@ SELECT
     "updated_at",
     "phone_number",
     "last_login",
-    "address"
+    "location_id"
 FROM "users";
 
 -- name: UpdateUser :one
@@ -66,7 +66,7 @@ SET
     "updated_at" = COALESCE($7, "updated_at"),
     "phone_number" = COALESCE($8, "phone_number"),
     "last_login" = COALESCE($9, "last_login"),
-    "address" = COALESCE($10, "address")
+    "location_id" = COALESCE($10, "location_id")
 WHERE
     "id" = $1
 RETURNING
@@ -79,7 +79,7 @@ RETURNING
     "updated_at",
     "phone_number",
     "last_login",
-    "address";
+    "location_id";
 
 -- name: DeleteUser :exec
 DELETE FROM "users" WHERE "id" = $1;
