@@ -57,10 +57,11 @@ func main() {
 	router.HandleFunc("/auth/discord/callback", handler.HandleCallback)
 
 	server := &http.Server{
-		Handler:      loggingMiddleware(csrfMiddleware(CORSMiddleware(router))),
-		Addr:         fmt.Sprintf(":%d", sandslashConfig.Server.Port),
-		ReadTimeout:  60 * time.Second,
-		WriteTimeout: 60 * time.Second,
+		Handler:        loggingMiddleware(csrfMiddleware(CORSMiddleware(router))),
+		Addr:           fmt.Sprintf(":%d", sandslashConfig.Server.Port),
+		ReadTimeout:    60 * time.Second,
+		WriteTimeout:   60 * time.Second,
+		MaxHeaderBytes: 1 << 20,
 	}
 
 	fmt.Println(fmt.Sprintf("listening on localhost:%d", sandslashConfig.Server.Port))

@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS "product_reviews" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INTEGER NOT NULL REFERENCES "users" ("id") ON UPDATE NO ACTION ON DELETE CASCADE,
     "product_id" INTEGER NOT NULL REFERENCES "products" ("id") ON UPDATE NO ACTION ON DELETE CASCADE,
-    "rating" INTEGER NOT NULL
+    "rating" INTEGER NOT NULL,
+    "comment" VARCHAR(1024)
 );
 
 CREATE INDEX idx_product_reviews_product_id ON "product_reviews" ("product_id");

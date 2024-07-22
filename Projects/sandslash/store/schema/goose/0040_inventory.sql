@@ -3,7 +3,7 @@
 -- Create "inventory" table
 CREATE TABLE IF NOT EXISTS "inventory" (
     "id" SERIAL PRIMARY KEY,
-    "product_id" INTEGER NOT NULL REFERENCES "products" ("id") ON UPDATE NO ACTION ON DELETE CASCADE,
+    "product_id" INTEGER NOT NULL REFERENCES "product_variants" ("id") ON UPDATE NO ACTION ON DELETE CASCADE,
     "seller_id" INTEGER NOT NULL REFERENCES "seller" ("id") ON UPDATE NO ACTION ON DELETE CASCADE,
     "quantity" INTEGER NOT NULL
 );

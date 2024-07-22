@@ -1,5 +1,26 @@
 # Postgres
 
+* [Choosing the Right Database: MongoDB vs PostgreSQL for Your Project (Developer Guide)](https://www.youtube.com/watch?v=AlYHUNQQVGg)
+
+* [Postgres pgvector Extension - Vector Database with PostgreSQL / Langchain Integration](https://www.youtube.com/watch?v=FDBnyJu_Ndg)
+
+* [5 Secrets for making PostgreSQL run BLAZING FAST. How to improve database performance.](https://www.youtube.com/watch?v=YON9PliOYFk)
+* [Database Tuning at Zerodha](https://www.youtube.com/watch?v=XB2lF_Z9cbs)
+
+* [What is Database Sharding?](https://www.youtube.com/watch?v=XP98YCr-iXQ)
+
+* [PostgresSQL](https://www.youtube.com/playlist?list=PLQnljOFTspQWGrOqslniFlRcwxyY94cjj)
+
+* [Database Configurations with Google Cloud SQL](https://www.youtube.com/watch?v=q6noaMAnk5s)
+* [GCP Cloud SQL | Google Cloud Platform: For PostgreSQL | PgAdmin + SSL](https://www.youtube.com/watch?v=iBArrntzWcU)
+
+* [PostgreSQL High-Availability](https://www.youtube.com/playlist?list=PLBrWqg4Ny6vVwwrxjgEtJgdreMVbWkBz0)
+
+* [PostgreSQL performance tips you have never seen before](https://www.youtube.com/watch?v=m8ogrogKjXo)
+
+* [Practical Partitioning in Production with #PostgreSQL](https://www.youtube.com/watch?v=edQZauVU-ws)
+* [Don't make these mistakes with #PostgreSQL!](https://www.youtube.com/watch?v=vxuPW4Ottrk)
+
 ```sql
 docker run --name goddess -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres
 docker exec -it goddess psql -U root
