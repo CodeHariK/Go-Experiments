@@ -2,10 +2,14 @@
 CREATE SCHEMA IF NOT EXISTS "public";
 -- Set comment to schema: "public"
 COMMENT ON SCHEMA "public" IS 'standard public schema';
--- Create "products" table
-CREATE TABLE "public"."products" ("id" serial NOT NULL, "product_name" character varying(255) NOT NULL, "description" integer NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "products_product_name_key" UNIQUE ("product_name"));
 -- Create "goose_db_version" table
 CREATE TABLE "public"."goose_db_version" ("id" serial NOT NULL, "version_id" bigint NOT NULL, "is_applied" boolean NOT NULL, "tstamp" timestamp NULL DEFAULT now(), PRIMARY KEY ("id"));
+-- Create "authors" table
+CREATE TABLE "public"."authors" ("id" bigserial NOT NULL, "name" text NOT NULL, "bio" text NULL, PRIMARY KEY ("id"));
+-- Create "schema_migrations" table
+CREATE TABLE "public"."schema_migrations" ("version" bigint NOT NULL, "dirty" boolean NOT NULL, PRIMARY KEY ("version"));
+-- Create "products" table
+CREATE TABLE "public"."products" ("id" serial NOT NULL, "product_name" character varying(255) NOT NULL, "description" integer NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "products_product_name_key" UNIQUE ("product_name"));
 -- Create "product_variants" table
 CREATE TABLE "public"."product_variants" ("id" serial NOT NULL, "product_id" integer NOT NULL, "variant_name" character varying(255) NOT NULL, "price" numeric(10,4) NOT NULL, "currency" character varying(12) NOT NULL DEFAULT 'USD', PRIMARY KEY ("id"), CONSTRAINT "product_variants_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "public"."products" ("id") ON UPDATE NO ACTION ON DELETE CASCADE, CONSTRAINT "product_variants_currency_check" CHECK ((currency)::text = ANY ((ARRAY['USD'::character varying, 'INR'::character varying, 'BTC'::character varying, 'ETH'::character varying, 'SOL'::character varying])::text[])));
 -- Create index "idx_variant_name" to table: "product_variants"
@@ -13,7 +17,7 @@ CREATE INDEX "idx_variant_name" ON "public"."product_variants" ("variant_name");
 -- Create index "idx_variant_product_id" to table: "product_variants"
 CREATE INDEX "idx_variant_product_id" ON "public"."product_variants" ("product_id");
 -- Create "locations" table
-CREATE TABLE "public"."locations" ("id" serial NOT NULL, "name" character varying(255) NOT NULL, "address" character varying(255) NOT NULL, "city" character varying(100) NOT NULL, "state" character varying(100) NOT NULL, "country" character varying(100) NOT NULL, "postal_code" character varying(20) NOT NULL, "latitude" numeric(9,6) NOT NULL, "longitude" numeric(9,6) NOT NULL, PRIMARY KEY ("id"));
+CREATE TABLE "public"."locations" ("id" serial NOT NULL, "address" character varying(255) NOT NULL, "city" character varying(100) NOT NULL, "state" character varying(100) NOT NULL, "country" character varying(100) NOT NULL, "postal_code" character varying(20) NOT NULL, "latitude" numeric(9,6) NOT NULL, "longitude" numeric(9,6) NOT NULL, PRIMARY KEY ("id"));
 -- Create index "idx_locations_latitude_longitude" to table: "locations"
 CREATE INDEX "idx_locations_latitude_longitude" ON "public"."locations" ("latitude", "longitude");
 -- Create "seller" table
@@ -25,7 +29,7 @@ CREATE INDEX "idx_inventory_product_id" ON "public"."inventory" ("product_id");
 -- Create index "idx_inventory_seller_id_id" to table: "inventory"
 CREATE INDEX "idx_inventory_seller_id_id" ON "public"."inventory" ("seller_id");
 -- Create "users" table
-CREATE TABLE "public"."users" ("id" serial NOT NULL, "username" character varying(255) NOT NULL, "email" character varying(255) NOT NULL, "is_admin" boolean NULL DEFAULT false, "created_at" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, "date_of_birth" date NULL, "updated_at" timestamp NULL DEFAULT CURRENT_TIMESTAMP, "phone_number" character varying(15) NOT NULL, "last_login" timestamp NULL, "location" integer NULL, PRIMARY KEY ("id"), CONSTRAINT "users_email_key" UNIQUE ("email"), CONSTRAINT "users_username_key" UNIQUE ("username"), CONSTRAINT "users_location_fkey" FOREIGN KEY ("location") REFERENCES "public"."locations" ("id") ON UPDATE NO ACTION ON DELETE SET NULL);
+CREATE TABLE "public"."users" ("id" serial NOT NULL, "username" character varying(255) NOT NULL, "email" character varying(255) NOT NULL, "phone_number" character varying(15) NOT NULL, "is_admin" boolean NOT NULL DEFAULT false, "date_of_birth" date NOT NULL, "created_at" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, "updated_at" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, "location" integer NULL, PRIMARY KEY ("id"), CONSTRAINT "users_email_key" UNIQUE ("email"), CONSTRAINT "users_phone_number_key" UNIQUE ("phone_number"), CONSTRAINT "users_username_key" UNIQUE ("username"), CONSTRAINT "users_location_fkey" FOREIGN KEY ("location") REFERENCES "public"."locations" ("id") ON UPDATE NO ACTION ON DELETE SET NULL);
 -- Create index "idx_users_email" to table: "users"
 CREATE INDEX "idx_users_email" ON "public"."users" ("email");
 -- Create "orders" table

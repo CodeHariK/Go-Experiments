@@ -3,23 +3,21 @@ INSERT INTO
     "users" (
         "username",
         "email",
+        "phone_number",
         "is_admin",
         "date_of_birth",
-        "phone_number",
-        "last_login",
         "location"
     )
-VALUES ($1, $2, $3, $4, $5, $6, $7)
+VALUES ($1, $2, $3, $4, $5, $6)
 RETURNING
     "id",
     "username",
     "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
     "phone_number",
-    "last_login",
+    "is_admin",
+    "date_of_birth",
+    "created_at",
+    "updated_at",
     "location";
 
 -- name: GetUserByID :one
@@ -27,12 +25,11 @@ SELECT
     "id",
     "username",
     "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
     "phone_number",
-    "last_login",
+    "is_admin",
+    "date_of_birth",
+    "created_at",
+    "updated_at",
     "location"
 FROM "users"
 WHERE
@@ -43,24 +40,22 @@ UPDATE "users"
 SET
     "username" = $1,
     "email" = $2,
-    "is_admin" = $3,
-    "date_of_birth" = $4,
-    "phone_number" = $5,
-    "last_login" = $6,
-    "location" = $7,
+    "phone_number" = $3,
+    "is_admin" = $4,
+    "date_of_birth" = $5,
+    "location" = $6,
     "updated_at" = CURRENT_TIMESTAMP
 WHERE
-    "id" = $8
+    "id" = $7
 RETURNING
     "id",
     "username",
     "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
     "phone_number",
-    "last_login",
+    "is_admin",
+    "date_of_birth",
+    "created_at",
+    "updated_at",
     "location";
 
 -- name: DeleteUser :one
@@ -71,12 +66,11 @@ SELECT
     "id",
     "username",
     "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
     "phone_number",
-    "last_login",
+    "is_admin",
+    "date_of_birth",
+    "created_at",
+    "updated_at",
     "location"
 FROM "users"
 ORDER BY "created_at" DESC;
@@ -86,12 +80,11 @@ SELECT
     "id",
     "username",
     "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
     "phone_number",
-    "last_login",
+    "is_admin",
+    "date_of_birth",
+    "created_at",
+    "updated_at",
     "location"
 FROM "users"
 WHERE

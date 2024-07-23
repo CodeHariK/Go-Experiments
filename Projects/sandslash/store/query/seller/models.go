@@ -8,6 +8,12 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
+type Author struct {
+	ID   int64       `json:"id"`
+	Name string      `json:"name"`
+	Bio  pgtype.Text `json:"bio"`
+}
+
 type GooseDbVersion struct {
 	ID        int32            `json:"id"`
 	VersionID int64            `json:"version_id"`
@@ -24,7 +30,6 @@ type Inventory struct {
 
 type Location struct {
 	ID         int32          `json:"id"`
-	Name       string         `json:"name"`
 	Address    string         `json:"address"`
 	City       string         `json:"city"`
 	State      string         `json:"state"`
@@ -117,6 +122,11 @@ type ProductVariant struct {
 	Currency    string         `json:"currency"`
 }
 
+type SchemaMigration struct {
+	Version int64 `json:"version"`
+	Dirty   bool  `json:"dirty"`
+}
+
 type Seller struct {
 	ID       int32       `json:"id"`
 	Name     string      `json:"name"`
@@ -127,11 +137,10 @@ type User struct {
 	ID          int32            `json:"id"`
 	Username    string           `json:"username"`
 	Email       string           `json:"email"`
-	IsAdmin     pgtype.Bool      `json:"is_admin"`
-	CreatedAt   pgtype.Timestamp `json:"created_at"`
-	DateOfBirth pgtype.Date      `json:"date_of_birth"`
-	UpdatedAt   pgtype.Timestamp `json:"updated_at"`
 	PhoneNumber string           `json:"phone_number"`
-	LastLogin   pgtype.Timestamp `json:"last_login"`
+	IsAdmin     bool             `json:"is_admin"`
+	DateOfBirth pgtype.Date      `json:"date_of_birth"`
+	CreatedAt   pgtype.Timestamp `json:"created_at"`
+	UpdatedAt   pgtype.Timestamp `json:"updated_at"`
 	Location    pgtype.Int4      `json:"location"`
 }

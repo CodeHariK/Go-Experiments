@@ -1,16 +1,18 @@
 -- +goose Up
 
 -- Create "users" table
+-- 024/07/23 - Create users table and trigger
+
+-- Create the table
 CREATE TABLE IF NOT EXISTS "users" (
     "id" SERIAL PRIMARY KEY,
     "username" VARCHAR(255) NOT NULL UNIQUE,
     "email" VARCHAR(255) NOT NULL UNIQUE,
-    "is_admin" BOOLEAN DEFAULT FALSE,
+    "phone_number" VARCHAR(15) NOT NULL UNIQUE,
+    "is_admin" BOOLEAN DEFAULT FALSE NOT NULL,
+    "date_of_birth" DATE NOT NULL,
     "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "date_of_birth" DATE,
-    "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    "phone_number" VARCHAR(15) NOT NULL,
-    "last_login" TIMESTAMP,
+    "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "location" INTEGER REFERENCES "locations" ("id") ON UPDATE NO ACTION ON DELETE SET NULL
 );
 

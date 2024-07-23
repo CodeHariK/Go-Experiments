@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"sandslash/handler"
+	UserHandler "sandslash/handler/user"
 	"sandslash/service"
 	"sandslash/store"
 
@@ -50,6 +51,9 @@ func main() {
 	h := handler.New(&storeInstance)
 
 	router := http.NewServeMux()
+
+	UserHandler.CreateRoutes(router, storeInstance.UserStore)
+
 	router.HandleFunc("/", (h.Index))
 	router.HandleFunc("/login", handler.HandleLogin)
 	router.HandleFunc("/logout", handler.Logout)

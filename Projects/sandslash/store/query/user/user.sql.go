@@ -16,44 +16,40 @@ INSERT INTO
     "users" (
         "username",
         "email",
+        "phone_number",
         "is_admin",
         "date_of_birth",
-        "phone_number",
-        "last_login",
         "location"
     )
-VALUES ($1, $2, $3, $4, $5, $6, $7)
+VALUES ($1, $2, $3, $4, $5, $6)
 RETURNING
     "id",
     "username",
     "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
     "phone_number",
-    "last_login",
+    "is_admin",
+    "date_of_birth",
+    "created_at",
+    "updated_at",
     "location"
 `
 
 type CreateUserParams struct {
-	Username    string           `json:"username"`
-	Email       string           `json:"email"`
-	IsAdmin     pgtype.Bool      `json:"is_admin"`
-	DateOfBirth pgtype.Date      `json:"date_of_birth"`
-	PhoneNumber string           `json:"phone_number"`
-	LastLogin   pgtype.Timestamp `json:"last_login"`
-	Location    pgtype.Int4      `json:"location"`
+	Username    string      `json:"username"`
+	Email       string      `json:"email"`
+	PhoneNumber string      `json:"phone_number"`
+	IsAdmin     bool        `json:"is_admin"`
+	DateOfBirth pgtype.Date `json:"date_of_birth"`
+	Location    pgtype.Int4 `json:"location"`
 }
 
 func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
 	row := q.db.QueryRow(ctx, createUser,
 		arg.Username,
 		arg.Email,
+		arg.PhoneNumber,
 		arg.IsAdmin,
 		arg.DateOfBirth,
-		arg.PhoneNumber,
-		arg.LastLogin,
 		arg.Location,
 	)
 	var i User
@@ -61,12 +57,11 @@ func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, e
 		&i.ID,
 		&i.Username,
 		&i.Email,
-		&i.IsAdmin,
-		&i.CreatedAt,
-		&i.DateOfBirth,
-		&i.UpdatedAt,
 		&i.PhoneNumber,
-		&i.LastLogin,
+		&i.IsAdmin,
+		&i.DateOfBirth,
+		&i.CreatedAt,
+		&i.UpdatedAt,
 		&i.Location,
 	)
 	return i, err
@@ -87,12 +82,11 @@ SELECT
     "id",
     "username",
     "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
     "phone_number",
-    "last_login",
+    "is_admin",
+    "date_of_birth",
+    "created_at",
+    "updated_at",
     "location"
 FROM "users"
 WHERE
@@ -106,12 +100,11 @@ func (q *Queries) FindUserByUsername(ctx context.Context, username string) (User
 		&i.ID,
 		&i.Username,
 		&i.Email,
-		&i.IsAdmin,
-		&i.CreatedAt,
-		&i.DateOfBirth,
-		&i.UpdatedAt,
 		&i.PhoneNumber,
-		&i.LastLogin,
+		&i.IsAdmin,
+		&i.DateOfBirth,
+		&i.CreatedAt,
+		&i.UpdatedAt,
 		&i.Location,
 	)
 	return i, err
@@ -122,12 +115,11 @@ SELECT
     "id",
     "username",
     "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
     "phone_number",
-    "last_login",
+    "is_admin",
+    "date_of_birth",
+    "created_at",
+    "updated_at",
     "location"
 FROM "users"
 WHERE
@@ -141,12 +133,11 @@ func (q *Queries) GetUserByID(ctx context.Context, id int32) (User, error) {
 		&i.ID,
 		&i.Username,
 		&i.Email,
-		&i.IsAdmin,
-		&i.CreatedAt,
-		&i.DateOfBirth,
-		&i.UpdatedAt,
 		&i.PhoneNumber,
-		&i.LastLogin,
+		&i.IsAdmin,
+		&i.DateOfBirth,
+		&i.CreatedAt,
+		&i.UpdatedAt,
 		&i.Location,
 	)
 	return i, err
@@ -157,12 +148,11 @@ SELECT
     "id",
     "username",
     "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
     "phone_number",
-    "last_login",
+    "is_admin",
+    "date_of_birth",
+    "created_at",
+    "updated_at",
     "location"
 FROM "users"
 ORDER BY "created_at" DESC
@@ -181,12 +171,11 @@ func (q *Queries) ListAllUsers(ctx context.Context) ([]User, error) {
 			&i.ID,
 			&i.Username,
 			&i.Email,
-			&i.IsAdmin,
-			&i.CreatedAt,
-			&i.DateOfBirth,
-			&i.UpdatedAt,
 			&i.PhoneNumber,
-			&i.LastLogin,
+			&i.IsAdmin,
+			&i.DateOfBirth,
+			&i.CreatedAt,
+			&i.UpdatedAt,
 			&i.Location,
 		); err != nil {
 			return nil, err
@@ -204,46 +193,42 @@ UPDATE "users"
 SET
     "username" = $1,
     "email" = $2,
-    "is_admin" = $3,
-    "date_of_birth" = $4,
-    "phone_number" = $5,
-    "last_login" = $6,
-    "location" = $7,
+    "phone_number" = $3,
+    "is_admin" = $4,
+    "date_of_birth" = $5,
+    "location" = $6,
     "updated_at" = CURRENT_TIMESTAMP
 WHERE
-    "id" = $8
+    "id" = $7
 RETURNING
     "id",
     "username",
     "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
     "phone_number",
-    "last_login",
+    "is_admin",
+    "date_of_birth",
+    "created_at",
+    "updated_at",
     "location"
 `
 
 type UpdateUserParams struct {
-	Username    string           `json:"username"`
-	Email       string           `json:"email"`
-	IsAdmin     pgtype.Bool      `json:"is_admin"`
-	DateOfBirth pgtype.Date      `json:"date_of_birth"`
-	PhoneNumber string           `json:"phone_number"`
-	LastLogin   pgtype.Timestamp `json:"last_login"`
-	Location    pgtype.Int4      `json:"location"`
-	ID          int32            `json:"id"`
+	Username    string      `json:"username"`
+	Email       string      `json:"email"`
+	PhoneNumber string      `json:"phone_number"`
+	IsAdmin     bool        `json:"is_admin"`
+	DateOfBirth pgtype.Date `json:"date_of_birth"`
+	Location    pgtype.Int4 `json:"location"`
+	ID          int32       `json:"id"`
 }
 
 func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error) {
 	row := q.db.QueryRow(ctx, updateUser,
 		arg.Username,
 		arg.Email,
+		arg.PhoneNumber,
 		arg.IsAdmin,
 		arg.DateOfBirth,
-		arg.PhoneNumber,
-		arg.LastLogin,
 		arg.Location,
 		arg.ID,
 	)
@@ -252,12 +237,11 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 		&i.ID,
 		&i.Username,
 		&i.Email,
-		&i.IsAdmin,
-		&i.CreatedAt,
-		&i.DateOfBirth,
-		&i.UpdatedAt,
 		&i.PhoneNumber,
-		&i.LastLogin,
+		&i.IsAdmin,
+		&i.DateOfBirth,
+		&i.CreatedAt,
+		&i.UpdatedAt,
 		&i.Location,
 	)
 	return i, err
