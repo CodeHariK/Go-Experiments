@@ -2,6 +2,7 @@ package service
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -86,4 +87,16 @@ func LoadConfig() Config {
 	}
 
 	return cfg
+}
+
+func (config *Config) CreateDatabaseConnectionUri() string {
+	dsn := fmt.Sprintf("postgres://%s:%s@%s:%d/%s?sslmode=%s",
+		config.Database.User,
+		config.Database.Password,
+		config.Database.Host,
+		config.Database.Port,
+		config.Database.DbName,
+		config.Database.SSLMode,
+	)
+	return dsn
 }

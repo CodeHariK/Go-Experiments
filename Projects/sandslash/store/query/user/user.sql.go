@@ -17,64 +17,104 @@ INSERT INTO
         "username",
         "email",
         "is_admin",
-        "created_at",
         "date_of_birth",
-        "updated_at",
         "phone_number",
         "last_login",
-        "location_id"
+        "location"
     )
-VALUES (
-        $1,
-        $2,
-        $3,
-        $4,
-        $5,
-        $6,
-        $7,
-        $8,
-        $9
-    )
+VALUES ($1, $2, $3, $4, $5, $6, $7)
 RETURNING
-    "id"
+    "id",
+    "username",
+    "email",
+    "is_admin",
+    "created_at",
+    "date_of_birth",
+    "updated_at",
+    "phone_number",
+    "last_login",
+    "location"
 `
 
 type CreateUserParams struct {
 	Username    string           `json:"username"`
 	Email       string           `json:"email"`
 	IsAdmin     pgtype.Bool      `json:"is_admin"`
-	CreatedAt   pgtype.Timestamp `json:"created_at"`
 	DateOfBirth pgtype.Date      `json:"date_of_birth"`
-	UpdatedAt   pgtype.Timestamp `json:"updated_at"`
 	PhoneNumber string           `json:"phone_number"`
 	LastLogin   pgtype.Timestamp `json:"last_login"`
-	LocationID  pgtype.Int4      `json:"location_id"`
+	Location    pgtype.Int4      `json:"location"`
 }
 
-func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (int32, error) {
+func (q *Queries) CreateUser(ctx context.Context, arg CreateUserParams) (User, error) {
 	row := q.db.QueryRow(ctx, createUser,
 		arg.Username,
 		arg.Email,
 		arg.IsAdmin,
-		arg.CreatedAt,
 		arg.DateOfBirth,
-		arg.UpdatedAt,
 		arg.PhoneNumber,
 		arg.LastLogin,
-		arg.LocationID,
+		arg.Location,
 	)
-	var id int32
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.Username,
+		&i.Email,
+		&i.IsAdmin,
+		&i.CreatedAt,
+		&i.DateOfBirth,
+		&i.UpdatedAt,
+		&i.PhoneNumber,
+		&i.LastLogin,
+		&i.Location,
+	)
+	return i, err
+}
+
+const deleteUser = `-- name: DeleteUser :one
+DELETE FROM "users" WHERE "id" = $1 RETURNING "id"
+`
+
+func (q *Queries) DeleteUser(ctx context.Context, id int32) (int32, error) {
+	row := q.db.QueryRow(ctx, deleteUser, id)
 	err := row.Scan(&id)
 	return id, err
 }
 
-const deleteUser = `-- name: DeleteUser :exec
-DELETE FROM "users" WHERE "id" = $1
+const findUserByUsername = `-- name: FindUserByUsername :one
+SELECT
+    "id",
+    "username",
+    "email",
+    "is_admin",
+    "created_at",
+    "date_of_birth",
+    "updated_at",
+    "phone_number",
+    "last_login",
+    "location"
+FROM "users"
+WHERE
+    "username" = $1
 `
 
-func (q *Queries) DeleteUser(ctx context.Context, id int32) error {
-	_, err := q.db.Exec(ctx, deleteUser, id)
-	return err
+func (q *Queries) FindUserByUsername(ctx context.Context, username string) (User, error) {
+	row := q.db.QueryRow(ctx, findUserByUsername, username)
+	var i User
+	err := row.Scan(
+		&i.ID,
+		&i.Username,
+		&i.Email,
+		&i.IsAdmin,
+		&i.CreatedAt,
+		&i.DateOfBirth,
+		&i.UpdatedAt,
+		&i.PhoneNumber,
+		&i.LastLogin,
+		&i.Location,
+	)
+	return i, err
 }
 
 const getUserByID = `-- name: GetUserByID :one
@@ -88,7 +128,7 @@ SELECT
     "updated_at",
     "phone_number",
     "last_login",
-    "location_id"
+    "location"
 FROM "users"
 WHERE
     "id" = $1
@@ -107,12 +147,12 @@ func (q *Queries) GetUserByID(ctx context.Context, id int32) (User, error) {
 		&i.UpdatedAt,
 		&i.PhoneNumber,
 		&i.LastLogin,
-		&i.LocationID,
+		&i.Location,
 	)
 	return i, err
 }
 
-const listUsers = `-- name: ListUsers :many
+const listAllUsers = `-- name: ListAllUsers :many
 SELECT
     "id",
     "username",
@@ -123,12 +163,13 @@ SELECT
     "updated_at",
     "phone_number",
     "last_login",
-    "location_id"
+    "location"
 FROM "users"
+ORDER BY "created_at" DESC
 `
 
-func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
-	rows, err := q.db.Query(ctx, listUsers)
+func (q *Queries) ListAllUsers(ctx context.Context) ([]User, error) {
+	rows, err := q.db.Query(ctx, listAllUsers)
 	if err != nil {
 		return nil, err
 	}
@@ -146,7 +187,7 @@ func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
 			&i.UpdatedAt,
 			&i.PhoneNumber,
 			&i.LastLogin,
-			&i.LocationID,
+			&i.Location,
 		); err != nil {
 			return nil, err
 		}
@@ -161,17 +202,16 @@ func (q *Queries) ListUsers(ctx context.Context) ([]User, error) {
 const updateUser = `-- name: UpdateUser :one
 UPDATE "users"
 SET
-    "username" = COALESCE($2, "username"),
-    "email" = COALESCE($3, "email"),
-    "is_admin" = COALESCE($4, "is_admin"),
-    "created_at" = COALESCE($5, "created_at"),
-    "date_of_birth" = COALESCE($6, "date_of_birth"),
-    "updated_at" = COALESCE($7, "updated_at"),
-    "phone_number" = COALESCE($8, "phone_number"),
-    "last_login" = COALESCE($9, "last_login"),
-    "location_id" = COALESCE($10, "location_id")
+    "username" = $1,
+    "email" = $2,
+    "is_admin" = $3,
+    "date_of_birth" = $4,
+    "phone_number" = $5,
+    "last_login" = $6,
+    "location" = $7,
+    "updated_at" = CURRENT_TIMESTAMP
 WHERE
-    "id" = $1
+    "id" = $8
 RETURNING
     "id",
     "username",
@@ -182,34 +222,30 @@ RETURNING
     "updated_at",
     "phone_number",
     "last_login",
-    "location_id"
+    "location"
 `
 
 type UpdateUserParams struct {
-	ID          int32            `json:"id"`
 	Username    string           `json:"username"`
 	Email       string           `json:"email"`
 	IsAdmin     pgtype.Bool      `json:"is_admin"`
-	CreatedAt   pgtype.Timestamp `json:"created_at"`
 	DateOfBirth pgtype.Date      `json:"date_of_birth"`
-	UpdatedAt   pgtype.Timestamp `json:"updated_at"`
 	PhoneNumber string           `json:"phone_number"`
 	LastLogin   pgtype.Timestamp `json:"last_login"`
-	LocationID  pgtype.Int4      `json:"location_id"`
+	Location    pgtype.Int4      `json:"location"`
+	ID          int32            `json:"id"`
 }
 
 func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, error) {
 	row := q.db.QueryRow(ctx, updateUser,
-		arg.ID,
 		arg.Username,
 		arg.Email,
 		arg.IsAdmin,
-		arg.CreatedAt,
 		arg.DateOfBirth,
-		arg.UpdatedAt,
 		arg.PhoneNumber,
 		arg.LastLogin,
-		arg.LocationID,
+		arg.Location,
+		arg.ID,
 	)
 	var i User
 	err := row.Scan(
@@ -222,7 +258,7 @@ func (q *Queries) UpdateUser(ctx context.Context, arg UpdateUserParams) (User, e
 		&i.UpdatedAt,
 		&i.PhoneNumber,
 		&i.LastLogin,
-		&i.LocationID,
+		&i.Location,
 	)
 	return i, err
 }

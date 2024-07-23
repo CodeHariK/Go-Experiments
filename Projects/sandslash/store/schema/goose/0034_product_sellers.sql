@@ -9,4 +9,4 @@ CREATE TABLE IF NOT EXISTS "product_sellers" (
 );
 
 -- +goose Down
-DROP TABLE "product_sellers";
+DROP TABLE IF EXISTS "product_sellers";

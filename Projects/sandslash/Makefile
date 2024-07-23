@@ -1,5 +1,4 @@
-PROJECT := star
-POSTGRES_URL := postgres://superuser:secret@localhost:5432/test?sslmode=disable
+PROJECT := SandSlash
 DEV_URL := docker+postgres://_/postgres:alpine/dev
 SCHEMA_FILE := store/schema/schema.sql
 FILE_SCHEMA_FILE := file://store/schema/schema.sql
@@ -19,9 +18,18 @@ help:
 	@echo "\nGoose"	
 	@echo "  gup            - Apply Goose migrations"
 	@echo "  gdo            - Rollback Goose migrations"
-	@echo "  gdown          - Rollback Goose migrations to version 0"
+	@echo "  greset         - Rollback Goose migrations to version 0"
 	@echo "  gstatus        - Display the status of Goose migrations"
-	@echo "  help           - Display this help message"
+	@echo "  gdestroy       - Destroy Goose Table"
+
+	@echo "\nSQLc"
+	@echo "  sqlc			- sqlc generate"
+
+	@echo "\nGen"
+	@echo "  gen			- Generate All"
+
+	@echo "\nDB Status"
+	@echo "  dbstatus		- Database status"
 
 ainspect:
 	atlas schema inspect \
@@ -48,7 +56,17 @@ gup:
 	goose -dir store/schema/goose postgres $(POSTGRES_URL) up
 gdo:
 	goose -dir store/schema/goose postgres $(POSTGRES_URL) down
-gdown:
-	goose -dir store/schema/goose postgres $(POSTGRES_URL) down-to 0
+greset:
+	goose -dir store/schema/goose postgres $(POSTGRES_URL) reset
 gstatus:
 	goose -dir store/schema/goose postgres $(POSTGRES_URL) status
+gdestroy:
+	go run store/schema/function/destroy/destroy.go 
+
+sql:
+	sqlc generate
+
+gen: gup ainspect sql
+
+dbstatus:
+	go run store/schema/function/status/status.go

@@ -8,9 +8,9 @@ CREATE TABLE IF NOT EXISTS "inventory" (
     "quantity" INTEGER NOT NULL
 );
 
-CREATE INDEX idx_inventory_seller_id_id ON "inventory" ("seller_id");
+CREATE INDEX IF NOT EXISTS idx_inventory_seller_id_id ON "inventory" ("seller_id");
 
-CREATE INDEX idx_inventory_product_id ON "inventory" ("product_id");
+CREATE INDEX IF NOT EXISTS idx_inventory_product_id ON "inventory" ("product_id");
 
 -- +goose Down
-DROP TABLE "inventory";
+DROP TABLE IF EXISTS "inventory";

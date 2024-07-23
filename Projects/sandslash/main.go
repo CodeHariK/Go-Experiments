@@ -64,6 +64,6 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	fmt.Println(fmt.Sprintf("listening on localhost:%d", sandslashConfig.Server.Port))
+	fmt.Println(fmt.Sprintf("listening on http://localhost:%d", sandslashConfig.Server.Port))
 	log.Panic(server.ListenAndServe())
 }

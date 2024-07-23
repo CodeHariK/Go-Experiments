@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS "orders" (
     )
 );
 
-CREATE INDEX idx_orders_user_id ON "orders" ("user_id");
+CREATE INDEX IF NOT EXISTS idx_orders_user_id ON "orders" ("user_id");
 
 -- +goose Down
 
-DROP TABLE "orders";
+DROP TABLE IF EXISTS "orders";

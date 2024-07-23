@@ -2,14 +2,12 @@
 CREATE SCHEMA IF NOT EXISTS "public";
 -- Set comment to schema: "public"
 COMMENT ON SCHEMA "public" IS 'standard public schema';
+-- Create "products" table
+CREATE TABLE "public"."products" ("id" serial NOT NULL, "product_name" character varying(255) NOT NULL, "description" integer NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "products_product_name_key" UNIQUE ("product_name"));
 -- Create "goose_db_version" table
 CREATE TABLE "public"."goose_db_version" ("id" serial NOT NULL, "version_id" bigint NOT NULL, "is_applied" boolean NOT NULL, "tstamp" timestamp NULL DEFAULT now(), PRIMARY KEY ("id"));
--- Create "products" table
-CREATE TABLE "public"."products" ("id" serial NOT NULL, "product_name" character varying(255) NOT NULL, "description" character varying(2048) NULL, PRIMARY KEY ("id"), CONSTRAINT "products_product_name_key" UNIQUE ("product_name"));
--- Create index "idx_product_name" to table: "products"
-CREATE INDEX "idx_product_name" ON "public"."products" ("product_name");
 -- Create "product_variants" table
-CREATE TABLE "public"."product_variants" ("id" serial NOT NULL, "product_id" integer NOT NULL, "variant_name" character varying(255) NOT NULL, "images" character varying(1024)[] NULL, "videos" character varying(1024)[] NULL, "description" character varying(1024) NULL, "price" numeric(10,4) NOT NULL, "currency" character varying(12) NOT NULL DEFAULT 'USD', PRIMARY KEY ("id"), CONSTRAINT "product_variants_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "public"."products" ("id") ON UPDATE NO ACTION ON DELETE CASCADE, CONSTRAINT "product_variants_currency_check" CHECK ((currency)::text = ANY ((ARRAY['USD'::character varying, 'INR'::character varying, 'BTC'::character varying, 'ETH'::character varying, 'SOL'::character varying])::text[])));
+CREATE TABLE "public"."product_variants" ("id" serial NOT NULL, "product_id" integer NOT NULL, "variant_name" character varying(255) NOT NULL, "price" numeric(10,4) NOT NULL, "currency" character varying(12) NOT NULL DEFAULT 'USD', PRIMARY KEY ("id"), CONSTRAINT "product_variants_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "public"."products" ("id") ON UPDATE NO ACTION ON DELETE CASCADE, CONSTRAINT "product_variants_currency_check" CHECK ((currency)::text = ANY ((ARRAY['USD'::character varying, 'INR'::character varying, 'BTC'::character varying, 'ETH'::character varying, 'SOL'::character varying])::text[])));
 -- Create index "idx_variant_name" to table: "product_variants"
 CREATE INDEX "idx_variant_name" ON "public"."product_variants" ("variant_name");
 -- Create index "idx_variant_product_id" to table: "product_variants"
@@ -48,13 +46,17 @@ CREATE INDEX "idx_attribute_name" ON "public"."product_attributes" ("attribute_n
 CREATE INDEX "idx_attribute_product_id" ON "public"."product_attributes" ("product_id");
 -- Create index "idx_attribute_variant_id" to table: "product_attributes"
 CREATE INDEX "idx_attribute_variant_id" ON "public"."product_attributes" ("variant_id");
--- Create "product_promotions" table
-CREATE TABLE "public"."product_promotions" ("id" serial NOT NULL, "promotion_name" character varying(255) NOT NULL, "discount" numeric(4,2) NOT NULL, "product_variant_id" integer NOT NULL, "start_date" date NOT NULL, "end_date" date NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "product_promotions_product_variant_id_fkey" FOREIGN KEY ("product_variant_id") REFERENCES "public"."product_variants" ("id") ON UPDATE NO ACTION ON DELETE SET NULL);
 -- Create "product_reviews" table
-CREATE TABLE "public"."product_reviews" ("id" serial NOT NULL, "user_id" integer NOT NULL, "product_id" integer NOT NULL, "rating" integer NOT NULL, "comment" character varying(1024) NULL, PRIMARY KEY ("id"), CONSTRAINT "product_reviews_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "public"."products" ("id") ON UPDATE NO ACTION ON DELETE CASCADE, CONSTRAINT "product_reviews_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON UPDATE NO ACTION ON DELETE CASCADE);
+CREATE TABLE "public"."product_reviews" ("id" serial NOT NULL, "user_id" integer NOT NULL, "product_id" integer NOT NULL, "seller_id" integer NOT NULL, "rating" integer NOT NULL, "comment" integer NULL, PRIMARY KEY ("id"), CONSTRAINT "product_reviews_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "public"."products" ("id") ON UPDATE NO ACTION ON DELETE CASCADE, CONSTRAINT "product_reviews_seller_id_fkey" FOREIGN KEY ("seller_id") REFERENCES "public"."seller" ("id") ON UPDATE NO ACTION ON DELETE CASCADE, CONSTRAINT "product_reviews_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users" ("id") ON UPDATE NO ACTION ON DELETE CASCADE);
 -- Create index "idx_product_reviews_product_id" to table: "product_reviews"
 CREATE INDEX "idx_product_reviews_product_id" ON "public"."product_reviews" ("product_id");
 -- Create index "idx_product_reviews_user_id" to table: "product_reviews"
 CREATE INDEX "idx_product_reviews_user_id" ON "public"."product_reviews" ("user_id");
+-- Create "product_comment" table
+CREATE TABLE "public"."product_comment" ("id" serial NOT NULL, "comment" character varying(1024) NULL, "created_at" timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, "updated_at" timestamp NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY ("id"), CONSTRAINT "product_comment_id_fkey" FOREIGN KEY ("id") REFERENCES "public"."product_reviews" ("id") ON UPDATE NO ACTION ON DELETE CASCADE);
+-- Create "product_description" table
+CREATE TABLE "public"."product_description" ("id" serial NOT NULL, "product_id" integer NULL, "product_variant_id" integer NULL, "description" character varying(2048) NULL, "images" character varying(1024)[] NULL, "videos" character varying(1024)[] NULL, PRIMARY KEY ("id"), CONSTRAINT "product_description_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "public"."products" ("id") ON UPDATE NO ACTION ON DELETE CASCADE, CONSTRAINT "product_description_product_variant_id_fkey" FOREIGN KEY ("product_variant_id") REFERENCES "public"."product_variants" ("id") ON UPDATE NO ACTION ON DELETE CASCADE, CONSTRAINT "at_least_one_required" CHECK ((product_id IS NOT NULL) OR (product_variant_id IS NOT NULL)));
+-- Create "product_promotions" table
+CREATE TABLE "public"."product_promotions" ("id" serial NOT NULL, "promotion_name" character varying(255) NOT NULL, "discount" numeric(4,2) NOT NULL, "product_variant_id" integer NOT NULL, "start_date" date NOT NULL, "end_date" date NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "product_promotions_product_variant_id_fkey" FOREIGN KEY ("product_variant_id") REFERENCES "public"."product_variants" ("id") ON UPDATE NO ACTION ON DELETE SET NULL);
 -- Create "product_sellers" table
 CREATE TABLE "public"."product_sellers" ("id" serial NOT NULL, "product_variant_id" integer NOT NULL, "seller_id" integer NOT NULL, "price" numeric(10,4) NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "product_sellers_product_variant_id_fkey" FOREIGN KEY ("product_variant_id") REFERENCES "public"."product_variants" ("id") ON UPDATE NO ACTION ON DELETE CASCADE, CONSTRAINT "product_sellers_seller_id_fkey" FOREIGN KEY ("seller_id") REFERENCES "public"."seller" ("id") ON UPDATE NO ACTION ON DELETE CASCADE);

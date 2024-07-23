@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS "seller" (
 );
 
 -- +goose Down
-DROP TABLE "seller";
+DROP TABLE IF EXISTS "seller";

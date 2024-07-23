@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS "users" (
     "location" INTEGER REFERENCES "locations" ("id") ON UPDATE NO ACTION ON DELETE SET NULL
 );
 
-CREATE INDEX "idx_users_email" ON "users" ("email");
+CREATE INDEX IF NOT EXISTS "idx_users_email" ON "users" ("email");
 
 -- +goose Down
 
-DROP TABLE "users";
+DROP TABLE IF EXISTS "users";

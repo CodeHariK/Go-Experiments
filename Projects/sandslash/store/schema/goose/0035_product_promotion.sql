@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS "product_promotions" (
 );
 
 -- +goose Down
-DROP TABLE "product_promotions";
+DROP TABLE IF EXISTS "product_promotions";

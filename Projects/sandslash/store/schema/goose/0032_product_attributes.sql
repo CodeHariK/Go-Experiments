@@ -10,11 +10,11 @@ CREATE TABLE IF NOT EXISTS "product_attributes" (
 );
 
 -- Create indexes for the product_attributes table
-CREATE INDEX idx_attribute_product_id ON "product_attributes" ("product_id");
+CREATE INDEX IF NOT EXISTS idx_attribute_product_id ON "product_attributes" ("product_id");
 
-CREATE INDEX idx_attribute_variant_id ON "product_attributes" ("variant_id");
+CREATE INDEX IF NOT EXISTS idx_attribute_variant_id ON "product_attributes" ("variant_id");
 
-CREATE INDEX idx_attribute_name ON "product_attributes" ("attribute_name");
+CREATE INDEX IF NOT EXISTS idx_attribute_name ON "product_attributes" ("attribute_name");
 
 -- +goose Down
-DROP TABLE "product_attributes";
+DROP TABLE IF EXISTS "product_attributes";

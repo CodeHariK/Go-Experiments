@@ -4,26 +4,23 @@ INSERT INTO
         "username",
         "email",
         "is_admin",
-        "created_at",
         "date_of_birth",
-        "updated_at",
         "phone_number",
         "last_login",
-        "location_id"
+        "location"
     )
-VALUES (
-        $1,
-        $2,
-        $3,
-        $4,
-        $5,
-        $6,
-        $7,
-        $8,
-        $9
-    )
+VALUES ($1, $2, $3, $4, $5, $6, $7)
 RETURNING
-    "id";
+    "id",
+    "username",
+    "email",
+    "is_admin",
+    "created_at",
+    "date_of_birth",
+    "updated_at",
+    "phone_number",
+    "last_login",
+    "location";
 
 -- name: GetUserByID :one
 SELECT
@@ -36,39 +33,24 @@ SELECT
     "updated_at",
     "phone_number",
     "last_login",
-    "location_id"
+    "location"
 FROM "users"
 WHERE
     "id" = $1;
 
--- name: ListUsers :many
-SELECT
-    "id",
-    "username",
-    "email",
-    "is_admin",
-    "created_at",
-    "date_of_birth",
-    "updated_at",
-    "phone_number",
-    "last_login",
-    "location_id"
-FROM "users";
-
 -- name: UpdateUser :one
 UPDATE "users"
 SET
-    "username" = COALESCE($2, "username"),
-    "email" = COALESCE($3, "email"),
-    "is_admin" = COALESCE($4, "is_admin"),
-    "created_at" = COALESCE($5, "created_at"),
-    "date_of_birth" = COALESCE($6, "date_of_birth"),
-    "updated_at" = COALESCE($7, "updated_at"),
-    "phone_number" = COALESCE($8, "phone_number"),
-    "last_login" = COALESCE($9, "last_login"),
-    "location_id" = COALESCE($10, "location_id")
+    "username" = $1,
+    "email" = $2,
+    "is_admin" = $3,
+    "date_of_birth" = $4,
+    "phone_number" = $5,
+    "last_login" = $6,
+    "location" = $7,
+    "updated_at" = CURRENT_TIMESTAMP
 WHERE
-    "id" = $1
+    "id" = $8
 RETURNING
     "id",
     "username",
@@ -79,7 +61,38 @@ RETURNING
     "updated_at",
     "phone_number",
     "last_login",
-    "location_id";
+    "location";
 
--- name: DeleteUser :exec
-DELETE FROM "users" WHERE "id" = $1;
+-- name: DeleteUser :one
+DELETE FROM "users" WHERE "id" = $1 RETURNING "id";
+
+-- name: ListAllUsers :many
+SELECT
+    "id",
+    "username",
+    "email",
+    "is_admin",
+    "created_at",
+    "date_of_birth",
+    "updated_at",
+    "phone_number",
+    "last_login",
+    "location"
+FROM "users"
+ORDER BY "created_at" DESC;
+
+-- name: FindUserByUsername :one
+SELECT
+    "id",
+    "username",
+    "email",
+    "is_admin",
+    "created_at",
+    "date_of_birth",
+    "updated_at",
+    "phone_number",
+    "last_login",
+    "location"
+FROM "users"
+WHERE
+    "username" = $1;

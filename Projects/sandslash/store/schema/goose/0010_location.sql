@@ -14,8 +14,8 @@ CREATE TABLE IF NOT EXISTS "locations" (
 );
 
 -- Create an index on the latitude and longitude for efficient spatial queries
-CREATE INDEX idx_locations_latitude_longitude ON "locations" ("latitude", "longitude");
+CREATE INDEX IF NOT EXISTS idx_locations_latitude_longitude ON "locations" ("latitude", "longitude");
 
 -- +goose Down
 
-DROP TABLE "locations";
+DROP TABLE IF EXISTS "locations";
