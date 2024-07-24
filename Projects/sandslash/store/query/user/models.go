@@ -8,12 +8,6 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-type Author struct {
-	ID   int64       `json:"id"`
-	Name string      `json:"name"`
-	Bio  pgtype.Text `json:"bio"`
-}
-
 type GooseDbVersion struct {
 	ID        int32            `json:"id"`
 	VersionID int64            `json:"version_id"`
@@ -120,11 +114,6 @@ type ProductVariant struct {
 	VariantName string         `json:"variant_name"`
 	Price       pgtype.Numeric `json:"price"`
 	Currency    string         `json:"currency"`
-}
-
-type SchemaMigration struct {
-	Version int64 `json:"version"`
-	Dirty   bool  `json:"dirty"`
 }
 
 type Seller struct {

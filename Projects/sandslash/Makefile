@@ -65,8 +65,13 @@ gdestroy:
 
 sql:
 	sqlc generate
+sqlcgrpc:
+	sqlc-grpc -tracing -metric
 
 gen: gup ainspect sql
 
 dbstatus:
 	go run store/schema/function/status/status.go
+
+run:
+	go run cmd/main.go

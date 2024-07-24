@@ -2,14 +2,10 @@
 CREATE SCHEMA IF NOT EXISTS "public";
 -- Set comment to schema: "public"
 COMMENT ON SCHEMA "public" IS 'standard public schema';
--- Create "goose_db_version" table
-CREATE TABLE "public"."goose_db_version" ("id" serial NOT NULL, "version_id" bigint NOT NULL, "is_applied" boolean NOT NULL, "tstamp" timestamp NULL DEFAULT now(), PRIMARY KEY ("id"));
--- Create "authors" table
-CREATE TABLE "public"."authors" ("id" bigserial NOT NULL, "name" text NOT NULL, "bio" text NULL, PRIMARY KEY ("id"));
--- Create "schema_migrations" table
-CREATE TABLE "public"."schema_migrations" ("version" bigint NOT NULL, "dirty" boolean NOT NULL, PRIMARY KEY ("version"));
 -- Create "products" table
 CREATE TABLE "public"."products" ("id" serial NOT NULL, "product_name" character varying(255) NOT NULL, "description" integer NOT NULL, PRIMARY KEY ("id"), CONSTRAINT "products_product_name_key" UNIQUE ("product_name"));
+-- Create "goose_db_version" table
+CREATE TABLE "public"."goose_db_version" ("id" serial NOT NULL, "version_id" bigint NOT NULL, "is_applied" boolean NOT NULL, "tstamp" timestamp NULL DEFAULT now(), PRIMARY KEY ("id"));
 -- Create "product_variants" table
 CREATE TABLE "public"."product_variants" ("id" serial NOT NULL, "product_id" integer NOT NULL, "variant_name" character varying(255) NOT NULL, "price" numeric(10,4) NOT NULL, "currency" character varying(12) NOT NULL DEFAULT 'USD', PRIMARY KEY ("id"), CONSTRAINT "product_variants_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "public"."products" ("id") ON UPDATE NO ACTION ON DELETE CASCADE, CONSTRAINT "product_variants_currency_check" CHECK ((currency)::text = ANY ((ARRAY['USD'::character varying, 'INR'::character varying, 'BTC'::character varying, 'ETH'::character varying, 'SOL'::character varying])::text[])));
 -- Create index "idx_variant_name" to table: "product_variants"

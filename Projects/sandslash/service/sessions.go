@@ -10,6 +10,16 @@ import (
 	"github.com/gorilla/sessions"
 )
 
+type User struct {
+	ID         string  `json:"id"`
+	Username   string  `json:"username"`
+	Avatar     *string `json:"avatar"`
+	GlobalName string  `json:"global_name"`
+	Locale     string  `json:"locale"`
+	Email      string  `json:"email"`
+	Verified   bool    `json:"verified"`
+}
+
 func CreateSessionStore(cfg Config) *sessions.CookieStore {
 	store := sessions.NewCookieStore(
 		[]byte(cfg.Session.AuthKey), []byte(cfg.Session.EncryptionKey),
