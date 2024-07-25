@@ -23,14 +23,14 @@ type Inventory struct {
 }
 
 type Location struct {
-	ID         int32          `json:"id"`
-	Address    string         `json:"address"`
-	City       string         `json:"city"`
-	State      string         `json:"state"`
-	Country    string         `json:"country"`
-	PostalCode string         `json:"postal_code"`
-	Latitude   pgtype.Numeric `json:"latitude"`
-	Longitude  pgtype.Numeric `json:"longitude"`
+	ID         int32  `json:"id"`
+	Address    string `json:"address"`
+	City       string `json:"city"`
+	State      string `json:"state"`
+	Country    string `json:"country"`
+	PostalCode string `json:"postal_code"`
+	Latitude   int64  `json:"latitude"`
+	Longitude  int64  `json:"longitude"`
 }
 
 type Order struct {
@@ -39,18 +39,18 @@ type Order struct {
 	Status      string           `json:"status"`
 	CreatedAt   pgtype.Timestamp `json:"created_at"`
 	UpdatedAt   pgtype.Timestamp `json:"updated_at"`
-	TotalAmount pgtype.Numeric   `json:"total_amount"`
+	TotalAmount int64            `json:"total_amount"`
 	Currency    string           `json:"currency"`
 }
 
 type OrderItem struct {
-	ID        int32          `json:"id"`
-	OrderID   int32          `json:"order_id"`
-	ProductID int32          `json:"product_id"`
-	SellerID  int32          `json:"seller_id"`
-	Quantity  int32          `json:"quantity"`
-	Price     pgtype.Numeric `json:"price"`
-	Currency  string         `json:"currency"`
+	ID        int32  `json:"id"`
+	OrderID   int32  `json:"order_id"`
+	ProductID int32  `json:"product_id"`
+	SellerID  int32  `json:"seller_id"`
+	Quantity  int32  `json:"quantity"`
+	Price     int64  `json:"price"`
+	Currency  string `json:"currency"`
 }
 
 type Product struct {
@@ -84,12 +84,12 @@ type ProductDescription struct {
 }
 
 type ProductPromotion struct {
-	ID               int32          `json:"id"`
-	PromotionName    string         `json:"promotion_name"`
-	Discount         pgtype.Numeric `json:"discount"`
-	ProductVariantID int32          `json:"product_variant_id"`
-	StartDate        pgtype.Date    `json:"start_date"`
-	EndDate          pgtype.Date    `json:"end_date"`
+	ID               int32       `json:"id"`
+	PromotionName    string      `json:"promotion_name"`
+	Discount         int64       `json:"discount"`
+	ProductVariantID int32       `json:"product_variant_id"`
+	StartDate        pgtype.Date `json:"start_date"`
+	EndDate          pgtype.Date `json:"end_date"`
 }
 
 type ProductReview struct {
@@ -102,18 +102,18 @@ type ProductReview struct {
 }
 
 type ProductSeller struct {
-	ID               int32          `json:"id"`
-	ProductVariantID int32          `json:"product_variant_id"`
-	SellerID         int32          `json:"seller_id"`
-	Price            pgtype.Numeric `json:"price"`
+	ID               int32 `json:"id"`
+	ProductVariantID int32 `json:"product_variant_id"`
+	SellerID         int32 `json:"seller_id"`
+	Price            int64 `json:"price"`
 }
 
 type ProductVariant struct {
-	ID          int32          `json:"id"`
-	ProductID   int32          `json:"product_id"`
-	VariantName string         `json:"variant_name"`
-	Price       pgtype.Numeric `json:"price"`
-	Currency    string         `json:"currency"`
+	ID          int32  `json:"id"`
+	ProductID   int32  `json:"product_id"`
+	VariantName string `json:"variant_name"`
+	Price       int64  `json:"price"`
+	Currency    string `json:"currency"`
 }
 
 type Seller struct {

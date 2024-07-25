@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS "product_variants" (
     "id" SERIAL PRIMARY KEY,
     "product_id" INT NOT NULL REFERENCES "products" ("id") ON DELETE CASCADE,
     "variant_name" VARCHAR(255) NOT NULL,
-    "price" NUMERIC(10, 4) NOT NULL,
+    "price" BIGINT NOT NULL,
     "currency" VARCHAR(12) NOT NULL DEFAULT 'USD' CHECK (
         "currency" IN (
             'USD',

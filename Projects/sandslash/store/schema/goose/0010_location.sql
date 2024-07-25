@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS "locations" (
     "state" VARCHAR(100) NOT NULL,
     "country" VARCHAR(100) NOT NULL,
     "postal_code" VARCHAR(20) NOT NULL,
-    "latitude" NUMERIC(9, 6) NOT NULL,
-    "longitude" NUMERIC(9, 6) NOT NULL
+    "latitude" BIGINT NOT NULL,
+    "longitude" BIGINT NOT NULL
 );
 
 -- Create an index on the latitude and longitude for efficient spatial queries

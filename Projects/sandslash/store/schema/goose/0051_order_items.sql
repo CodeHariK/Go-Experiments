@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS "order_items" (
     "product_id" INTEGER NOT NULL REFERENCES "product_variants" ("id") ON UPDATE NO ACTION ON DELETE CASCADE,
     "seller_id" INTEGER NOT NULL REFERENCES "seller" ("id") ON UPDATE NO ACTION ON DELETE CASCADE,
     "quantity" INTEGER NOT NULL,
-    "price" NUMERIC(10, 4) NOT NULL,
+    "price" BIGINT NOT NULL,
     "currency" VARCHAR(12) NOT NULL DEFAULT 'USD' CHECK (
         "currency" IN (
             'USD',

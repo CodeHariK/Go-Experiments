@@ -22,6 +22,7 @@ use (
 	./Projects/SwaggerGo
 	./Projects/TerminalWizard
 	./Projects/TwirpHat
+	./Projects/connect
 	./Projects/goredis
 	./Projects/gorilla-sessions-tutorial
 	./Projects/raft/part1

@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "@bufbuild/buf": "^1.35.1",
+    "@bufbuild/protobuf": "^1.10.0",
+    "@bufbuild/protoc-gen-es": "^1.10.0",
+    "@connectrpc/connect": "^1.4.0",
+    "@connectrpc/connect-web": "^1.4.0",
+    "@connectrpc/protoc-gen-connect-es": "^1.4.0",
+    "esbuild": "^0.23.0"
+  },
+  "scripts": {
+    "build": "esbuild cmd/client/main.ts --bundle --outfile=cmd/client/main.js",
+    "dev": "esbuild cmd/client/main.ts --serve=localhost:3000 --servedir=cmd/client --outdir=cmd/client --bundle --global-name=eliza"
+  },
+  "name": "connect",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

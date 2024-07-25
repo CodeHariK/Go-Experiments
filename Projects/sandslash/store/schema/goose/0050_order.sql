@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS "orders" (
     ),
     "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    "total_amount" NUMERIC(10, 4) NOT NULL,
+    "total_amount" BIGINT NOT NULL,
     "currency" VARCHAR(12) NOT NULL DEFAULT 'USD' CHECK (
         "currency" IN (
             'USD',

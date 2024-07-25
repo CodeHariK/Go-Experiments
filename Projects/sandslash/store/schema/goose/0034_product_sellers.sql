@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS "product_sellers" (
     "id" SERIAL PRIMARY KEY,
     "product_variant_id" INT NOT NULL REFERENCES "product_variants" ("id") ON DELETE CASCADE,
     "seller_id" INT NOT NULL REFERENCES "seller" ("id") ON UPDATE NO ACTION ON DELETE CASCADE,
-    "price" NUMERIC(10, 4) NOT NULL
+    "price" BIGINT NOT NULL
 );
 
 -- +goose Down
