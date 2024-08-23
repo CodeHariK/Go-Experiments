@@ -15,11 +15,22 @@ It demonstrates how to configure OpenTelemetry Go to send data to New Relic.
    data to New Relic:
 
     ```shell
-    export OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp.nr-data.net
-    export OTEL_EXPORTER_OTLP_HEADERS=api-key=42b0ac43ae044b2668ede4ef033a7ff5FFFFNRAL
-    export OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT=4095
-    export OTEL_SERVICE_NAME=getting-started-go
-    export OTEL_RESOURCE_ATTRIBUTES=service.instance.id=123
+      export OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp.nr-data.net
+      export OTEL_EXPORTER_OTLP_HEADERS=api-key=5e306a91fd8db2df3d1727ee1aeca8feFFFFNRAL
+      export OTEL_ATTRIBUTE_VALUE_LENGTH_LIMIT=4095
+      export OTEL_SERVICE_NAME=newgo
+      export OTEL_RESOURCE_ATTRIBUTES=service.instance.id=hello
+
+      export OTEL_EXPORTER_OTLP_ENDPOINT="https://otlp.uptrace.dev"
+      export OTEL_EXPORTER_OTLP_HEADERS="uptrace-dsn=https://kxlMTzzGL0dSrhwIq8ZWZQ@api.uptrace.dev?grpc=4317"
+      export OTEL_EXPORTER_OTLP_COMPRESSION=gzip
+      export OTEL_EXPORTER_OTLP_METRICS_DEFAULT_HISTOGRAM_AGGREGATION=BASE2_EXPONENTIAL_BUCKET_HISTOGRAM
+      export OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE=DELTA
+
+      export OTEL_SERVICE_NAME="newgo"
+      export OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf
+      export OTEL_EXPORTER_OTLP_ENDPOINT="https://api.honeycomb.io"
+      export OTEL_EXPORTER_OTLP_HEADERS="x-honeycomb-team=3hkXPamomjdL2qtpUFss1C"
     ```
 
     * If your account is based in the EU, set the endpoint to: [https://otlp.eu01.nr-data.net](https://otlp.eu01.nr-data.net)

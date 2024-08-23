@@ -3,6 +3,8 @@
 * Container Security
 * Security Observability with eBPF
 
+* [Kubernetes Security](https://www.youtube.com/playlist?list=PLFkEchqXDZx6Bw3B2NRVc499j1TavjOvm)
+
 ## Linux
 
 * [Hacking Docker](https://www.youtube.com/playlist?list=PLBf0hzazHTGNv0-GVWZoveC49pIDHEHbn)

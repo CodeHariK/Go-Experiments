@@ -18,7 +18,6 @@ use (
 	./Projects/GreenGoblin
 	./Projects/OAuth
 	./Projects/RSSAggregator
-	./Projects/ReRun
 	./Projects/SwaggerGo
 	./Projects/TerminalWizard
 	./Projects/TwirpHat
@@ -26,7 +25,6 @@ use (
 	./Projects/goredis
 	./Projects/gorilla-sessions-tutorial
 	./Projects/raft/part1
-	./Projects/sandslash
 	./Projects/torrent-client
 
 	./Protocols
