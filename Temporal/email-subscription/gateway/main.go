@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+
 	"subscribeemails"
 
 	"go.temporal.io/sdk/client"
@@ -26,7 +27,6 @@ type ResponseData struct {
 
 // create subscribe handler, which collects the email in the index handler form
 func subscribeHandler(w http.ResponseWriter, r *http.Request) {
-
 	// only respond to POST
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -71,7 +71,6 @@ func subscribeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Execute the Temporal Workflow to start the subscription.
 	_, err = temporalClient.ExecuteWorkflow(context.Background(), workflowOptions, subscribeemails.SubscriptionWorkflow, subscription)
-
 	if err != nil {
 		http.Error(w, "Couldn't sign up user. Please try again.", http.StatusInternalServerError)
 		log.Print(err)
@@ -97,7 +96,6 @@ func subscribeHandler(w http.ResponseWriter, r *http.Request) {
 
 // create unsubscribe handler, accessed at localhost:4000/unsubscribe
 func unsubscribeHandler(w http.ResponseWriter, r *http.Request) {
-
 	// only respond to POST
 	if r.Method != http.MethodDelete {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -196,12 +194,10 @@ func showDetailsHandler(w http.ResponseWriter, r *http.Request) {
 
 // set up handlers, Client, port, Task Queue name.
 func main() {
-
 	var err error
 	temporalClient, err = client.Dial(client.Options{
-		HostPort: client.DefaultHostPort,
+		HostPort: "127.0.0.1:7233",
 	})
-
 	if err != nil {
 		panic(err)
 	}

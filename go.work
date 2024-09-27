@@ -31,8 +31,10 @@ use (
 	./Protocols/Nats/Check
 
 	./Temporal/ecommerce
+	./Temporal/email-subscription
 	./Temporal/hello-world
 	./Temporal/money-transfer
+	./Temporal/samples-go
 
 	./Terraform/s3sqsfunction/src
 	./Testing/FuzzTest

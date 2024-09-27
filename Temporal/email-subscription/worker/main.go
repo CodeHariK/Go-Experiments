@@ -3,6 +3,7 @@ package main
 
 import (
 	"log"
+
 	"subscribeemails"
 
 	"go.temporal.io/sdk/client"
@@ -11,8 +12,8 @@ import (
 
 func main() {
 	// create client and worker
-	c, err := client.Dial(client.Options {
-		HostPort: client.DefaultHostPort,
+	c, err := client.Dial(client.Options{
+		HostPort:  "127.0.0.1:7233",
 		Namespace: client.DefaultNamespace,
 	})
 	if err != nil {
@@ -32,4 +33,5 @@ func main() {
 		log.Fatalln("Unable to start Worker.", err)
 	}
 }
+
 // @@@SNIPEND
