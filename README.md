@@ -164,9 +164,6 @@
 * InterviewPen
 * [System Design](https://www.youtube.com/playlist?list=PLPkuArhPxxQGkbl-_STo8FFxBBB4ri-tl)
 
-* NeetCode
-* [Design Youtube - System Design Interview](https://www.youtube.com/watch?v=jPKTo1iGQiE)
-
 * [Scaling Hotstar for 25 million concurrent viewers](https://www.youtube.com/watch?v=QjvyiyH4rr0)
 
 * [How to Build an Exchange](https://www.youtube.com/watch?v=b1e4t2k2KJY)
@@ -181,3 +178,7 @@
 
 ![Stock](./SystemDesign/Stock.excalidraw.png)
 ![Twitter](./SystemDesign/Twitter.excalidraw.png)
+
+## Webrtc
+
+* https://github.com/leandromoreira/digital_video_introduction
